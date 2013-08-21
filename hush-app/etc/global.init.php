@@ -34,10 +34,12 @@ if (defined('__HUSH_CLI')) {
 else {
 	
 	// check other libraries
+	$hushDir = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'Hush';
 	$zendDir = __COMM_LIB_DIR . DIRECTORY_SEPARATOR . 'Zend';
-	if (!is_dir($zendDir)) {
-		echo "\nCore libraries can not be found .. \n";
-		echo "Please enter 'hush_app/bin' and use 'hush sys init' command to complete the installation.\n";
+	if (!is_dir($hushDir) || !is_dir($zendDir)) {
+		echo "Core libraries can not be found .. <br/>\n";
+		echo "1. If database EXISTED, Please enter 'hush_app/bin' and execute 'hush sys uplib' command.<br/>\n";
+		echo "2. If database NO-EXISTED, Please enter 'hush_app/bin' and execute 'hush sys init' command.<br/>\n";
 		exit(1);
 	}
 }
