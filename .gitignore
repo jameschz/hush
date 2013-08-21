@@ -1,4 +1,5 @@
 .settings
 .project
-*.tpl.php
-zend_cache-*
+hush-app/dat/*
+hush-app/tpl/*/cache
+hush-app/tpl/*/template_c
