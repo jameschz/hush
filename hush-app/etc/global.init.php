@@ -17,8 +17,8 @@ if (defined('__HUSH_CLI')) {
 	if (!is_dir($hushDir)) {
 		// download Zend Framework
 		echo "\nInstalling Hush Framework .. \n";
-		$downFile = 'http://hush-framework.googlecode.com/files/HushFramework-lib-1.0.zip';
-		$saveFile = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'HushFramework-lib-1.0.zip';
+		$downFile = 'http://code.gameplus.sdo.com/HushFramework-1.1.0.zip';
+		$saveFile = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'HushFramework.zip';
 		$savePath = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . '.';
 		if (_hush_download($downFile, $saveFile)) {
 			echo "Extracting.. ";
