@@ -1,0 +1,30 @@
+.flow_model_add_box {width:600px; height:auto; background:#ffffe0; border:1px solid #ccc}
+.flow_model_add_head {width:600px; height:70px; font-size:26px; font-weight:bold; text-align:center; padding-top:30px;}
+.flow_model_add_body {width:600px; height:300px;}
+
+.flow_model_field_table {}
+.flow_model_field_table td {padding:5px}
+.flow_model_field_table td.disn {display:none;}
+.flow_model_field_table input {font-size:12px;}
+.flow_model_field_table input.text {width:200px;}
+.flow_model_field_table select {width:204px;font-size:12px;}
+.flow_model_field_table textarea {width:300px;height:80px;font-size:12px;}
+.flow_model_field_table textarea.short {width:200px;height:50px;font-size:12px;}
+.flow_model_field_table input.btn {width:50px}
+.flow_model_field_left {height:30px;}
+
+.flow_node_helper {background:#ffffe0;}
+.flow_node_helper_tab {background:#ffffe0;}
+.flow_node_helper_title {color:blue; display:block;}
+
+.flow_chart_box {width:800px; height:600px; background:#ffffe0; position:relative;}
+.flow_chart_field_list {background:#ffffe0;}
+.flow_chart_drag_box {width:800px; height:600px; position:absolute; left:0px; top:0px}
+.flow_chart_drag_flow {width:120px;height:40px;line-height:38px;background:#ffffff; position:absolute; cursor:pointer; text-align:center; }
+.flow_chart_node_attr_1 {background:#fde5c8;color:#333333}
+.flow_chart_node_attr_2 {background:#FFFFFF;color:#333333}
+.flow_chart_node_attr_3 {background:#fde5c8;color:#333333}
+.flow_chart_node_type_1 {border:2px solid #66CC00}
+.flow_chart_node_type_2 {border:2px solid #5BBFFF}
+.flow_chart_node_type_3 {border:2px dashed #66CC00}
+.flow_chart_node_type_4 {border:2px solid #FF6600}

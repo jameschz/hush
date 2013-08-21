@@ -1,0 +1,70 @@
+@charset "utf-8";
+*{padding:0px; margin:0px;}
+body{background:#fff; color:#333; padding-bottom:50px; font-size:12px; font-family:Tahoma,Verdana,Arial,Helvetica,sans-serif;}
+img{border:none; vertical-align:middle; border: none}
+img.icon {width:16px;height:16px;padding-bottom:2px}
+ul,dl{list-style:none;}
+a{color:#004b8d; text-decoration:none}
+a:hover{color:#4192d9; text-decoration:none}
+hr.common{margin-top:10px;margin-bottom:10px;}
+.fc_red{color:#f26101}
+.fc_blue{color:#004b8d}
+.fc_gray{color:#656565}
+button, input, select{vertical-align:middle}
+button{margin-right:5px;cursor:pointer;}
+.btn1{height:22px;padding:0 6px;font-size:10pt;line-height:22px;color:#333;border:1px solid #d9e8f5;background:url(../img/button_bg1.gif) repeat-x; cursor:pointer;}
+.highlight{background:#ffffe0}
+.disn{display:none}
+
+.mtitle{width:100%;margin:0px auto; height:29px; background:url(../img/mtitle_bg.gif) left top repeat-x; overflow:hidden; clear:both}
+.mtitle h1{width:48%; height:29px; float:left; line-height:27px; font-size:12pt; font-weight:bold; text-indent:14px; letter-spacing:2px; color:#333;}
+.mtitle span{float:right;}
+
+.tform{width:100%; margin:0 auto; border-bottom:1px solid #d9e8f5; height:26px;line-height:26px;text-align:right;}
+
+table .title{color:#333;font-weight:bold;background:#d9e8f5;}
+table thead tr{height:24px;line-height:24px;}
+table thead th{padding:3px;color:#333;}
+
+.tlist{width:100%; margin:7px auto 0px; border-collapse:collapse}
+.tlist tbody tr{height:20px;line-height:20px;background:#fff;font-weight:normal;color:#333;border-bottom:1px dotted #d9e8f5}
+.tlist tr td{line-height:15px;padding:5px;color:#333;}
+.tlist tbody td{border-bottom:1px dotted #d9e8f5}
+.tlist tfoot tr{text-align:left;}
+.tlist tfoot td{padding-left:0px;}
+
+.titem {border-collapse:separate;}
+.titem input {font-size:12px;}
+.titem select {font-size:12px;}
+.titem textarea {font-size:12px;}
+.titem td.field {border:#d9e8f5 solid 1px;background:#d9e8f5;padding:3px;width:80px}
+.titem td.value {border:#d9e8f5 solid 1px;padding:3px;}
+.titem td.value input.common {width:300px}
+.titem td.value textarea.common {width:300px}
+.titem select.common {width:304px}
+.titem select optgroup option {padding-left:23px}
+.titem td.submit {padding-top:10px;}
+.titem td.submit input {width:50px}
+
+.pagelist{padding:0px;}
+.pagelist b{overflow:hidden;display:inline; padding:4px;text-decoration:none; color:#333; border:1px solid #eeeeee;}
+.pagelist a{overflow:hidden;display:inline; padding:4px;text-decoration:none; color:#333; border:1px solid #ebebeb;}
+.pagelist a:hover,.pagelist strong{border:1px solid #ffd375;color:#f26101;padding:4px;}
+.pagelist span{margin:0 5px;}
+
+img.chart_common{width:800px;height:440px}
+img.chart_line{width:1000px;height:500px}
+img.chart_pie{width:500px;height:300px}
+
+input.filter_input{width:50px}
+
+div.errorbox{width:100%; border:#ff0000 solid 1px;margin-bottom:10px;}
+div.errorbox span{padding:3px 5px 3px 5px;display:block}
+
+div.main{height:100%;margin:0px;padding:10px;}
+div.maintop{padding:5px 0px 10px 0px; border-bottom:#ccc dashed 1px}
+div.mainbox{margin-top:10px;margin-bottom:20px}
+div.tablebox{width:800px}
+div.windowbox{padding:0px;margin:0px}
+div.windownav{padding:2px 2px 0px 2px;text-align:left;background:#CCCCCC}
+div.windownav .close{float:right;width:18px;cursor:pointer}

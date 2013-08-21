@@ -1,0 +1,22 @@
+@charset "utf-8"; *{padding:0px; margin:0px; font-size:10pt}
+html{*overflow-y:scroll}
+body{color:#333; font-size:12px;background:#fff;font-family:Tahoma,Verdana,Arial,Helvetica,sans-serif;}
+img{border:none;vertical-align:middle}
+img.icon {width:16px;height:16px;padding-bottom:2px}
+ul,dl{list-style:none;}
+a{color:#004b8d; text-decoration:none}
+a:hover{color:#4192d9; text-decoration:none}
+.fc_red{color:#f26101}
+.fc_blue{color:#004b8d}
+.fc_gray{color:#656565}
+button, input, select{vertical-align:middle}
+button{margin-right:5px;cursor:pointer;}
+.btn1{height:22px;padding:0 6px;font-size:12px;line-height:22px;color:#333;border:1px solid #d9e8f5;background:url(../img/button_bg1.gif) repeat-x; cursor:pointer;}
+textarea{margin-left:5px!important}
+.highlight{background:#ffffe0}
+.disn{display:none}
+
+div.main{height:100%;padding:10px;}
+div.maintop{padding:5px 0px 10px 0px; border-bottom:#ccc dashed 1px}
+div.mainbox{margin-top:10px;margin-bottom:20px}
+div.tablebox{width:800px}

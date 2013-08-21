@@ -1,0 +1,76 @@
+> 开发规范
+
+1、统一使用 Eclipse 编辑器（PDT）
+
+2、版本管理使用 Subclipse - http://subclipse.tigris.org/update_1.6.x
+
+3、项目编码统一使用 UTF-8
+
+> 编码规范
+
+* 基于 Zend Framework 编码规范
+
+1、缩进为一个 Tab 或者 4 个空格，按层次缩进。
+
+2、require/require_once 以及 include/include_once 统一使用标准调用写法，比如：
+require_once 'Hush/Page.php';
+require_once 'Hush/Db.php';
+
+3、一般类库的名称必须以 ZF 方式的命名，比如：Path_To_Class
+除开特殊的 Page 类、Service 类以及 Dao 类文件，他们的命名规则分别如下：
+Dao 类：Database_Tablename {} 类文件在 Dao 类库目录下
+Page 类：XxxPage {} 类文件在页面类库目录下
+Service 类：XxxService {} 类文件在 Service 类库目录下
+
+4、一般变量以及函数的名称以骆驼命名法（首字母小写），比如：
+$variableName = 1;
+public function methodName()
+而 private/protected 变量或函数以 _ 开头，比如：private function _methodName()
+
+5、类声名和函数声名后的第一个 { 符号换行，比如：
+Class_Name
+{
+	public function methodName ()
+	{
+		// TODO : method process
+	}
+}
+
+6、每个文件顶部必须有该类的说明注释，比如：
+<?php
+/**
+ * Ihush Dao
+ *
+ * @category   Ihush
+ * @package    Ihush_Dao
+ * @author     James.Huang <james@ihush.com>
+ * @copyright  Copyright (c) iHush Technologies Inc. (http://www.ihush.com)
+ * @version    $Id$
+ */
+
+7、每个类文件前必须有类定义说明，比如：
+...
+/**
+ * @abstract
+ * @package Ihush_Dao
+ */
+class Ihush_Dao
+{
+...
+
+8、被调用类库文件函数名前必须有说明注释（页面类可省略，因为基本不会被调用），比如：
+...
+	/**
+	 * Load data by primary key id
+	 * 
+	 * @param mixed $id Primary key value
+	 * @param string $pk Primary key name
+	 * @return array
+	 */
+	public function methodName ()
+	{
+		// TODO : method process
+	}
+...
+
+9、被调用类库文件后面的 php 结束符 ?> 可不用写。要写也可以，但是结束符后不要加任何字符。

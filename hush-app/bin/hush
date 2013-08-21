@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ ! -f "$PWD/hush" ]; then
+    echo "no shell"
+    exit 1
+fi
+
+PHP_EXE="php"
+
+$PHP_EXE $PWD/hush.php $1 $2 $3 $4 $5 $6 $7 $8 $9

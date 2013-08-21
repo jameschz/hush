@@ -1,0 +1,11 @@
+body{background:#fff;margin:0;padding:0;color:#333;}
+h1{float:left;width:410px;margin:20px;display:inline;}
+h1 img{float:left;}
+h1 span{float:right;width:270px;height:47px;background:#ebebeb;font:20px/46px "黑体";text-indent:20px;}
+.login-body{margin-top:50px;height:392px;width:100%;background:url(../img/lor_bg.gif) repeat-x;}
+.login-con{width:450px;height:392px;background:url(../img/login_bg.gif) no-repeat;margin:0 auto;}
+.login{float:right;width:290px;margin-right:20px;display:inline}
+.login li{float:left;width:100%;margin-bottom:20px;}
+.login label{float:left;width:100%;font-size:14px;margin-bottom:3px;}
+.login input{float:left;padding:4px 2px;margin:0}
+.submit{float:left;border:none;width:70px; height:28px;background:transparent url(../img/lg_buttom.gif) no-repeat;cursor: pointer;font-size:14px;color:#fff;font-weight:bold;}
