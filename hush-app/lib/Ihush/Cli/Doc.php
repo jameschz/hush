@@ -4,7 +4,7 @@
  *
  * @category   Ihush
  * @package    Ihush_Cli
- * @author     James.Huang <huangjuanshi@163.com>
+ * @author     James.Huang <shagoo@gmail.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @version    $Id$
  */

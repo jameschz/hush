@@ -1,8 +1,12 @@
 <?php
 /**
- * Global environment settings
+ * Global php settings
  */
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ERROR | E_WARNING);
+
+/**
+ * Global timezone
+ */
 date_default_timezone_set('PRC');
 
 /**

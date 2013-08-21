@@ -171,7 +171,8 @@ class Hush_View_Smarty extends Hush_View implements Zend_View_Interface
 	 */
 	public function __get($key) 
 	{
-		return $this->_smarty->get_template_vars($key);
+// 		return $this->_smarty->get_template_vars($key);
+		return $this->__autocall('get_template_vars', array($key));
 	}
 
 	/**
@@ -181,7 +182,8 @@ class Hush_View_Smarty extends Hush_View implements Zend_View_Interface
 	 */
 	public function __isset($key) 
 	{
-		return (null !== $this->_smarty->get_template_vars($key));
+// 		return (null !== $this->_smarty->get_template_vars($key));
+		return (null !== $this->__autocall('get_template_vars', array($key)));
 	}
 
 	/**
@@ -191,7 +193,8 @@ class Hush_View_Smarty extends Hush_View implements Zend_View_Interface
 	 */
 	public function __unset($key) 
 	{
-		$this->_smarty->clear_assign($key);
+// 		$this->_smarty->clear_assign($key);
+		$this->__autocall('clear_assign', array($key));
 	}
 
 	/**
@@ -245,7 +248,8 @@ class Hush_View_Smarty extends Hush_View implements Zend_View_Interface
 	 */
 	public function clearVars() 
 	{
-		$this->_smarty->clear_all_assign();
+// 		$this->_smarty->clear_all_assign();
+		$this->__autocall('clear_all_assign');
 	}
 	
 	/**

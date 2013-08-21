@@ -17,4 +17,11 @@ $app->setTplDir(__TPL_SMARTY_PATH)
  */
 $app->setDebug(true);
 
+/**
+ * set page's debug level
+ * Hush_Debug::DEBUG
+ * TODO : should be changed to Hush_Debug::FATAL in www environment
+ */
+$app->setDebugLevel(Hush_Debug::DEBUG);
+
 $app->run();

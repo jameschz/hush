@@ -4,7 +4,7 @@
  *
  * @category   Lbs
  * @package    Lbs_Dao_Mongo
- * @author     James.Huang <huangjuanshi@snda.com>
+ * @author     James.Huang <shagoo@gmail.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @version    $Id$
  */
