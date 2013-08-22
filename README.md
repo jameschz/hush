@@ -1,10 +1,6 @@
 #Hush Framework
 
-==================
-
-###Summary
-
-------------------
+##Summary
 
 > Powerful and Full-stack web application framework for PHP
 
@@ -12,9 +8,7 @@
 
 > By -- James.Huang (黄隽实) 
 
-###Features
-
-------------------
+##Features
 
 1. ZendFramework 和 Smarty 的完美结合（MVC/S）
 
@@ -30,11 +24,9 @@
 
 7. 多进程，消息处理（用于 CLI） 
 
-###Quick Guide
+##Quick Guide
 
-------------------
-
-#####1> 安装框架源码
+####1> 安装框架源码
 
 进入目录执行命令：
 
@@ -46,7 +38,7 @@
 * hush-app：应用框架，可用于二次开发
 * hush-pms：工作流框架，目前暂时不可用（待开发）
 
-#####2> 初始化应用框架
+####2> 初始化应用框架
 
 * **前提：**服务器上已经装有 Apache/Nginx 和 MySQL
 * 进入 hush/hush-app/bin 目录（Linux 下需执行 chmod +x hush）
@@ -63,7 +55,7 @@
     * 以上过程是完全自动化的，开发者根据提示操作即可
     * 看到 "Initialized successfully" 则表示安装成功
 
-#####3> 配置 Apache/Nginx 站点
+####3> 配置 Apache/Nginx 站点
 
 Apache 站点配置如下（Windows）：
 
@@ -133,7 +125,7 @@ server {
 }
 ```
 
-#####4> 修改本地 hosts 文件
+####4> 修改本地 hosts 文件
 
 为了便于调试，建议开发者修改本地的 hosts 文件来访问站点：
 
@@ -144,15 +136,13 @@ server {
 
 重新启动 Apache/Nginx 服务器，就可以在浏览器中访问应用框架的界面了
 
-###Quick Develop Guide
+##Quick Develop Guide
 
-------------------
-
-#####框架总体概览
+####框架总体概览
 
 README.txt 中是框架主要目录的概要说明，请参考。
 
-#####框架主要命令
+####框架主要命令
 
 * 执行 ./hush 即可看到所有命令
 * hush sys init：系统初始化，建议仅在首次安装的时候使用
@@ -166,4 +156,4 @@ README.txt 中是框架主要目录的概要说明，请参考。
 * hush db backup [database]：备份指定数据库，[database] 是根据 database.mysql.php 文件中的 $_clusters 变量指定的，比如：default:0:master:0:ihush_apps 代表 $_clusters['default'][0]['master'][0] 的数据库配置，ihush_apps 代表数据库名
 * hush db recover [database]：恢复制定数据库，[database] 的规则和 hush db backup [database] 命令相同
 
-##### To be Added ...
+####To be Added ...
