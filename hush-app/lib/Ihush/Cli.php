@@ -137,8 +137,8 @@ NOTICE;
 				return ' -h' . $dbHost
 					 . ' -P' . $dbPort
 					 . ' -u' . $dbUser
-					 . ' -p' . $dbPass
-					 . ' ' . $dbName;
+					 . ' -p"' . $dbPass
+					 . '" ' . $dbName;
 			default:
 				return '';
 		}

@@ -108,8 +108,8 @@ NOTICE;
 		}
 		
 		// check dirs and configs
-		system('hush check dirs');
-		system('hush check configs');
+		system('./hush check dirs');
+		system('./hush check configs');
 		
 		echo 
 <<<NOTICE
