@@ -43,6 +43,7 @@ class Ihush_Cli_Check extends Ihush_Cli
 		foreach ($check_dirs as $dir) {
 			if (!is_dir($dir) || !is_writable($dir)) {
 				@mkdir($dir, 0777);
+				@chmod($dir, 0777);
 			}
 			echo "Check Dir : $dir\n";
 		}
