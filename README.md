@@ -136,7 +136,7 @@ server {
 
 重新启动 Apache/Nginx 服务器，就可以在浏览器中访问应用框架的界面了
 
-##Quick Develop Guide
+##Quick Development Guide
 
 ####框架总体概览
 

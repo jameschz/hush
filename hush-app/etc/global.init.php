@@ -1,5 +1,14 @@
 <?php
 /**
+ * Global init settings
+ */
+$GLOBALS['LIB']['HUSH'] = 'http://code.gameplus.sdo.com/HushFramework-1.1.0.zip';
+$GLOBALS['LIB']['ZEND'] = 'http://code.gameplus.sdo.com/ZendFramework-1.12.3.zip';
+$GLOBALS['LIB']['SMARTY2'] = 'http://code.gameplus.sdo.com/Smarty-2.6.27.zip';
+$GLOBALS['LIB']['SMARTY3'] = 'http://code.gameplus.sdo.com/Smarty-3.1.14.zip';
+$GLOBALS['LIB']['PHPDOC'] = 'http://code.gameplus.sdo.com/Phpdoc-stable.zip';
+
+/**
  * Global init logics
  */
 if (defined('__HUSH_CLI')) {
@@ -17,7 +26,7 @@ if (defined('__HUSH_CLI')) {
 	if (!is_dir($hushDir)) {
 		// download Zend Framework
 		echo "\nInstalling Hush Framework .. \n";
-		$downFile = 'http://code.gameplus.sdo.com/HushFramework-1.1.0.zip';
+		$downFile = $GLOBALS['LIB']['HUSH'];
 		$saveFile = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'HushFramework.zip';
 		$savePath = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . '.';
 		if (_hush_download($downFile, $saveFile)) {

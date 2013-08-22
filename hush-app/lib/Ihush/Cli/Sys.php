@@ -136,7 +136,7 @@ NOTICE;
 		
 		// download Zend Framework
 		echo "\nInstalling Zend Framework ..\n";
-		$downFile = 'http://code.gameplus.sdo.com/ZendFramework-1.12.3.zip';
+		$downFile = $GLOBALS['LIB']['ZEND'];
 		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'ZendFramework.zip';
 		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
 		if ($down->download($downFile, $saveFile)) {
@@ -151,7 +151,7 @@ NOTICE;
 		
 		// download Phpdoc
 		echo "\nInstalling Php Documentor ..\n";
-		$downFile = 'http://code.gameplus.sdo.com/Phpdoc-stable.zip';
+		$downFile = $GLOBALS['LIB']['PHPDOC'];
 		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Phpdoc.zip';
 		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
 		if ($down->download($downFile, $saveFile)) {
@@ -166,7 +166,7 @@ NOTICE;
 		
 		// download Smarty_2
 		echo "\nInstalling Smarty 2.x ..\n";
-		$downFile = 'http://code.gameplus.sdo.com/Smarty-2.6.27.zip';
+		$downFile = $GLOBALS['LIB']['SMARTY2'];
 		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Smarty_2.zip';
 		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
 		if ($down->download($downFile, $saveFile)) {
@@ -181,7 +181,7 @@ NOTICE;
 		
 		// download Smarty_3
 		echo "\nInstalling Smarty 3.x ..\n";
-		$downFile = 'http://code.gameplus.sdo.com/Smarty-3.1.14.zip';
+		$downFile = $GLOBALS['LIB']['SMARTY3'];
 		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Smarty_3.zip';
 		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
 		if ($down->download($downFile, $saveFile)) {
