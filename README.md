@@ -1,8 +1,10 @@
 #Hush Framework
 
----
+==================
 
 ###Summary
+
+------------------
 
 > Powerful and Full-stack web application framework for PHP
 
@@ -11,6 +13,8 @@
 > By -- James.Huang (黄隽实) 
 
 ###Features
+
+------------------
 
 1. ZendFramework 和 Smarty 的完美结合（MVC/S）
 
@@ -27,6 +31,8 @@
 7. 多进程，消息处理（用于 CLI） 
 
 ###Quick Guide
+
+------------------
 
 #####1> 安装框架源码
 
@@ -140,115 +146,24 @@ server {
 
 ###Quick Develop Guide
 
-以下是框架的目录说明：
+------------------
 
-hush-framework
+#####框架总体概览
 
-|
+README.txt 中是框架主要目录的概要说明，请参考。
 
-|- hush-app                 HF Demo 应用程序
+#####框架主要命令
 
-|  |- bin                   可执行文件目录
+* 执行 ./hush 即可看到所有命令
+* hush sys init：系统初始化，建议仅在首次安装的时候使用
+* hush sys uplib：更新依赖类库，当类库有更新的时候使用
+* hush sys newapp：根据当前应用框架的代码生成新应用
+* hush sys newdao：生成新的数据库模块类（Model）
+* hush sys newctrl：生成新的控制器类（Controller）
+* hush check all：检查所有运行目录的路径和权限
+* hush clean all：清除模板缓存以及文件缓存
+* hush doc build：生成 Hush 基础类库和应用框架的文档
+* hush db backup [database]：备份指定数据库，[database] 是根据 database.mysql.php 文件中的 $_clusters 变量指定的，比如：default:0:master:0:ihush_apps 代表 $_clusters['default'][0]['master'][0] 的数据库配置，ihush_apps 代表数据库名
+* hush db recover [database]：恢复制定数据库，[database] 的规则和 hush db backup [database] 命令相同
 
-|  |- dat                   临时存储文件
-
-|  |- doc                   主要文档目录
-
-|  |- etc                   配置文件目录
-
-|  |- lib                   主要逻辑目录
-
-|  |  |- Ihush
-|  |     |- Acl             ACL 权限逻辑类库
-
-|  |     |- App
-
-|  |     |  |- Backend
-
-|  |     |  |  |- Page      后台 Controller 逻辑
-
-|  |     |  |  |- Remote    后台 Service 逻辑
-
-|  |     |  |- Frontend
-
-|  |     |     |- Page      前台 Controller 逻辑
-
-|  |     |- Bpm             Bpm 逻辑类库
-
-|  |     |- Dao
-
-|  |        |- Apps         Apps 库的 Module/Dao 类库
-
-|  |        |- Core         Core 库的 Module/Dao 类库
-
-|  |- tpl
-
-|  |  |- backend            后台模板文件
-
-|  |  |- frontend           前台模板文件
-
-|  |- web
-
-|     |- backend            后台 DocumentRoot（站点目录）
-
-|     |- frontend           前台 DocumentRoot（站点目录）
-
-|
-
-|- hush-lib
-
-|  |- Hush
-
-|     |- Acl                Acl 权限类库
-
-|     |- App                App Url Dispatcher
-
-|     |- Auth				
-
-|     |- Bpm                Bpm 类库
-
-|     |- Cache              Cache 类库
-
-|     |- Chart              图像类库
-
-|     |- Crypt              加密类（Rsa）
-
-|     |- Date
-
-|     |- Db                 数据库层（Module）类库
-
-|     |- Debug              调试类库
-
-|     |- Document           文档类库
-
-|     |- Examples           一些例子（主要针对 Cli 程序）
-
-|     |- Html               Html 构建类库
-
-|     |- Http               远程访问类库
-
-|     |- Json				
-
-|     |- Mail               邮件收发类库
-
-|     |- Message            消息类库
-
-|     |- Mongo              Mongodb 类库
-
-|     |- Page               页面层（Controller）类库
-
-|     |- Process            多进程类库
-
-|     |- Service            服务层（Service）类库
-
-|     |- Session			
-
-|     |- Socket             Socket 类库
-
-|     |- Util               工具类库
-
-|     |- View               展示层（View）类库
-
-|
-
-|- hush-pms                 PHP Message Server
+##### To be Added ...
