@@ -1,6 +1,5 @@
 .settings
 .project
-hush-app/dat
 hush-app/dat/*
 hush-app/tpl/*/cache
 hush-app/tpl/*/template_c
