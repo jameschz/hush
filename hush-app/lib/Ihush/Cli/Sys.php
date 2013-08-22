@@ -56,7 +56,7 @@ Because you will do following things :
 Are you sure you want to continue [Y/N] : 
 NOTICE;
 		
-		// check user input
+		// check init task
 		$input = fgets(fopen("php://stdin", "r"));
 		if (strcasecmp(trim($input), 'y')) {
 			exit;
@@ -69,27 +69,42 @@ NOTICE;
 		}
 		
 		// import backend and frontend
-		$import_cmd_be = str_replace(
-			array('{PARAMS}', '{SQLFILE}'), 
-			array($this->_getCmdParams(), $this->init_sql_be),
-			__MYSQL_IMPORT_COMMAND);
-		
-		$import_cmd_fe = str_replace(
-			array('{PARAMS}', '{SQLFILE}'), 
-			array($this->_getCmdParams(), $this->init_sql_fe),
-			__MYSQL_IMPORT_COMMAND);
-		
-		echo "\nRun Command : $import_cmd_be\n";
-		system($import_cmd_be, $be_res);
-		
-		echo "Run Command : $import_cmd_fe\n";
-		system($import_cmd_fe, $fe_res);
-		
-		if (!$be_res && !$be_res) {
-			echo "Import database ok.\n";
+		$dbSettings = $this->_getDatabaseSettings();
+		if ($dbSettings) {
+			$import_cmd_be = str_replace(
+				array('{PARAMS}', '{SQLFILE}'), 
+				array($this->_getCmdParams(
+					$dbSettings['type'], 
+					$dbSettings['host'], 
+					$dbSettings['port'], 
+					$dbSettings['user'], 
+					$dbSettings['pass']), $this->init_sql_be),
+				__MYSQL_IMPORT_COMMAND);
+			
+			$import_cmd_fe = str_replace(
+				array('{PARAMS}', '{SQLFILE}'), 
+				array($this->_getCmdParams(
+					$dbSettings['type'], 
+					$dbSettings['host'], 
+					$dbSettings['port'], 
+					$dbSettings['user'], 
+					$dbSettings['pass']), $this->init_sql_fe),
+				__MYSQL_IMPORT_COMMAND);
+			
+			echo "\nExecute Command : $import_cmd_be\n";
+			system($import_cmd_be, $be_res);
+			
+			echo "Execute Command : $import_cmd_fe\n";
+			system($import_cmd_fe, $fe_res);
+			
+			if (!$be_res && !$be_res) {
+				echo "\nImport database ok.\n";
+			} else {
+				echo "\nImport database failed.\n";
+				exit;
+			}
 		} else {
-			echo "Import database failed.\n";
-			exit;
+			echo "\nEscape importing database.\n";
 		}
 		
 		// check dirs and configs
@@ -100,7 +115,7 @@ NOTICE;
 <<<NOTICE
 
 **********************************************************
-* Initialize successfully                                *
+* Initialized successfully                                *
 **********************************************************
 
 Thank you for using Hush Framework !!!

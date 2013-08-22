@@ -47,7 +47,7 @@ class Ihush_Cli_Check extends Ihush_Cli
 			echo "Check Dir : $dir\n";
 		}
 		
-		echo "Check all dirs ok.\n";
+		echo "\nCheck all dirs ok.\n";
 	}
 	
 	public function configsAction () 
@@ -65,7 +65,7 @@ class Ihush_Cli_Check extends Ihush_Cli
 			}
 			echo "Check Config class : $class\n";
 		}
-		echo "Check all config classes ok.\n";
+		echo "\nCheck all config classes ok.\n";
 		
 		// config defines
 		$check_defines = array(
@@ -81,23 +81,25 @@ class Ihush_Cli_Check extends Ihush_Cli
 		
 		// check frontend defines
 		$this->_loadConfig('fe');
+		echo "\n";
 		foreach ($check_defines as $define) {
 			if (!defined($define) || !constant($define)) {
 				die("Error : bad define constant $define.\n");
 			}
 			echo "Check Frontend Define : $define > " . constant($define) . "\n";
 		}
-		echo "Check frontend defines ok.\n";
+		echo "\nCheck frontend defines ok.\n";
 		
 		// check backend defines
 		$this->_loadConfig('be');
+		echo "\n";
 		foreach ($check_defines as $define) {
 			if (!defined($define) || !constant($define)) {
 				die("Error : bad define constant $define.\n");
 			}
 			echo "Check Backend Define : $define > " . constant($define) . "\n";
 		}
-		echo "Check backend defines ok.\n";
+		echo "\nCheck backend defines ok.\n";
 	}
 	
 	public function allAction ()

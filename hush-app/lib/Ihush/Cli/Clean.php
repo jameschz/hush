@@ -60,9 +60,9 @@ class Ihush_Cli_Clean extends Ihush_Cli
 		
 		if (is_dir($cleanDir)) {
 			Hush_Util::dir_clean($cleanDir);
-			echo "clean dir '$cleanDir' ok.\n";
+			echo "\nclean dir '$cleanDir' ok.\n";
 		} else {
-			echo "clean dir '$cleanDir' failed.\n";
+			echo "\nclean dir '$cleanDir' failed.\n";
 		}
 	}
 	
@@ -84,9 +84,9 @@ class Ihush_Cli_Clean extends Ihush_Cli
 		
 		if (is_dir($cleanDir)) {
 			Hush_Util::dir_clean($cleanDir);
-			echo "clean dir '$cleanDir' ok.\n";
+			echo "\nclean dir '$cleanDir' ok.\n";
 		} else {
-			echo "clean dir '$cleanDir' failed.\n";
+			echo "\nclean dir '$cleanDir' failed.\n";
 		}
 	}
 	
