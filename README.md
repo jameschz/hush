@@ -156,4 +156,24 @@ README.txt 中是框架主要目录的概要说明，请参考。
 * hush db backup [database]：备份指定数据库，[database] 是根据 database.mysql.php 文件中的 $_clusters 变量指定的，比如：default:0:master:0:ihush_apps 代表 $_clusters['default'][0]['master'][0] 的数据库配置，ihush_apps 代表数据库名
 * hush db recover [database]：恢复制定数据库，[database] 的规则和 hush db backup [database] 命令相同
 
+###开发简要说明
+
+区别于其他框架，Hush Framework 鼓励大家抛开文档，直接通过阅读代码学习，其自带的应用框架（hush-app）中已经包含了绝大部分框架类库的用法，大家可以通过阅读源码或者亲自动手来加深对使用 Hush Framework 进行项目开发的认识。
+
+Hush Framework 基于 Zend Framework，并在其基础上进行了重要的优化，同时还添加了许多实用的开发类库；开发者可以直接使用 hush doc build 生成 Hush Framework 的类库使用文档，不过某些类的用法还是需要参考 Zend Framework，比如 DAO 类中 SQL 的写法等。
+
+以下是相关 Zend Framework 类库的使用文档，可在开发的时候用于参考：
+
+* [Zend_Acl](http://framework.zend.com/manual/1.12/en/zend.acl.html)
+* [Zend_Auth](http://framework.zend.com/manual/1.12/en/zend.auth.html)
+* [Zend_Barcode](http://framework.zend.com/manual/1.12/en/zend.barcode.html)
+* [Zend_Cache](http://framework.zend.com/manual/1.12/en/zend.cache.html)
+* [Zend_Db](http://framework.zend.com/manual/1.12/en/zend.db.html)
+* [Zend_Debug](http://framework.zend.com/manual/1.12/en/zend.debug.html)
+* [Zend_Http](http://framework.zend.com/manual/1.12/en/zend.http.html)
+* [Zend_Ldap](http://framework.zend.com/manual/1.12/en/zend.ldap.html)
+* [Zend_Mail](http://framework.zend.com/manual/1.12/en/zend.mail.html)
+* [Zend_Session](http://framework.zend.com/manual/1.12/en/zend.session.html)
+* [Zend_Validate](http://framework.zend.com/manual/1.12/en/zend.validate.html)
+
 ####To be Added ...
