@@ -41,7 +41,6 @@
 ####2> 初始化应用框架
 
 * **前提：**服务器上已经装有 Apache/Nginx 和 MySQL
-* 进入 hush/hush-app/bin 目录（Linux 下需执行 chmod +x hush）
 * **如果需要**，可以在 hush/etc/global.config.php 中设置类库的安装路径
     * __COMM_LIB_DIR：第三方类库的安装目录（默认安装在 hush 同级目录 phplibs）
     * __HUSH_LIB_DIR：框架核心类库的安装目录（一般不需要配置）
@@ -51,6 +50,7 @@
     * __HUSH_DB_PORT：数据库端口地址（默认 3306）
     * __HUSH_DB_USER：数据库用户名（默认 root）
     * __HUSH_DB_PASS：数据库密码（默认 passwd）
+* 进入 hush/hush-app/bin 目录（Linux 下需执行 chmod +x hush）
 * 执行 ./hush sys init 按照提示安装类库、导入数据库、初始化目录等工作
     * 以上过程是完全自动化的，开发者根据提示操作即可
     * 看到 "Initialized successfully" 则表示安装成功
