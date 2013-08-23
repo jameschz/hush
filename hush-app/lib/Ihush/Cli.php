@@ -16,14 +16,6 @@ require_once 'Hush/Cli.php';
  */
 class Ihush_Cli extends Hush_Cli
 {
-	public function __construct() {
-		parent::__construct();
-	
-		// add dao
-		require_once 'Ihush/Dao.php';
-		$this->dao = new Ihush_Dao();
-	}
-	
 	/**
 	 * Implement Hush_Cli run method
 	 * Used by bin/cli.php
@@ -38,6 +30,17 @@ class Ihush_Cli extends Hush_Cli
 			$cli = new $className();
 			$cli->start();
 		}
+	}
+	
+	/**
+	 * Get dao instance
+	 */
+	public function dao() {
+		if (!$this->dao) {
+			require_once 'Ihush/Dao.php';
+			$this->dao = new Ihush_Dao();
+		}
+		return $this->dao;
 	}
 	
 	/**
