@@ -46,11 +46,11 @@
     * __COMM_LIB_DIR：第三方类库的安装目录（默认安装在 hush 同级目录 phplibs）
     * __HUSH_LIB_DIR：框架核心类库的安装目录（一般不需要配置）
 * **如果需要**，可以在 hush/etc/database.mysql.php 中设置数据库的配置
-    * type：数据库连接类型（默认 MYSQLI）
-    * host：数据库 IP 地址（默认 localhost）
-    * port：数据库端口地址（默认 3306）
-    * user：数据库用户名（默认 root）
-    * pass：数据库密码（默认 passwd）
+    * __HUSH_DB_TYPE：数据库连接类型（默认 MYSQLI）
+    * __HUSH_DB_HOST：数据库 IP 地址（默认 localhost）
+    * __HUSH_DB_PORT：数据库端口地址（默认 3306）
+    * __HUSH_DB_USER：数据库用户名（默认 root）
+    * __HUSH_DB_PASS：数据库密码（默认 passwd）
 * 执行 ./hush sys init 按照提示安装类库、导入数据库、初始化目录等工作
     * 以上过程是完全自动化的，开发者根据提示操作即可
     * 看到 "Initialized successfully" 则表示安装成功
