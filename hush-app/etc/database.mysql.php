@@ -5,11 +5,11 @@
 require_once 'Hush/Db/Config.php';
 
 // 公用数据库配置
-define('__HUSH_DB_TYPE', self::DEFAULT_TYPE);
-define('__HUSH_DB_HOST', self::DEFAULT_HOST);
-define('__HUSH_DB_PORT', self::DEFAULT_PORT);
-define('__HUSH_DB_USER', self::DEFAULT_USER);
-define('__HUSH_DB_PASS', self::DEFAULT_PASS);
+define('__HUSH_DB_TYPE', Hush_Db_Config::DEFAULT_TYPE);
+define('__HUSH_DB_HOST', Hush_Db_Config::DEFAULT_HOST);
+define('__HUSH_DB_PORT', Hush_Db_Config::DEFAULT_PORT);
+define('__HUSH_DB_USER', Hush_Db_Config::DEFAULT_USER);
+define('__HUSH_DB_PASS', Hush_Db_Config::DEFAULT_PASS);
 
 class MysqlConfig extends Hush_Db_Config
 {
