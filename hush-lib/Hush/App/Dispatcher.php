@@ -388,7 +388,7 @@ class Hush_App_Dispatcher
 		if (Hush_Debug::showDebug('time')) {
 			$this->end_time = microtime(true);
 			$debug = Hush_Debug::getInstance();
-			$debug->addWriter(new Hush_Debug_Writer_Html());
+			$debug->setWriter(new Hush_Debug_Writer_Html());
 			$debug->debug($this->end_time - $this->start_time, '<span style="color:red">Hush App Dispatch Time >>></span>', Hush_Debug::INFO);
 		}
 		

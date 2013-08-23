@@ -157,4 +157,11 @@ NOTICE;
 			echo "Recover database failed.\n";
 		}
 	}
+	
+	public function testAction()
+	{
+		$dao = $this->dao->load('Core_User');
+		$res = $dao->read(1);
+		print_r($res);
+	}
 }

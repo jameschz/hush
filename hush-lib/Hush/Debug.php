@@ -128,7 +128,24 @@ class Hush_Debug
 	}
 	
 	/**
-	 * Add writer for debug process
+	 * Set one writer for debug
+	 * @param Hush_Debug_Writer $writer
+	 * @return unknown
+	 */
+	public function setWriter($writer = null)
+	{
+		if (!$writer instanceof Hush_Debug_Writer) {
+			require_once 'Hush/Debug/Exception.php';
+			throw new Hush_Debug_Exception('Writer must be an instance of Hush_Debug_Writer');
+		}
+	
+		// escape repeated writer class
+		$writer_class_name = get_class($writer);
+		$this->_writers = array($writer_class_name => $writer);
+	}
+	
+	/**
+	 * Add writer for debug
 	 * @param Hush_Debug_Writer $writer
 	 * @return unknown
 	 */

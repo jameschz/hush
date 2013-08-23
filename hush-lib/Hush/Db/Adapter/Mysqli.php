@@ -141,6 +141,7 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 			
 			require_once 'Hush/Debug.php';
 			$debug = Hush_Debug::getInstance();
+			$debug->setWriter(new Hush_Debug_Writer_Html()); // default can be override
 			
 			if (!($debug instanceof Hush_Debug)) {
 				require_once 'Zend/Db/Adapter/Exception.php';

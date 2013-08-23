@@ -275,7 +275,7 @@ class Hush_Page
 		
 		// set page debug object
 		$this->_debug = Hush_Debug::getInstance();
-		$this->_debug->addWriter(new Hush_Debug_Writer_Html());
+		$this->_debug->setWriter(new Hush_Debug_Writer_Html());
 		
 		// close debug infos in www
 		if (!strcmp(__ENV, 'www')) {

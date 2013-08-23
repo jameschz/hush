@@ -15,7 +15,15 @@ require_once 'Hush/Cli.php';
  * @package Lbs_Cli
  */
 class Ihush_Cli extends Hush_Cli
-{	
+{
+	public function __construct() {
+		parent::__construct();
+	
+		// add dao
+		require_once 'Ihush/Dao.php';
+		$this->dao = new Ihush_Dao();
+	}
+	
 	/**
 	 * Implement Hush_Cli run method
 	 * Used by bin/cli.php
