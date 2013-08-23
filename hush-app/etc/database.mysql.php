@@ -4,6 +4,13 @@
  */
 require_once 'Hush/Db/Config.php';
 
+// 公用数据库配置
+define('__HUSH_DB_TYPE', self::DEFAULT_TYPE);
+define('__HUSH_DB_HOST', self::DEFAULT_HOST);
+define('__HUSH_DB_PORT', self::DEFAULT_PORT);
+define('__HUSH_DB_USER', self::DEFAULT_USER);
+define('__HUSH_DB_PASS', self::DEFAULT_PASS);
+
 class MysqlConfig extends Hush_Db_Config
 {
 	// 配置名：必须和类名一致
@@ -18,20 +25,20 @@ class MysqlConfig extends Hush_Db_Config
 			array(
 				'master' => array(
 					array(
-						'type' => self::DEFAULT_TYPE, 
-						'host' => self::DEFAULT_HOST, 
-						'port' => self::DEFAULT_PORT, 
-						'user' => self::DEFAULT_USER, 
-						'pass' => self::DEFAULT_PASS
+						'type' => __HUSH_DB_TYPE, 
+						'host' => __HUSH_DB_HOST, 
+						'port' => __HUSH_DB_PORT, 
+						'user' => __HUSH_DB_USER, 
+						'pass' => __HUSH_DB_PASS
 					)
 				),
 				'slave'  => array(
 					array(
-						'type' => self::DEFAULT_TYPE, 
-						'host' => self::DEFAULT_HOST, 
-						'port' => self::DEFAULT_PORT, 
-						'user' => self::DEFAULT_USER, 
-						'pass' => self::DEFAULT_PASS
+						'type' => __HUSH_DB_TYPE, 
+						'host' => __HUSH_DB_HOST, 
+						'port' => __HUSH_DB_PORT, 
+						'user' => __HUSH_DB_USER, 
+						'pass' => __HUSH_DB_PASS
 					)
 				)
 			),
@@ -39,20 +46,20 @@ class MysqlConfig extends Hush_Db_Config
 			array(
 				'master' => array(
 					array(
-						'type' => self::DEFAULT_TYPE, 
-						'host' => self::DEFAULT_HOST, 
-						'port' => self::DEFAULT_PORT, 
-						'user' => self::DEFAULT_USER, 
-						'pass' => self::DEFAULT_PASS
+						'type' => __HUSH_DB_TYPE, 
+						'host' => __HUSH_DB_HOST, 
+						'port' => __HUSH_DB_PORT, 
+						'user' => __HUSH_DB_USER, 
+						'pass' => __HUSH_DB_PASS
 					)
 				),
 				'slave'  => array(
 					array(
-						'type' => self::DEFAULT_TYPE, 
-						'host' => self::DEFAULT_HOST, 
-						'port' => self::DEFAULT_PORT, 
-						'user' => self::DEFAULT_USER, 
-						'pass' => self::DEFAULT_PASS
+						'type' => __HUSH_DB_TYPE, 
+						'host' => __HUSH_DB_HOST, 
+						'port' => __HUSH_DB_PORT, 
+						'user' => __HUSH_DB_USER, 
+						'pass' => __HUSH_DB_PASS
 					)
 				)
 			)
