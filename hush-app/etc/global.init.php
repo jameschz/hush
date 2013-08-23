@@ -24,7 +24,7 @@ if (defined('__HUSH_CLI')) {
 	// check core libraries
 	$hushDir = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'Hush';
 	if (!is_dir($hushDir)) {
-		// download Zend Framework
+		// download Hush Framework
 		echo "\nInstalling Hush Framework .. \n";
 		$downFile = $GLOBALS['LIB']['HUSH'];
 		$saveFile = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'HushFramework.zip';

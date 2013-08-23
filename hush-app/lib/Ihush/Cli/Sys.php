@@ -65,7 +65,7 @@ NOTICE;
 		// upgrade libraries
 		$zendDir = __COMM_LIB_DIR . DIRECTORY_SEPARATOR . 'Zend';
 		if (!is_dir($zendDir)) {
-			$this->uplibAction();
+			$this->uplibAction(false);
 		}
 		
 		// import backend and frontend
@@ -123,7 +123,7 @@ Thank you for using Hush Framework !!!
 NOTICE;
 	}
 	
-	public function uplibAction ()
+	public function uplibAction ($hush = true)
 	{
 		// see in etc/global.config.php
 		$libDir = __COMM_LIB_DIR;
@@ -192,6 +192,23 @@ NOTICE;
 			$zip->close();
 			unset($zip);
 			echo "Done!\n";
+		}
+		
+		if ($hush) {
+			// download Hush Framework
+			echo "\nInstalling Hush Framework .. \n";
+			$downFile = $GLOBALS['LIB']['HUSH'];
+			$saveFile = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . 'HushFramework.zip';
+			$savePath = __HUSH_LIB_DIR . DIRECTORY_SEPARATOR . '.';
+			if (_hush_download($downFile, $saveFile)) {
+				echo "Extracting.. ";
+				$zip = new ZipArchive;
+				$zip->open($saveFile);
+				$zip->extractTo($savePath);
+				$zip->close();
+				unset($zip);
+				echo "Done!\n";
+			}
 		}
 		
 		unset($down);
