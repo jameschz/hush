@@ -108,8 +108,13 @@ NOTICE;
 		}
 		
 		// check dirs and configs
-		system('./hush check dirs');
-		system('./hush check configs');
+		if (__OS_WIN) {
+			system('hush check dirs');
+			system('hush check configs');
+		} else {
+			system('./hush check dirs');
+			system('./hush check configs');
+		}
 		
 		echo 
 <<<NOTICE

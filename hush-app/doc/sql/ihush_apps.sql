@@ -25,7 +25,7 @@ CREATE TABLE `product_0` (
   `desc` text NOT NULL,
   `updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_0` */
 
@@ -48,13 +48,36 @@ CREATE TABLE `product_1` (
   `desc` text NOT NULL,
   `updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
 
 LOCK TABLES `product_1` WRITE;
 
 insert  into `product_1`(`id`,`name`,`desc`,`updatetime`) values (1,'Test product 1','Test product 1','2010-08-31 06:04:33');
+
+UNLOCK TABLES;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+
+/*Table structure for table `product_p` */
+
+DROP TABLE IF EXISTS `product_p`;
+
+CREATE TABLE `product_p` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `desc` text NOT NULL,
+  `updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `product_p` */
+
+LOCK TABLES `product_p` WRITE;
+
+insert  into `product_p`(`id`,`name`,`desc`,`updatetime`) values (1,'Test product 1','Test product 1','2010-08-31 06:04:33'),(2,'Test product 2','Test product 2','2010-08-31 06:04:33'),(3,'Test product 3','Test product 3','2010-08-31 06:04:33'),(4,'Test product 4','Test product 4','2010-08-31 06:04:33'),(5,'Test product 5','Test product 5','2010-08-31 06:04:33'),(6,'Test product 6','Test product 6','2010-08-31 06:04:33'),(7,'Test product 7','Test product 7','2010-08-31 06:04:33'),(8,'Test product 8','Test product 8','2010-08-31 06:04:33'),(9,'Test product 9','Test product 9','2010-08-31 06:04:33'),(10,'Test product 10','Test product 10','2010-08-31 06:04:33');
 
 UNLOCK TABLES;
 

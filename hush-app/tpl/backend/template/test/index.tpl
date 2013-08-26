@@ -26,6 +26,7 @@
 	<ul style="margin:10px">
 		<li><img src="{$_root}img/icon_arrow_right.png" class="icon" /> 调试页面 : <a href="?debug=time">执行时间</a></li>
 		<li><img src="{$_root}img/icon_arrow_right.png" class="icon" /> 调试全部 : <a href="?debug=time,sql">时间&SQL</a></li>
+		<li><img src="{$_root}img/icon_arrow_right.png" class="icon" /> 调试接口 : <a href="/test/apiList">测试接口调试</a> <font color=red>(NEW)</font></li>
 	</ul>
 	
 	<h1 style="font-size:14pt">JQuery UI Demo :</h1>

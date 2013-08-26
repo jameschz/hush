@@ -30,6 +30,13 @@ class TestDbPage extends Ihush_App_Frontend_Page
 		echo 'This is index action'; 
 	}
 	
+	public function mysqlPageAction ()
+	{
+		$dao = $this->dao->load('Apps_ProductPage');
+		$res = $dao->getListByPage(3);
+		Hush_Util::dump($res);
+	}
+	
 	public function mysqlShardAction () 
 	{
 		$dao = $this->dao->load('Apps_Product');
