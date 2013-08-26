@@ -162,7 +162,7 @@ README.txt 中是框架主要目录的概要说明，请参考。
 
 Hush Framework 基于 Zend Framework，并在其基础上进行了重要的优化，同时还添加了许多实用的开发类库；开发者可以直接使用 hush doc build 生成 Hush Framework 的类库使用文档，不过某些类的用法还是需要参考 Zend Framework，比如 DAO 类中 SQL 的写法等。
 
-以下是相关 Zend Framework 类库的使用文档，可在开发的时候用于参考：
+以下是 Zend Framework 有关类库的使用文档，开发时可作参考：
 
 * [Zend_Acl](http://framework.zend.com/manual/1.12/en/zend.acl.html)
 * [Zend_Auth](http://framework.zend.com/manual/1.12/en/zend.auth.html)
@@ -175,5 +175,10 @@ Hush Framework 基于 Zend Framework，并在其基础上进行了重要的优�
 * [Zend_Mail](http://framework.zend.com/manual/1.12/en/zend.mail.html)
 * [Zend_Session](http://framework.zend.com/manual/1.12/en/zend.session.html)
 * [Zend_Validate](http://framework.zend.com/manual/1.12/en/zend.validate.html)
+
+以下是 Smarty 的使用文档，开发时可作参考：
+
+* [Smarty_2](http://www.smarty.net/docsv2/en/)
+* [Smarty_3](http://www.smarty.net/docs/en/)
 
 ####To be Added ...
