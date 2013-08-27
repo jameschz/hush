@@ -369,7 +369,7 @@ NOTICE;
 		
 		// check controller path
 		$ctrlClsBase = realpath(__LIB_DIR . '/' . __APP_NAME . '/App/');
-		$ctrlNS = str_replace('\\', DIRECTORY_SEPARATOR, $ctrlNS); // fix bug on linux
+		$ctrlNS = str_replace('\\', DIRECTORY_SEPARATOR, $ctrlNS); // fix bug on linux 
 		$ctrlClsPath = realpath($ctrlClsBase . '/' . dirname($ctrlNS)); // just for check
 		$ctrlClsFile = $ctrlClsPath . DIRECTORY_SEPARATOR . $ctrlName . 'Page.php';
 		$ctrlTplBase = realpath(__TPL_DIR . '/' . strtolower($baseName) . '/template/');
