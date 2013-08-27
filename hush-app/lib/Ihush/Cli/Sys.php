@@ -380,7 +380,7 @@ NOTICE;
 			echo "\nUnknown Controller.\n";
 			exit;
 		}
-		if (file_exists($ctrlClsFile) || file_exists($ctrlTplFile)) {
+		if (file_exists($ctrlClsFile) && file_exists($ctrlTplFile)) {
 			echo "\nExisted Controller.\n";
 			exit;
 		}
