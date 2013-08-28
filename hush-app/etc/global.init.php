@@ -12,8 +12,8 @@ $GLOBALS['LIB']['PHPDOC'] = 'http://code.gameplus.sdo.com/Phpdoc-stable.zip';
  * Global checking
  */
 if (!class_exists('ZipArchive')) {
-	require_once 'Hush/Exception.php';
-	throw new Hush_Exception('Please install zip extension for PHP');
+	echo "Please install zip extension for PHP\n";
+	exit;
 }
 
 /**
