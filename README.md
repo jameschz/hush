@@ -134,13 +134,15 @@ server {
 127.0.0.1 hush-app-backend
 ```
 
-重新启动 Apache/Nginx 服务器，就可以在浏览器中访问应用框架的界面了
+重新启动 Apache/Nginx 服务器，就可以在浏览器中访问应用框架的界面了。
 
 ##Quick Development Guide
 
 ####框架总体概览
 
-README.txt 中是框架主要目录的概要说明，请参考。
+README.txt 中是 Hush Framework 版本的功能说明
+
+ARCHITECTURE.txt 中是框架主要目录的概要说明，请参考
 
 ####框架主要命令
 

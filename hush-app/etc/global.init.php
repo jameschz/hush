@@ -1,6 +1,6 @@
 <?php
 /**
- * Global init settings
+ * Global settings
  */
 $GLOBALS['LIB']['HUSH'] = 'http://code.gameplus.sdo.com/HushFramework-1.1.0.zip';
 $GLOBALS['LIB']['ZEND'] = 'http://code.gameplus.sdo.com/ZendFramework-1.12.3.zip';
@@ -9,7 +9,15 @@ $GLOBALS['LIB']['SMARTY3'] = 'http://code.gameplus.sdo.com/Smarty-3.1.14.zip';
 $GLOBALS['LIB']['PHPDOC'] = 'http://code.gameplus.sdo.com/Phpdoc-stable.zip';
 
 /**
- * Global init logics
+ * Global checking
+ */
+if (!class_exists('ZipArchive')) {
+	require_once 'Hush/Exception.php';
+	throw new Hush_Exception('Please install zip extension for PHP');
+}
+
+/**
+ * Global initialization
  */
 if (defined('__HUSH_CLI')) {
 	
