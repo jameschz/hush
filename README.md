@@ -8,6 +8,10 @@
 
 > By -- James.Huang (黄隽实) 
 
+##Release
+
+> v1.1.0 - please view README.txt for details
+
 ##Features
 
 1. ZendFramework 和 Smarty 的完美结合（MVC/S）
