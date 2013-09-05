@@ -179,11 +179,7 @@ class Hush_Db_Dao
 		// get master db
 		$configs = array();
 		if (!is_null($cid) && !is_null($sid)) {
-			try {
-				$configs = $this->_config->getDb($this->dbName, $cid, 'master', $sid);
-			} catch (Exception $e) {
-				throw new Hush_Db_Exception('Can not found master db server');
-			}
+			$configs = $this->_config->getDb($this->dbName, $cid, 'master', $sid);
 		}
 		return $configs;
 	}
@@ -200,11 +196,7 @@ class Hush_Db_Dao
 		// get slave db
 		$configs = array();
 		if (!is_null($cid) && !is_null($sid)) {
-			try {
-				$configs = $this->_config->getDb($this->dbName, $cid, 'slave', $sid);
-			} catch (Exception $e) {
-				throw new Hush_Db_Exception('Can not found slave db server');
-			}
+			$configs = $this->_config->getDb($this->dbName, $cid, 'slave', $sid);
 		}
 		return $configs;
 	}
@@ -219,13 +211,13 @@ class Hush_Db_Dao
 	public function dbr ($cid = 0, $sid = 0)
 	{
 		$dbr = null;
-		// try to get specify db
+		// try to get specific db
 		$configs = $this->_getSlave($cid, $sid);
 		// try to get sharded db
 		if (!$configs) {
-			// if specify db can not be found, do sharding
+			// if specific db can not be found, do sharding
 			$this->_doShardDb();
-			// get specify db server or random slave server
+			// get specific db server or random slave server
 			$configs = $this->_config->getSlaveDb();
 		}
 		// try to init db
@@ -248,13 +240,13 @@ class Hush_Db_Dao
 	public function dbw ($cid = 0, $sid = 0)
 	{
 		$dbw = null;
-		// try to get specify db
+		// try to get specific db
 		$configs = $this->_getMaster($cid, $sid);
 		// try to get sharded db
 		if (!$configs) {
-			// if specify db can not be found, do sharding
+			// if specific db can not be found, do sharding
 			$this->_doShardDb();
-			// get specify db server or random master server
+			// get specific db server or random master server
 			$configs = $this->_config->getMasterDb();
 		}
 		// try to init db

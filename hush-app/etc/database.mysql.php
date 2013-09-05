@@ -62,10 +62,36 @@ class MysqlConfig extends Hush_Db_Config
 						'pass' => __HUSH_DB_PASS
 					)
 				)
-			)
+			),
 			// cluster N
 			// ...
-		)
+		),
+		// 模糊匹配配置策略
+		'ihush_*' => array(
+			// cluster 0
+			array(
+				'master' => array(
+					array(
+						'type' => __HUSH_DB_TYPE,
+						'host' => __HUSH_DB_HOST,
+						'port' => __HUSH_DB_PORT,
+						'user' => __HUSH_DB_USER,
+						'pass' => __HUSH_DB_PASS
+					)
+				),
+				'slave'  => array(
+					array(
+						'type' => __HUSH_DB_TYPE,
+						'host' => __HUSH_DB_HOST,
+						'port' => __HUSH_DB_PORT,
+						'user' => __HUSH_DB_USER,
+						'pass' => __HUSH_DB_PASS
+					)
+				)
+			),
+			// cluster N
+			// ...
+		),
 	);
 	
 	// 重写分库策略

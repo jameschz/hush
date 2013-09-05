@@ -69,18 +69,31 @@ abstract class Hush_Db_Config
 	/**
 	 * 设置目前 cluster
 	 * @param string $dbName
-	 * @param int|string $position
+	 * @param int|string $clusterId
 	 * @return bool
 	 */
-	protected function setClusterDb ($dbName, $position = 0) 
+	protected function setClusterDb ($dbName, $clusterId = 0) 
 	{
-		// defaultly return default cluster group
-		$clusters = isset($this->_clusters[$dbName]) ? $this->_clusters[$dbName] : $this->_clusters['default'];
+		$clusters = array();
+		// find specific db cluster
+		if (isset($this->_clusters[$dbName])) {
+			$clusters = (array) $this->_clusters[$dbName];
+		}
+		// search matched db cluster
+		foreach (array_keys($this->_clusters) as $key) {
+			if (preg_match("/$key/i", $dbName)) {
+				$clusters = (array) $this->_clusters[$key];
+			}
+		}
+		// use default db cluster
+		if (!$clusters) {
+			$clusters = (array) $this->_clusters['default'];
+		}
 		// defaultly return the first cluster
-		if (!isset($clusters[$position])) {
+		if (!isset($clusters[$clusterId])) {
 			throw new Hush_Db_Exception('Can not found cluster');
 		}
-		$this->_cluster = $clusters[$position];
+		$this->_cluster = $clusters[$clusterId];
 		return true;
 	}
 	
@@ -118,9 +131,9 @@ abstract class Hush_Db_Config
 	 * @param int $serverId
 	 * @return bool
 	 */
-	protected function setDb ($dbName, $clusterId = 0, $dbType, $serverId = 0)
+	protected function setDb ($dbName, $clusterId = 0)
 	{
-		return $this->setClusterDb($dbName, $position);
+		return $this->setClusterDb($dbName, $clusterId);
 	}
 	
 	/**
@@ -133,12 +146,6 @@ abstract class Hush_Db_Config
 	 */
 	public function getDb ($dbName, $clusterId = 0, $dbType, $serverId = 0)
 	{
-		if (!isset($this->_clusters[$dbName])) {
-			$dbName = 'default';
-		}
-		if (!$this->_clusters[$dbName][$clusterId][$dbType][$serverId]) {
-			throw new Hush_Db_Exception('Can not found db server');
-		}
 		return $this->_clusters[$dbName][$clusterId][$dbType][$serverId];
 	}
 	

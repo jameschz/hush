@@ -48,7 +48,7 @@ define('__CACHE_DIR', realpath(__DAT_DIR . '/cache'));
 require_once __ETC . '/global.funcs.php';
 
 /**
- * Common libraries paths
+ * Core libraries paths
  */
 define('__COMM_LIB_DIR', _hush_realpath(__ROOT . '/../../phplibs'));
 
@@ -56,11 +56,12 @@ define('__COMM_LIB_DIR', _hush_realpath(__ROOT . '/../../phplibs'));
  * Hush libraries paths
  */
 define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../../phplibs'));
+//define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../hush-lib'));
 
 /**
  * Include path setting
  */
-set_include_path('.' . PATH_SEPARATOR . __LIB_DIR . PATH_SEPARATOR . __COMM_LIB_DIR . PATH_SEPARATOR . __HUSH_LIB_DIR . PATH_SEPARATOR . get_include_path());
+set_include_path('.' . PATH_SEPARATOR . __LIB_DIR . PATH_SEPARATOR . __HUSH_LIB_DIR . PATH_SEPARATOR . __COMM_LIB_DIR . PATH_SEPARATOR . get_include_path());
 
 /**
  * Global init logics

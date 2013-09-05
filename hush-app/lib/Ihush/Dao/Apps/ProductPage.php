@@ -38,11 +38,11 @@ class Apps_ProductPage extends Ihush_Dao_Apps
 	{
 		$sql_count = $this->select();
 		$sql_list = clone $sql_count; // used to build $sql_list
-	
+		
 		$sql_count = $sql_count->from($this->t1, array("count(1) as total"));
 		$sql_list = $sql_list->from($this->t1, array("{$this->t1}.*"))
 			->limitPage(Hush_Util::param('p'), $each);
-	
+		
 		$res_total = $this->dbr()->fetchOne($sql_count);
 		$res_list = $this->dbr()->fetchAll($sql_list);
 		
