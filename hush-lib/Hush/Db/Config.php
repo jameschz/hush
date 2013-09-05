@@ -127,8 +127,6 @@ abstract class Hush_Db_Config
 	 * 设置目前 cluster db
 	 * @param string $dbName
 	 * @param int $clusterId
-	 * @param string $dbType
-	 * @param int $serverId
 	 * @return bool
 	 */
 	protected function setDb ($dbName, $clusterId = 0)
