@@ -29,10 +29,10 @@ class Ihush_Cli_Sys extends Ihush_Cli
 		// command description
 		$this->_printHeader();
 		echo "hush sys init\n";
-		echo "hush sys uplib\n";
 		echo "hush sys newapp\n";
 		echo "hush sys newdao\n";
 		echo "hush sys newctrl\n";
+		echo "hush sys uplib [core|hush]\n";
 	}
 	
 	public function initAction () 
@@ -65,7 +65,7 @@ NOTICE;
 		// upgrade libraries
 		$zendDir = __COMM_LIB_DIR . DIRECTORY_SEPARATOR . 'Zend';
 		if (!is_dir($zendDir)) {
-			$this->uplibAction(false);
+			$this->uplibAction('core');
 		}
 		
 		// import backend and frontend
@@ -128,8 +128,16 @@ Thank you for using Hush Framework !!!
 NOTICE;
 	}
 	
-	public function uplibAction ($hush = true)
+	public function uplibAction ()
 	{
+		$args = func_get_args();
+		$actionName = isset($args[0]) ? $args[0] : null;
+		$validActions = array('core', 'hush');
+		if (!in_array($actionName, $validActions)) {
+			echo "hush sys uplib [core|hush]\n";
+			return false;
+		}
+		
 		// see in etc/global.config.php
 		$libDir = __COMM_LIB_DIR;
 		if (!is_dir($libDir)) {
@@ -139,67 +147,8 @@ NOTICE;
 		require_once 'Hush/Util/Download.php';
 		$down = new Hush_Util_Download();
 		
-		// download Zend Framework
-		echo "\nInstalling Zend Framework ..\n";
-		$downFile = $GLOBALS['LIB']['ZEND'];
-		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'ZendFramework.zip';
-		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
-		if ($down->download($downFile, $saveFile)) {
-			echo "Extracting.. ";
-			$zip = new ZipArchive;
-			$zip->open($saveFile);
-			$zip->extractTo($savePath);
-			$zip->close();
-			unset($zip);
-			echo "Done!\n";
-		}
-		
-		// download Phpdoc
-		echo "\nInstalling Php Documentor ..\n";
-		$downFile = $GLOBALS['LIB']['PHPDOC'];
-		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Phpdoc.zip';
-		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
-		if ($down->download($downFile, $saveFile)) {
-			echo "Extracting.. ";
-			$zip = new ZipArchive;
-			$zip->open($saveFile);
-			$zip->extractTo($savePath);
-			$zip->close();
-			unset($zip);
-			echo "Done!\n";
-		}
-		
-		// download Smarty_2
-		echo "\nInstalling Smarty 2.x ..\n";
-		$downFile = $GLOBALS['LIB']['SMARTY2'];
-		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Smarty_2.zip';
-		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
-		if ($down->download($downFile, $saveFile)) {
-			echo "Extracting.. ";
-			$zip = new ZipArchive;
-			$zip->open($saveFile);
-			$zip->extractTo($savePath);
-			$zip->close();
-			unset($zip);
-			echo "Done!\n";
-		}
-		
-		// download Smarty_3
-		echo "\nInstalling Smarty 3.x ..\n";
-		$downFile = $GLOBALS['LIB']['SMARTY3'];
-		$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Smarty_3.zip';
-		$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
-		if ($down->download($downFile, $saveFile)) {
-			echo "Extracting.. ";
-			$zip = new ZipArchive;
-			$zip->open($saveFile);
-			$zip->extractTo($savePath);
-			$zip->close();
-			unset($zip);
-			echo "Done!\n";
-		}
-		
-		if ($hush) {
+		if ($actionName == 'hush') {
+			
 			// download Hush Framework
 			echo "\nInstalling Hush Framework .. \n";
 			$downFile = $GLOBALS['LIB']['HUSH'];
@@ -214,6 +163,71 @@ NOTICE;
 				unset($zip);
 				echo "Done!\n";
 			}
+			
+		}
+		
+		if ($actionName == 'core') {
+		
+			// download Zend Framework
+			echo "\nInstalling Zend Framework ..\n";
+			$downFile = $GLOBALS['LIB']['ZEND'];
+			$saveFile = $libDir . DIRECTORY_SEPARATOR . 'ZendFramework.zip';
+			$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
+			if ($down->download($downFile, $saveFile)) {
+				echo "Extracting.. ";
+				$zip = new ZipArchive;
+				$zip->open($saveFile);
+				$zip->extractTo($savePath);
+				$zip->close();
+				unset($zip);
+				echo "Done!\n";
+			}
+			
+			// download Phpdoc
+			echo "\nInstalling Php Documentor ..\n";
+			$downFile = $GLOBALS['LIB']['PHPDOC'];
+			$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Phpdoc.zip';
+			$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
+			if ($down->download($downFile, $saveFile)) {
+				echo "Extracting.. ";
+				$zip = new ZipArchive;
+				$zip->open($saveFile);
+				$zip->extractTo($savePath);
+				$zip->close();
+				unset($zip);
+				echo "Done!\n";
+			}
+			
+			// download Smarty_2
+			echo "\nInstalling Smarty 2.x ..\n";
+			$downFile = $GLOBALS['LIB']['SMARTY2'];
+			$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Smarty_2.zip';
+			$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
+			if ($down->download($downFile, $saveFile)) {
+				echo "Extracting.. ";
+				$zip = new ZipArchive;
+				$zip->open($saveFile);
+				$zip->extractTo($savePath);
+				$zip->close();
+				unset($zip);
+				echo "Done!\n";
+			}
+			
+			// download Smarty_3
+			echo "\nInstalling Smarty 3.x ..\n";
+			$downFile = $GLOBALS['LIB']['SMARTY3'];
+			$saveFile = $libDir . DIRECTORY_SEPARATOR . 'Smarty_3.zip';
+			$savePath = $libDir . DIRECTORY_SEPARATOR . '.';
+			if ($down->download($downFile, $saveFile)) {
+				echo "Extracting.. ";
+				$zip = new ZipArchive;
+				$zip->open($saveFile);
+				$zip->extractTo($savePath);
+				$zip->close();
+				unset($zip);
+				echo "Done!\n";
+			}
+		
 		}
 		
 		unset($down);
