@@ -41,13 +41,19 @@ class TestDbPage extends Ihush_App_Frontend_Page
 	{
 		$dao = $this->dao->load('Apps_Product');
 		
-		// test create
+		// test sharding
 		echo "<b>READ SHARDING 1 :</b>";
 		Hush_Util::dump($dao->shard(1)->read(1));
 		
-		// test create
+		// test sharding
 		echo "<b>READ SHARDING 2 :</b>";
 		Hush_Util::dump($dao->shard(2)->read(2));
+		
+		// test assigning
+		echo "<b>READ ASSIGNING : <font color=red>(NEW)</font></b>";
+		$dbr = $dao->dbr(0,0); // assign db
+		$sql = $dbr->select()->from('product_0')->where("id = 2"); // assign table
+		Hush_Util::dump($dbr->fetchRow($sql));
 	}
 	
 	public function mongoShardAction () 

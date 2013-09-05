@@ -163,7 +163,7 @@ class Hush_Db_Dao
 		// if using default shardId
 		$shardId = $shardId ? $shardId : $this->_shardId;
 		$this->_config->doShardTable($this->dbName, $this->tableName, $shardId);
-		// set sharded table name
+		// set sharded table name for dao
 		$this->shardTableName = $this->_config->getTable();
 	}
 	
@@ -174,18 +174,18 @@ class Hush_Db_Dao
 	 * @param int $sid Server index number
 	 * @return bool
 	 */
-	protected function _getMaster ($cid = 0, $sid = 0)
+	private function _getMaster ($cid = null, $sid = null)
 	{
 		// get master db
-		if ($cid && $sid) {
+		$configs = array();
+		if (!is_null($cid) && !is_null($sid)) {
 			try {
-				$this->_config->getDb($this->dbName, $cid, 'master', $sid);
+				$configs = $this->_config->getDb($this->dbName, $cid, 'master', $sid);
 			} catch (Exception $e) {
 				throw new Hush_Db_Exception('Can not found master db server');
 			}
-			return true;
 		}
-		return false;
+		return $configs;
 	}
 	
 	/**
@@ -195,18 +195,18 @@ class Hush_Db_Dao
 	 * @param int $sid Server index number
 	 * @return bool
 	 */
-	protected function _getSlave ($cid = 0, $sid = 0)
+	private function _getSlave ($cid = null, $sid = null)
 	{
 		// get slave db
-		if ($cid && $sid) {
+		$configs = array();
+		if (!is_null($cid) && !is_null($sid)) {
 			try {
-				$this->_config->getDb($this->dbName, $cid, 'slave', $sid);
+				$configs = $this->_config->getDb($this->dbName, $cid, 'slave', $sid);
 			} catch (Exception $e) {
 				throw new Hush_Db_Exception('Can not found slave db server');
 			}
-			return true;
 		}
-		return false;
+		return $configs;
 	}
 	
 	/**
@@ -218,16 +218,24 @@ class Hush_Db_Dao
 	 */
 	public function dbr ($cid = 0, $sid = 0)
 	{
-		// try to get specify db firstly
-		if (!$this->_getSlave($cid, $sid)) {
+		$dbr = null;
+		// try to get specify db
+		$configs = $this->_getSlave($cid, $sid);
+		// try to get sharded db
+		if (!$configs) {
 			// if specify db can not be found, do sharding
 			$this->_doShardDb();
-			$this->_doShardTable();
+			// get specify db server or random slave server
+			$configs = $this->_config->getSlaveDb();
 		}
-		// get specify db server or random slave server
-		$options = $this->_config->getSlaveDb();
-		$options['name'] = $this->dbName; // set db name
-		return Hush_Db::dbPool($options, $this->charset);
+		// try to init db
+		if ($configs) {
+			$configs['name'] = $this->dbName;
+			$dbr = Hush_Db::dbPool($configs, $this->charset);
+		}
+		// try to shard table
+		$this->_doShardTable();
+		return $dbr;
 	}
 	
 	/**
@@ -239,16 +247,24 @@ class Hush_Db_Dao
 	 */
 	public function dbw ($cid = 0, $sid = 0)
 	{
-		// try to get specify db firstly
-		if (!$this->_getMaster($cid, $sid)) {
+		$dbw = null;
+		// try to get specify db
+		$configs = $this->_getMaster($cid, $sid);
+		// try to get sharded db
+		if (!$configs) {
 			// if specify db can not be found, do sharding
 			$this->_doShardDb();
-			$this->_doShardTable();
+			// get specify db server or random master server
+			$configs = $this->_config->getMasterDb();
 		}
-		// get specify db server or random slave server
-		$options = $this->_config->getMasterDb();
-		$options['name'] = $this->dbName; // set db name
-		return Hush_Db::dbPool($options, $this->charset);
+		// try to init db
+		if ($configs) {
+			$configs['name'] = $this->dbName;
+			$dbr = Hush_Db::dbPool($configs, $this->charset);
+		}
+		// try to shard table
+		$this->_doShardTable();
+		return $dbr;
 	}
 	
 	/**

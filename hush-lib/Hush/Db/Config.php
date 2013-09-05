@@ -67,7 +67,7 @@ abstract class Hush_Db_Config
 	private static $_instance = null;
 	
 	/**
-	 * 获取集群
+	 * 设置目前 cluster
 	 * @param string $dbName
 	 * @param int|string $position
 	 * @return bool
@@ -111,15 +111,31 @@ abstract class Hush_Db_Config
 	}
 	
 	/**
-	 * 获取特定库
+	 * 设置目前 cluster db
 	 * @param string $dbName
-	 * @param string $dbType
 	 * @param int $clusterId
+	 * @param string $dbType
+	 * @param int $serverId
+	 * @return bool
+	 */
+	protected function setDb ($dbName, $clusterId = 0, $dbType, $serverId = 0)
+	{
+		return $this->setClusterDb($dbName, $position);
+	}
+	
+	/**
+	 * 获取特定 cluster db
+	 * @param string $dbName
+	 * @param int $clusterId
+	 * @param string $dbType
 	 * @param int $serverId
 	 * @return array
 	 */
-	public function getDb ($dbName, $dbType, $clusterId = 0, $serverId = 0)
+	public function getDb ($dbName, $clusterId = 0, $dbType, $serverId = 0)
 	{
+		if (!isset($this->_clusters[$dbName])) {
+			$dbName = 'default';
+		}
 		if (!$this->_clusters[$dbName][$clusterId][$dbType][$serverId]) {
 			throw new Hush_Db_Exception('Can not found db server');
 		}

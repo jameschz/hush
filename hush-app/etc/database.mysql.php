@@ -73,11 +73,11 @@ class MysqlConfig extends Hush_Db_Config
 	{
 		// Product 数据平均分配到 2 组 cluster
 		if (!strcasecmp($tbName, 'product')) {
-			$this->setClusterDb($dbName, $shardId % 2);
+			$this->setDb($dbName, $shardId % 2);
 		}
 		// 默认使用 cluster 0
 		else {
-			$this->setClusterDb($dbName, 0);
+			$this->setDb($dbName, 0);
 		}
 	}
 	
