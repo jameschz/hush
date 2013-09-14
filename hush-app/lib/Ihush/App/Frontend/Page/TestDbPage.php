@@ -41,19 +41,57 @@ class TestDbPage extends Ihush_App_Frontend_Page
 	{
 		$dao = $this->dao->load('Apps_Product');
 		
-		// test sharding
-		echo "<b>READ SHARDING 1 :</b>";
-		Hush_Util::dump($dao->shard(1)->read(1));
+		if ($_POST) {
+			$pid = $this->param('pid');
+			$pname = $this->param('pname');
+			$pdesc = $this->param('pdesc');
+			try {
+				switch ($this->param('act')) {
+					case "Create":
+						$this->view->res = $dao->shard($pid)->create(array(
+							'id' => $pid,
+							'name' => $pname,
+							'desc' => $pdesc,
+						));
+						break;
+					case "Read":
+						$this->view->res = $dao->shard($pid)->read($pid);
+						$this->view->sid = $this->view->res['id'];
+						break;
+					case "Update":
+						$this->view->res = $dao->shard($pid)->update(array(
+								'id' => $pid,
+								'name' => $pname,
+								'desc' => $pdesc,
+						));
+						break;
+					case "Delete":
+						$this->view->res = $dao->shard($pid)->delete($pid);
+						break;
+				}
+			} catch (Exception $e) {
+				$this->view->res = $e->getMessage();
+			}
+			$this->view->act = $this->param('act');
+			$this->view->res = json_encode($this->view->res);
+		}
 		
-		// test sharding
-		echo "<b>READ SHARDING 2 :</b>";
-		Hush_Util::dump($dao->shard(2)->read(2));
+		// get real time data
+		$dbr = $dao->dbr(1,0); // assign db
+		$sql = $dbr->select()->from('product_0'); // assign table
+		$this->view->product_all_0 = $dbr->fetchAll($sql);
 		
-		// test assigning
-		echo "<b>READ ASSIGNING : <font color=red>(NEW)</font></b>";
-		$dbr = $dao->dbr(0,0); // assign db
-		$sql = $dbr->select()->from('product_0')->where("id = 2"); // assign table
-		Hush_Util::dump($dbr->fetchRow($sql));
+		$dbr = $dao->dbr(1,0); // assign db
+		$sql = $dbr->select()->from('product_1'); // assign table
+		$this->view->product_all_1 = $dbr->fetchAll($sql);
+		
+		$dbr = $dao->dbr(1,0); // assign db
+		$sql = $dbr->select()->from('product_2'); // assign table
+		$this->view->product_all_2 = $dbr->fetchAll($sql);
+		
+		$dbr = $dao->dbr(1,0); // assign db
+		$sql = $dbr->select()->from('product_3'); // assign table
+		$this->view->product_all_3 = $dbr->fetchAll($sql);
 	}
 	
 	public function mongoShardAction () 
