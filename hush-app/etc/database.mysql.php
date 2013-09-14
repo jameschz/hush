@@ -42,32 +42,11 @@ class MysqlConfig extends Hush_Db_Config
 					)
 				)
 			),
-			// cluster 1
-			array(
-				'master' => array(
-					array(
-						'type' => __HUSH_DB_TYPE, 
-						'host' => __HUSH_DB_HOST, 
-						'port' => __HUSH_DB_PORT, 
-						'user' => __HUSH_DB_USER, 
-						'pass' => __HUSH_DB_PASS
-					)
-				),
-				'slave'  => array(
-					array(
-						'type' => __HUSH_DB_TYPE, 
-						'host' => __HUSH_DB_HOST, 
-						'port' => __HUSH_DB_PORT, 
-						'user' => __HUSH_DB_USER, 
-						'pass' => __HUSH_DB_PASS
-					)
-				)
-			),
 			// cluster N
 			// ...
 		),
 		// 模糊匹配配置策略
-		'ihush_*' => array(
+		'ihush_app*' => array(
 			// cluster 0
 			array(
 				'master' => array(
@@ -85,6 +64,27 @@ class MysqlConfig extends Hush_Db_Config
 						'host' => __HUSH_DB_HOST,
 						'port' => __HUSH_DB_PORT,
 						'user' => __HUSH_DB_USER,
+						'pass' => __HUSH_DB_PASS
+					)
+				)
+			),
+			// cluster 1
+			array(
+				'master' => array(
+					array(
+						'type' => __HUSH_DB_TYPE, 
+						'host' => __HUSH_DB_HOST, 
+						'port' => __HUSH_DB_PORT, 
+						'user' => __HUSH_DB_USER, 
+						'pass' => __HUSH_DB_PASS
+					)
+				),
+				'slave'  => array(
+					array(
+						'type' => __HUSH_DB_TYPE, 
+						'host' => __HUSH_DB_HOST, 
+						'port' => __HUSH_DB_PORT, 
+						'user' => __HUSH_DB_USER, 
 						'pass' => __HUSH_DB_PASS
 					)
 				)
@@ -112,7 +112,7 @@ class MysqlConfig extends Hush_Db_Config
 	{
 		// Product 数据平均分配到 2 张 table
 		if (!strcasecmp($tbName, 'product')) {
-			return $this->setTable($tbName.'_'.($shardId % 2));
+			$this->setTable($tbName.'_'.($shardId % 4));
 		}
 		// 默认使用原始表名
 		else {
