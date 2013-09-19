@@ -99,25 +99,21 @@ class MysqlConfig extends Hush_Db_Config
 	{
 		// Product 数据平均分配到 2 组 cluster
 		if (!strcasecmp($tbName, 'product')) {
-			$this->setDb($dbName, $shardId % 2);
+			return $this->setDb($dbName, $shardId % 2);
 		}
 		// 默认使用 cluster 0
-		else {
-			$this->setDb($dbName, 0);
-		}
+		return $this->setDb($dbName, 0);
 	}
 	
 	// 重写分表策略
 	public function doShardTable ($dbName, $tbName, $shardId)
 	{
-		// Product 数据平均分配到 2 张 table
+		// Product 数据平均分配到 4 张 table
 		if (!strcasecmp($tbName, 'product')) {
-			$this->setTable($tbName.'_'.($shardId % 4));
+			return $this->setTable($tbName.'_'.($shardId % 4));
 		}
 		// 默认使用原始表名
-		else {
-			$this->setTable($tbName);
-		}
+		return $this->setTable($tbName);
 	}
 	
 	/**

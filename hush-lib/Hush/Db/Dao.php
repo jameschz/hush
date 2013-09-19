@@ -35,7 +35,6 @@ class Hush_Db_Dao
 	private $_dbw = null;
 	
 	/**
-	 * db name
 	 * @var string
 	 */
 	public $dbName = null;
@@ -44,6 +43,11 @@ class Hush_Db_Dao
 	 * @var string
 	 */
 	public $tableName = null;
+	
+	/**
+	 * @var string
+	 */
+	public $shardDbName = null;
 	
 	/**
 	 * @var string
@@ -147,7 +151,10 @@ class Hush_Db_Dao
 		}
 		// if using default shardId
 		$shardId = $shardId ? $shardId : $this->_shardId;
+		// running callback function
 		$this->_config->doShardDb($this->dbName, $this->tableName, $shardId);
+		// set sharded table name for dao
+		$this->shardDbName = $this->_config->getDbName();
 	}
 	
 	/**
@@ -162,6 +169,7 @@ class Hush_Db_Dao
 		}
 		// if using default shardId
 		$shardId = $shardId ? $shardId : $this->_shardId;
+		// running callback function
 		$this->_config->doShardTable($this->dbName, $this->tableName, $shardId);
 		// set sharded table name for dao
 		$this->shardTableName = $this->_config->getTable();
@@ -222,7 +230,7 @@ class Hush_Db_Dao
 		}
 		// try to init db
 		if ($configs) {
-			$configs['name'] = $this->dbName;
+			$configs['name'] = $this->shardDbName ? $this->shardDbName : $this->dbName;
 			$dbr = Hush_Db::dbPool($configs, $this->charset);
 		}
 		// try to shard table
@@ -251,7 +259,7 @@ class Hush_Db_Dao
 		}
 		// try to init db
 		if ($configs) {
-			$configs['name'] = $this->dbName;
+			$configs['name'] = $this->shardDbName ? $this->shardDbName : $this->dbName;
 			$dbr = Hush_Db::dbPool($configs, $this->charset);
 		}
 		// try to shard table

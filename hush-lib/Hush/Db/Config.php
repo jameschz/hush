@@ -57,7 +57,12 @@ abstract class Hush_Db_Config
 	private $_cluster = null;
 	
 	/**
-	 * @var array
+	 * @var string
+	 */
+	private $_dbName = null;
+	
+	/**
+	 * @var string
 	 */
 	private $_table = null;
 	
@@ -131,6 +136,7 @@ abstract class Hush_Db_Config
 	 */
 	protected function setDb ($dbName, $clusterId = 0)
 	{
+		$this->_dbName = $dbName;
 		return $this->setClusterDb($dbName, $clusterId);
 	}
 	
@@ -145,6 +151,15 @@ abstract class Hush_Db_Config
 	public function getDb ($dbName, $clusterId = 0, $dbType, $serverId = 0)
 	{
 		return $this->_clusters[$dbName][$clusterId][$dbType][$serverId];
+	}
+	
+	/**
+	 * 获取 db name
+	 * @return string
+	 */
+	public function getDbName ()
+	{
+		return $this->_dbName;
 	}
 	
 	/**
@@ -171,7 +186,7 @@ abstract class Hush_Db_Config
 	}
 	
 	/**
-	 * 分库策略
+	 * 分库策略（子类重写）
 	 * @param string $dbName
 	 * @param string $tbName
 	 * @param int|string $shardId
@@ -182,7 +197,7 @@ abstract class Hush_Db_Config
 	}
 	
 	/**
-	 * 分表策略
+	 * 分表策略（子类重写）
 	 * @param string $dbName
 	 * @param string $tbName
 	 * @param int|string $shardId
