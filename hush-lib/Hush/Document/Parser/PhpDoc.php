@@ -87,7 +87,9 @@ class Hush_Document_Parser_PhpDoc extends Hush_Document_Parser
 	 */
 	protected function _parseLine($codeLine)
 	{
-		// 
+		// easy to parse
+		$codeLine .= '  ';
+		// set annotations
 		if (preg_match('/@(\w+)\s+(.*?)\s+(.*?)\s+(.*)/i', $codeLine, $annotationRes)) {
 			$annotationName = isset($annotationRes[1]) ? trim($annotationRes[1]) : '';
 			if ($annotationName) {
@@ -96,7 +98,7 @@ class Hush_Document_Parser_PhpDoc extends Hush_Document_Parser
 				$this->_setRegister('annotation', $annotationName, $annotationRes);
 			}
 		}
-		// 
+		// get class annotation
 		if (preg_match('/class\s+(\w+)\s+/i', $codeLine, $classRes)) {
 			$className = isset($classRes[1]) ? trim($classRes[1]) : '';
 			if ($className) {
@@ -108,7 +110,7 @@ class Hush_Document_Parser_PhpDoc extends Hush_Document_Parser
 				}
 			}
 		}
-		// 
+		// get function annotation
 		if (preg_match('/function\s+(\w+)\s+/i', $codeLine, $functionRes)) {
 			$functionName = isset($functionRes[1]) ? trim($functionRes[1]) : '';
 			if ($functionName) {
