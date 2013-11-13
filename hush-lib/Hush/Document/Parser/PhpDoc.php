@@ -99,7 +99,7 @@ class Hush_Document_Parser_PhpDoc extends Hush_Document_Parser
 			}
 		}
 		// get class annotation
-		if (preg_match('/class\s+(\w+)\s+/i', $codeLine, $classRes)) {
+		if (preg_match('/class\s+(\w+)\s?/i', $codeLine, $classRes)) {
 			$className = isset($classRes[1]) ? trim($classRes[1]) : '';
 			if ($className) {
 				$this->_setRegister('class', $className);
@@ -111,7 +111,7 @@ class Hush_Document_Parser_PhpDoc extends Hush_Document_Parser
 			}
 		}
 		// get function annotation
-		if (preg_match('/function\s+(\w+)\s+/i', $codeLine, $functionRes)) {
+		if (preg_match('/function\s+(\w+)\s?/i', $codeLine, $functionRes)) {
 			$functionName = isset($functionRes[1]) ? trim($functionRes[1]) : '';
 			if ($functionName) {
 				$className = $this->_getRegister('class');

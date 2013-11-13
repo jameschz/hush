@@ -19,3 +19,8 @@ Version 1.1.0 :
 |
 |- 5 添加数据库分页代码例子
    |- 5.1 参考前台“DB Mysql : /testDb/mysqlPage”部分
+
+Version 1.1.1 :
+
+|- 1 修复 BUG
+|  |- 1.1 修复 Hush_Document_Parser_PhpDoc 不能识别的 BUG
