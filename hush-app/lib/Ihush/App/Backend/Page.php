@@ -50,7 +50,7 @@ class Ihush_App_Backend_Page extends Ihush_App_Backend
 		$this->view->_admin = $this->admin = $this->session('admin');
 		
 		// check if this path is accessable
-		$path = parse_url($_SERVER['REQUEST_URI']);
+		$path = parse_url(preg_replace('/\/{2,}/i', '/', rtrim($_SERVER['REQUEST_URI'], '/')));
 		if ($this->acl instanceof Zend_Acl) {
 			if ($this->acl->has($path['path'])) {
 				if (!$this->acl->isAllowed($this->admin['role'], $path['path'])) {

@@ -346,8 +346,12 @@ class Hush_App_Dispatcher
 					// url matching
 					$pattern = preg_quote($pattern, '/');
 					$pattern = str_replace('\*', '(.*?)', $pattern);
-					if (preg_match('/^' .$pattern . '$/i', $path_raw)) {
+					if (preg_match('/^' .$pattern . '$/i', $path_raw, $path_args)) {
 						$mapper_class = $class;
+						// fill params
+						foreach ($path_args as $k => $v) {
+							$_REQUEST['$'.$k] = $v;
+						}
 						break;
 					}
 				}

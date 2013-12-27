@@ -20,17 +20,24 @@ class TestPage extends Ihush_App_Frontend_Page
 	
 	public function indexAction () 
 	{
-		echo 'This is index action'; 
+		echo '<b>This is index action</b>'; 
 	}
 	
 	public function mappingAction () 
 	{
-		echo 'This is mapping action'; 
+		echo '<b>This is mapping action</b>'; 
+	}
+	
+	public function staticAction ()
+	{
+		echo '<b>Static parameters : </b><br/><br/>';
+		echo '<b>$1 : </b>' . $this->param('$1') . '<br/>';
+		echo '<b>$2 : </b>' . $this->param('$2') . '<br/>';
 	}
 	
 	public function pagingAction () 
 	{
-		echo 'Paging object : ';
+		echo '<b>Paging object : </b>';
 		$this->pagingDemo();
 		
 	}
