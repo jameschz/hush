@@ -55,8 +55,8 @@ define('__COMM_LIB_DIR', _hush_realpath(__ROOT . '/../../phplibs'));
 /**
  * Hush libraries paths
  */
-//define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../../phplibs'));
-define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../hush-lib'));
+define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../../phplibs'));
+//define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../hush-lib'));
 
 /**
  * Include path setting
