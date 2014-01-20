@@ -91,4 +91,16 @@ class TestPage extends Ihush_App_Frontend_Page
 		 */
 		Hush_Util::dump($page->toArray());
 	}
+	
+	public function apiv1Action ()
+	{
+		echo '<b>This is api v1</b><br/><br/>';
+		echo '<b>$_SERVER[\'REQUEST_URI\'] : </b>' . $_SERVER['REQUEST_URI'] . '<br/>';
+	}
+	
+	public function apiv2Action ()
+	{
+		echo '<b>This is api v2</b><br/><br/>';
+		echo '<b>$_SERVER[\'REQUEST_URI\'] : </b>' . $_SERVER['REQUEST_URI'] . '<br/>';
+	}
 }

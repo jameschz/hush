@@ -46,9 +46,9 @@ class Hush_App_Dispatcher
 	private $_path = null;
 	
 	/**
-	 * @var string
+	 * @var array
 	 */
-	private $_epage = null;
+	private $_epage = array();
 	
 	/**
 	 * For debug mode
@@ -282,14 +282,7 @@ class Hush_App_Dispatcher
 		}
 	}
 	
-	/**
-	 * Parse mapper path by specific separator
-	 * @return array
-	 */
-	private function _parseMapPath ($path) 
-	{
-		return array_filter(explode('::', $path)); // strip empty value
-	}
+
 	
 	/**
 	 * Parse common path by specific separator
@@ -298,6 +291,32 @@ class Hush_App_Dispatcher
 	private function _parsePath ($path) 
 	{
 		return array_filter(explode('/', $path)); // strip empty value
+	}
+	
+	/**
+	 * Parse mapper path by specific separator
+	 * @return array
+	 */
+	private function _parseMapPath ($path)
+	{
+		return array_filter(explode('::', $path)); // strip empty value
+	}
+	
+	/**
+	 * Print debug information
+	 * @param array $debugInfo
+	 * @param object $e
+	 */
+	private function _printDebugInfo ($debugInfo, $e)
+	{
+		echo '<b>Dispatch Debug Info >>></b>' . "<br/>\n" . "<br/>\n";
+		echo 'Class Name : ' . $debugInfo['className'] . "<br/>\n";
+		echo 'Action Name : ' . $debugInfo['actionName'] . "<br/>\n";
+		echo 'Action Args : ' . json_encode($debugInfo['actionArgs']) . "<br/>\n";
+		echo 'Template Name : ' . $debugInfo['templateName'] . "<br/>\n" . "<br/>\n";
+		echo '<b>Dispatch Exception Info >>></b>' . "<br/>\n";
+		Hush_Util::trace($e);
+		exit;
 	}
 	
 	/**
@@ -315,7 +334,7 @@ class Hush_App_Dispatcher
 		
 		$this->_formatPath();
 		
-		$mapper_class = array();
+		$mapper_class = null;
 		$mapper = $this->getMapper();
 		
 		/* MAIN PROCESS
@@ -328,22 +347,27 @@ class Hush_App_Dispatcher
 			$page_map = $mapper->getPageMap();
 			$path_raw = $this->_request->getPathInfo();
 			
-			// map with raw url path
-			if (array_key_exists($path_raw, $page_map)) {
-				$mapper_class = $page_map[$path_raw];
-			}
-			// map with formatted path
-			elseif (array_key_exists($this->_path, $page_map)) {
-				$mapper_class = $page_map[$this->_path];
-			}
-			// map with REGEXP mapping rule
-			else {
-				foreach ((array) $page_map as $pattern => $class) {
-					// escape not REGEXP rules
-					if (strpos($pattern, '*') === false) {
-						continue;
+			// do mapping loop
+			foreach ((array) $page_map as $pattern => $class) {
+				// handle REWRITE rules
+				if (strpos($class, '/') === 0) {
+					$pattern = preg_quote($pattern, '/');
+					$pattern = str_replace('\*', '(.*?)', $pattern);
+					$replacement = str_replace('*', '$1', $class); // not preg format
+					$path_raw = preg_replace('/^' .$pattern . '$/i', $replacement, $path_raw);
+					continue;
+				}
+				// handle NOT REGEXP rules
+				if (strpos($pattern, '*') === false) {
+					if (!strcasecmp($path_raw, $pattern) || 
+						!strcasecmp($this->_path, $pattern)) {
+						$mapper_class = $class;
+						break;
 					}
-					// url matching
+					continue;
+				}
+				// handle REGEXP rules
+				if (true) {
 					$pattern = preg_quote($pattern, '/');
 					$pattern = str_replace('\*', '(.*?)', $pattern);
 					if (preg_match('/^' .$pattern . '$/i', $path_raw, $path_args)) {
@@ -354,6 +378,7 @@ class Hush_App_Dispatcher
 						}
 						break;
 					}
+					continue;
 				}
 			}
 		}
@@ -386,7 +411,7 @@ class Hush_App_Dispatcher
 		/* MAIN PROCESS
 		 * Get template name
 		 */
-		$tplName = $this->getTemplateName($className, $actionName);
+		$templateName = $this->getTemplateName($className, $actionName);
 		
 		// app dispatch time
 		if (Hush_Debug::showDebug('time')) {
@@ -397,20 +422,43 @@ class Hush_App_Dispatcher
 		}
 		
 		/* MAIN PROCESS
-		 * Enter page scope
+		 * find page by url
 		 */
 		try {
 			
 			// load page class
 			@Zend_Loader::loadClass($className, $app_dir); // debug should be closed
-			if (!class_exists($className)) {
+			if (!class_exists($className)) {echo 1;
 				require_once 'Hush/App/Exception.php';
 				throw new Hush_App_Exception('Can not find definition for class \'' . $className . '\'');
 			}
 			
-			/* USE PAGE VIEW PROCESS
-			 * close auto-load for page view class
-			 */
+		} catch (Exception $e) {
+			
+			require_once 'Hush/Util.php';
+			Hush_Util::HTTPStatus(404);
+			if (!$this->_debug) {
+				if (file_exists($this->_epage[404])) {
+					include_once $this->_epage[404];
+					exit;
+				}
+			} else {
+				$this->_printDebugInfo(array(
+					'className'		=> $className,
+					'actionName'	=> $actionName,
+					'actionArgs'	=> $actionArgs,
+					'templateName'	=> templateName,
+				), $e);
+			}
+			
+		}
+		
+		/* MAIN PROCESS
+		 * display page by url
+		*/
+		try {
+			
+			// close auto-load for page view class
 			if (self::$pageViewClass) {
 				require_once 'Hush/Page.php';
 				Hush_Page::closeAutoLoad(); // close page autoload mechanism
@@ -449,30 +497,29 @@ class Hush_App_Dispatcher
 			 * display template for page view class
 			 */
 			if (self::$pageViewClass) {
-				$page->__display($tplName);
+				$page->__display($templateName);
 			}
 			
 		} catch (Exception $e) {
 			
 			require_once 'Hush/Util.php';
-			
+			Hush_Util::HTTPStatus(500);
 			if (!$this->_debug) {
-				Hush_Util::HTTPStatus(404);
-				if (file_exists($this->_epage)) {
-					include_once $this->_epage;
+				
+				if (file_exists($this->_epage[500])) {
+					include_once $this->_epage[500];
 					exit;
 				}
-			
 			} else {
-				echo '<b>Dispatch Debug Info >>></b>' . "<br/>\n" . "<br/>\n";
-				echo 'Class Name : ' . $className . "<br/>\n";
-				echo 'Action Name : ' . $actionName . "<br/>\n";
-				echo 'Action Args : ' . json_encode($actionArgs) . "<br/>\n";
-				echo 'Template Name : ' . $tplName . "<br/>\n" . "<br/>\n";
-				echo '<b>Dispatch Exception Info >>></b>' . "<br/>\n";
-				Hush_Util::trace($e);
+				$this->_printDebugInfo(array(
+					'className'		=> $className,
+					'actionName'	=> $actionName,
+					'actionArgs'	=> $actionArgs,
+					'templateName'	=> templateName,
+				), $e);
 			}
 			
 		}
 	}
+		
 }

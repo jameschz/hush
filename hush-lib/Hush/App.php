@@ -48,10 +48,10 @@ class Hush_App
 	private $_tpls = '';
 	
 	/**
-	 * Error page
-	 * @var string
+	 * Error pages
+	 * @var array
 	 */
-	private $_epage = '';
+	private $_epage = array();
 	
 	/**
 	 * Debug mode
@@ -92,9 +92,9 @@ class Hush_App
 	 * @param string $err_page (error page url)
 	 * @return Hush_App
 	 */
-	public function setErrorPage ($err_page)
+	public function setErrorPage ($err_page, $err_code = 404)
 	{
-		$this->_epage = $err_page;
+		$this->_epage[$err_code] = $err_page;
 		return $this;
 	}
 	

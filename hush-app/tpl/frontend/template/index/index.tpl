@@ -23,11 +23,12 @@
 		<li><img src="{$_root}img/icon_arrow_right.png" class="icon" /> 传统模式 : <a href="/app/index.php?debug=time">执行时间</a></li>
 	</ul>
 	
-	<h1 style="font-size:14pt">Hush Url Mapping Engine Test :</h1>
+	<h1 style="font-size:14pt">Hush URL Mapping Engine Test :</h1>
 	
 	<ul style="margin:10px">
 		<li><img src="{$_root}img/icon_round.png" class="icon" /> 普通映射 : <a href="/test/mapping?debug=time">/test/mapping</a></li>
 		<li><img src="{$_root}img/icon_round.png" class="icon" /> 静态映射 : <a href="/static_1_2.html?debug=time">/static_1_2.html</a></li>
+		<li><img src="{$_root}img/icon_round.png" class="icon" /> 重写匹配 : <a href="/v2/api2?debug=time">/v2/api2</a></li>
 		<li><img src="{$_root}img/icon_round.png" class="icon" /> 分页演示 : <a href="/test/p/1?debug=time">/test/p/*</a></li>
 		<li><img src="{$_root}img/icon_round.png" class="icon" /> 模糊匹配 : <a href="/test/*?debug=time">/test/*</a></li>
 	</ul>
