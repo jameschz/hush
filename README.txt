@@ -24,3 +24,7 @@ Version 1.1.1 :
 
 |- 1 修复 BUG
 |  |- 1.1 修复 Hush_Document_Parser_PhpDoc 不能识别的 BUG
+|
+|- 2 功能优化
+   |- 2.1 增加 mapping 静态映射和重写功能
+   |- 2.2 增加 500 错误处理页面
