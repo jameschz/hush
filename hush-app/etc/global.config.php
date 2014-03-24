@@ -2,7 +2,7 @@
 /**
  * Global php settings
  */
-error_reporting(E_ERROR | E_WARNING);
+error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
 
 /**
  * Global timezone
