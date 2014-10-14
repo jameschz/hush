@@ -85,9 +85,10 @@ abstract class Hush_Db_Config
 			$clusters = (array) $this->_clusters[$dbName];
 		}
 		// search matched db cluster
-		foreach (array_keys($this->_clusters) as $key) {
-			if (preg_match("/$key/i", $dbName)) {
-				$clusters = (array) $this->_clusters[$key];
+		foreach (array_keys($this->_clusters) as $rule) {
+			$rule = str_replace('/', '\/', $rule);
+			if (preg_match("/$rule/i", $dbName)) {
+				$clusters = (array) $this->_clusters[$rule];
 			}
 		}
 		// use default db cluster

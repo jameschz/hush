@@ -279,6 +279,7 @@ class Hush_App_Dispatcher
 		// get raw url path
 		if (!$this->_path) {
 			$this->_path = $this->_request->getPathInfo();
+			$this->_path = preg_replace('/\/+/i', '/', $this->_path);
 		}
 	}
 	
@@ -345,9 +346,9 @@ class Hush_App_Dispatcher
 			
 			// prepare mapping 
 			$page_map = $mapper->getPageMap();
-			$path_raw = $this->_request->getPathInfo();
 			
 			// do mapping loop
+			$path_raw = $this->_path;
 			foreach ((array) $page_map as $pattern => $class) {
 				// handle REWRITE rules
 				if (strpos($class, '/') === 0) {

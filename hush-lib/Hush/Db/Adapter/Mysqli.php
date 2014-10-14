@@ -33,7 +33,7 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	 * For debug mode
 	 * @var bool
 	 */
-	public $_debug = true; // for trace sql with 'Hush_Debug' lib
+	public $_debug = false; // for trace sql with 'Hush_Debug' lib
 	
 	/**
 	 * Replace table rows with specified data based on a WHERE clause.
