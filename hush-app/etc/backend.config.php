@@ -19,7 +19,7 @@ define('__MAP_INI_FILE', realpath(__ETC . '/backend.mapping.ini'));
  * Error's messages ini file
  * TODO : could be changed by yourself's settings !!!
  */
-define('__MSG_INI_FILE', realpath(__ETC . '/backend.errors.ini'));
+define('__MSG_INI_FILE', realpath(__ETC . '/backend.message.ini'));
 
 /**
  * PHP libraries for pages
