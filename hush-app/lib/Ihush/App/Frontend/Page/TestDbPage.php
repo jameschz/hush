@@ -10,7 +10,6 @@
  */
  
 require_once 'Ihush/App/Frontend/Page.php';
-require_once 'Ihush/Mongo.php';
 
 /**
  * @package Ihush_App_Frontend
@@ -21,8 +20,6 @@ class TestDbPage extends Ihush_App_Frontend_Page
 	{
 		// init dao
 		parent::__init();
-		
-		$this->mongo = new Ihush_Mongo();
 	}
 	
 	public function indexAction () 
@@ -35,6 +32,29 @@ class TestDbPage extends Ihush_App_Frontend_Page
 		$dao = $this->dao->load('Apps_ProductPage');
 		$res = $dao->getListByPage(3);
 		Hush_Util::dump($res);
+	}
+	
+	public function mysqlTransactionAction ()
+	{
+		$dao = $this->dao->load('Apps_ProductPage');
+		$dbw = $dao->dbw(); // get dbw for transaction
+		$dbw->beginTransaction();
+		try {
+			// do update
+			$dao->update(array(
+				'id' => 1,
+				'name' => 'Test product N',
+			));
+			// throw Exception for test
+			throw new Exception('Test Exception');
+			// commit
+			$dbw->commit();
+			echo 'Transaction Commited OK';
+		} catch (Exception $e) {
+			// rollback
+			$dbw->rollback();
+			echo 'Transaction Error : ' . $e->getMessage();
+		}
 	}
 	
 	public function mysqlShardAction () 
@@ -96,6 +116,9 @@ class TestDbPage extends Ihush_App_Frontend_Page
 	
 	public function mongoShardAction () 
 	{
+		// init mongo db
+		require_once 'Ihush/Mongo.php';
+		$this->mongo = new Ihush_Mongo();
 		$mongo = $this->mongo->load('Foo_Foo');
 		
 		// test create

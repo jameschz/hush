@@ -36,9 +36,10 @@
 	<h1 style="font-size:14pt">Hush Sharding Database Test :</h1>
 	
 	<ul style="margin:10px">
-		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mysql : <a href="/testDb/mysqlPage?debug=sql">/testDb/mysqlPage</a></li>
-		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mysql : <a href="/testDb/mysqlShard?debug=sql">/testDb/mysqlShard</a></li>
-		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mongo : <a href="/testDb/mongoShard?debug=time">/testDb/mongoShard</a></li>
+		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mysql Paging : <a href="/testDb/mysqlPage?debug=sql">/testDb/mysqlPage</a></li>
+		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mysql Sharding : <a href="/testDb/mysqlShard?debug=sql">/testDb/mysqlShard</a></li>
+		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mysql Transaction : <a href="/testDb/mysqlTransaction?debug=sql">/testDb/mysqlTransaction</a></li>
+		<li><img src="{$_root}img/icon_round.png" class="icon" /> DB Mongo Sharding : <a href="/testDb/mongoShard?debug=time">/testDb/mongoShard</a></li>
 	</ul>
 
 {include file="frame/foot.tpl"}
