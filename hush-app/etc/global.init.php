@@ -2,11 +2,11 @@
 /**
  * Global settings
  */
-$GLOBALS['LIB']['HUSH'] = 'http://code.gameplus.sdo.com/HushFramework-1.1.0.zip';
-$GLOBALS['LIB']['ZEND'] = 'http://code.gameplus.sdo.com/ZendFramework-1.12.3.zip';
-$GLOBALS['LIB']['SMARTY2'] = 'http://code.gameplus.sdo.com/Smarty-2.6.27.zip';
-$GLOBALS['LIB']['SMARTY3'] = 'http://code.gameplus.sdo.com/Smarty-3.1.14.zip';
-$GLOBALS['LIB']['PHPDOC'] = 'http://code.gameplus.sdo.com/Phpdoc-stable.zip';
+$GLOBALS['LIB']['HUSH'] = 'http://cdn.qtplay.com/dev/hush/HushFramework.zip';
+$GLOBALS['LIB']['ZEND'] = 'http://cdn.qtplay.com/dev/hush/ZendFramework.zip';
+$GLOBALS['LIB']['SMARTY2'] = 'http://cdn.qtplay.com/dev/hush/Smarty_2.zip';
+$GLOBALS['LIB']['SMARTY3'] = 'http://cdn.qtplay.com/dev/hush/Smarty_3.zip';
+$GLOBALS['LIB']['PHPDOC'] = 'http://cdn.qtplay.com/dev/hush/Phpdoc.zip';
 
 /**
  * Global checking

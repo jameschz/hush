@@ -429,7 +429,7 @@ class Hush_App_Dispatcher
 			
 			// load page class
 			@Zend_Loader::loadClass($className, $app_dir); // debug should be closed
-			if (!class_exists($className)) {echo 1;
+			if (!class_exists($className)) {
 				require_once 'Hush/App/Exception.php';
 				throw new Hush_App_Exception('Can not find definition for class \'' . $className . '\'');
 			}
