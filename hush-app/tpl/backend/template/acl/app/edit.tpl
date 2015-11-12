@@ -40,7 +40,7 @@
 			{include file="acl/forms/roles_edit.tpl"}
 		</td>
 	</tr>
-	<tr id="sel_path" {if $app.is_app eq 'NO'}class="disn"{/if}>
+	<tr id="sel_path" {if !$app.is_app || $app.is_app eq 'NO'}class="disn"{/if}>
 		<td class="field">应用路径 *</td>
 		<td class="value"><input class="common" type="text" name="path" value="{$app.path}" /></td>
 	</tr>
