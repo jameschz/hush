@@ -41,6 +41,27 @@ class Core_App extends Ihush_Dao_Core
 	}
 	
 	/**
+	 * Check whether name existed
+	 * @param string $path
+	 * @param int $app_id
+	 * @return array
+	 */
+	public function checkName ($name, $app_id = -1)
+	{
+		if (!$name) return true; // escape
+		
+		$sql = $this->select()->from($this->t1, "*")->where("{$this->t1}.name = ?", $name);
+		
+		$res = $this->dbr()->fetchRow($sql);
+		
+		if (!$res || ($res && $res['id'] == $app_id)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Check whether path existed
 	 * @param string $path
 	 * @param int $app_id
