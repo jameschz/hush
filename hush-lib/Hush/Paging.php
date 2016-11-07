@@ -337,7 +337,7 @@ class Hush_Paging
 			$pattern = preg_quote($pageUrl, '/');
 			$pattern = str_replace('\{page\}', '([0-9]+)', $pattern);
 			if (preg_match('/' .$pattern . '/i', $_SERVER['REQUEST_URI'], $match)) {
-				if (isset($match[1])) return $match[1];
+				if (isset($match[1])) $pageNo = intval($match[1]);
 			}
 		}
 		

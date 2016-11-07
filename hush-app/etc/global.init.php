@@ -2,11 +2,11 @@
 /**
  * Global settings
  */
-$GLOBALS['LIB']['HUSH'] = 'http://cdn.qtplay.com/dev/hush/HushFramework.zip';
-$GLOBALS['LIB']['ZEND'] = 'http://cdn.qtplay.com/dev/hush/ZendFramework.zip';
-$GLOBALS['LIB']['SMARTY2'] = 'http://cdn.qtplay.com/dev/hush/Smarty_2.zip';
-$GLOBALS['LIB']['SMARTY3'] = 'http://cdn.qtplay.com/dev/hush/Smarty_3.zip';
-$GLOBALS['LIB']['PHPDOC'] = 'http://cdn.qtplay.com/dev/hush/Phpdoc.zip';
+$GLOBALS['LIB']['HUSH'] = 'http://120.132.8.124/dev/hush/HushFramework.zip';
+$GLOBALS['LIB']['ZEND'] = 'http://120.132.8.124/dev/hush/ZendFramework.zip';
+$GLOBALS['LIB']['SMARTY2'] = 'http://120.132.8.124/dev/hush/Smarty_2.zip';
+$GLOBALS['LIB']['SMARTY3'] = 'http://120.132.8.124/dev/hush/Smarty_3.zip';
+$GLOBALS['LIB']['PHPDOC'] = 'http://120.132.8.124/dev/hush/Phpdoc.zip';
 
 /**
  * Global checking
