@@ -448,7 +448,7 @@ class Hush_App_Dispatcher
 					'className'		=> $className,
 					'actionName'	=> $actionName,
 					'actionArgs'	=> $actionArgs,
-					'templateName'	=> templateName,
+					'templateName'	=> $templateName,
 				), $e);
 			}
 			
@@ -516,7 +516,7 @@ class Hush_App_Dispatcher
 					'className'		=> $className,
 					'actionName'	=> $actionName,
 					'actionArgs'	=> $actionArgs,
-					'templateName'	=> templateName,
+					'templateName'	=> $templateName,
 				), $e);
 			}
 			

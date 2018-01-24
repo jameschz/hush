@@ -7,7 +7,7 @@ $cas_text = "RluasYTudiTTaYsteqTERdwhaTEispYdkjsSDduyHfEWuiaQwHjfakRsjQWfasiQRue
 // Set the path to the font(s). Example: "wp-content/fonts/"
 // Empty string ("") defaults to the root of your blog.
 // If you add a path, DO include the trailing slash.
-$cas_fontpath = "./";
+$cas_fontpath = dirname(__FILE__) . "/";
 
 $cas_fontlist = array(); // <-- This line should not be changed
 // List as many TrueType font(s) as you like, one per line. Drop your own font files into this plugin's directory.
