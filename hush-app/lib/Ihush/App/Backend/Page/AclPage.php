@@ -26,7 +26,8 @@ class AclPage extends Ihush_App_Backend_Page
 	public function __done ()
 	{
 		// Notice : max_role_size must be bigger than 5
-		$this->view->max_role_size = max(count($this->view->allroles), count($this->view->selroles), 5);
+// 		$this->view->max_role_size = max(count($this->view->allroles), count($this->view->selroles), 5);
+		$this->view->max_role_size = 10;
 	}
 	
 	public function indexAction () 
