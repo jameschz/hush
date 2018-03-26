@@ -33,7 +33,7 @@ define('__LIB_PATH_REMOTE', realpath(__LIB_DIR . '/Ihush/App/Frontend/Remote'));
  * TODO : could be changed by yourself's settings !!!
  */
 define('__TPL_ENGINE', 'Smarty');
-define('__TPL_LIB_PATH', 'Smarty_2');
+define('__TPL_LIB_PATH', 'Smarty_3');
 define('__TPL_SMARTY_PATH', realpath(__TPL_DIR . '/frontend'));
 
 /**

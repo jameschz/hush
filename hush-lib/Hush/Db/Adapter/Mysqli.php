@@ -10,9 +10,9 @@
  */
  
 /**
- * @see Hush_Util
+ * @see Hush_Db_Extend
  */
-require_once 'Hush/Util.php';
+require_once 'Hush/Db/Extend.php';
 
 /**
  * @see Zend_Db_Adaptor_Mysqli
@@ -43,29 +43,10 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	 * @param  mixed $where UPDATE WHERE clause(s).
 	 * @return int   The number of affected rows.
 	 */
-	public function replace($table, array $bind, $debug = false)
+	public function replace($table, array $bind)
 	{
-		/**
-		 * Build "col = ?" pairs for the statement,
-		 * except for Zend_Db_Expr which is treated literally.
-		 */
-		$set = array();
-		$i = 0;
-		foreach ($bind as $col => $val) {
-			$val = '?';
-			$set[] = $this->quoteIdentifier($col, true) . ' = ' . $val;
-		}
-		
-		// Build the UPDATE statement
-		$sql = 'REPLACE INTO '
-			 . $this->quoteIdentifier($table, true)
-			 . ' SET ' . implode(', ', $set);
-		
-		if ($debug) return $sql;
-		
-		// Execute the statement and return the number of affected rows
+	    $sql = Hush_Db_Extend::replaceSql($this, $table, $bind);
 		$stmt = $this->query($sql, array_values($bind));
-		
 		return $stmt->rowCount();
 	}
 	
@@ -78,38 +59,24 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	 * @param bool $debug
 	 * @return mixed
 	 */
-	public function insertMultiRow ($table, $cols, $vals, $debug = false)
+	public function insertMulti ($table, array $cols, array $vals)
 	{
-		// param exception
-		if (!$vals || !$cols) {
-			require_once 'Zend/Db/Adapter/Exception.php';
-			throw new Zend_Db_Adapter_Exception("For table '{$table}' columns and values can not be empty");
-		}
-		
-		// extract and quote vals names from the array keys
-		$cols_num = count($cols);
-		$vals_sql = array();
-		foreach ($vals as $bind) {
-			if (!is_array($bind) || $cols_num != count($bind)) {
-				continue;
-			}
-			foreach ($bind as $k => $v) {
-				$bind[$k] = $this->quote($v);
-			}
-			$vals_sql[] = '(' . implode(', ', $bind) . ')';
-		}
-		
-		// build the statement
-		$sql = "INSERT INTO "
-			 . $this->quoteIdentifier($table, true)
-			 . ' (' . implode(', ', $cols) . ') VALUES ' . implode(', ', $vals_sql);
-		
-		if ($debug) return $sql;
-		
-		// execute the statement and return the number of affected rows
-		$stmt = $this->query($sql);
-		
-		return $stmt->rowCount();
+	    $sql = Hush_Db_Extend::insertMultiSql($this, $table, $cols, $vals);
+	    $stmt = $this->query($sql);
+	    return $stmt->rowCount();
+	}
+	
+	/**
+	 * Extend the insert method of Zend Db
+	 * We can use this method to insert multiple line's data oncely
+	 * @param string $table
+	 * @param array $cols
+	 * @param array $vals
+	 * @return mixed
+	 */
+	public function insertMultiRow ($table, $cols, $vals)
+	{
+	    return $this->insertMulti($table, $cols, $vals);
 	}
 	
 	/**
@@ -117,7 +84,7 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	 * @param string $table
 	 * @return array
 	 */
-	public function getAllColumnName ($table)
+	public function showColumns ($table)
 	{
 		$cols = array();
 		$res = $this->fetchAll('show columns from ' . $this->quoteIdentifier($table, true));
@@ -138,27 +105,10 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	public function query($sql, $bind = array()) 
 	{
 		if ($this->_debug) {
-			
-			require_once 'Hush/Debug.php';
-			$debug = Hush_Debug::getInstance();
-			$debug->setWriter(new Hush_Debug_Writer_Html()); // default can be override
-			
-			if (!($debug instanceof Hush_Debug)) {
-				require_once 'Zend/Db/Adapter/Exception.php';
-				throw new Zend_Db_Adapter_Exception("Can not initialize 'Hush_Debug' instance");
-			}
-			
 			if ($sql instanceof Zend_Db_Select) {
 				$sql = $sql->__toString();
 			}
-			
-			if (sizeof($bind) > 0) {
-				$label = 'Prepared Sql >>>';
-			} else {
-				$label = 'Query Sql >>>';
-			}
-			
-			$debug->debug($sql, '<font style="color:red">' . $label . '</font>');
+			Hush_Db_Extend::debugSql($sql);
 		}
 		
 		return parent::query($sql, $bind);

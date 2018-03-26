@@ -7,6 +7,7 @@ $GLOBALS['LIB']['ZEND'] = 'http://120.132.8.124/dev/hush/ZendFramework.zip';
 $GLOBALS['LIB']['SMARTY2'] = 'http://120.132.8.124/dev/hush/Smarty_2.zip';
 $GLOBALS['LIB']['SMARTY3'] = 'http://120.132.8.124/dev/hush/Smarty_3.zip';
 $GLOBALS['LIB']['PHPDOC'] = 'http://120.132.8.124/dev/hush/Phpdoc.zip';
+$GLOBALS['LIB']['PHPEXCEL'] = 'http://120.132.8.124/dev/hush/PHPExcel.zip';
 
 /**
  * Global checking

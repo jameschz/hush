@@ -23,7 +23,7 @@ class Ihush_Acl extends Hush_Acl
 	 * @param string $privilege
 	 * @return bool
 	 */
-	public function isAllowed ($roles, $resource, $privilege = null) 
+    public function isAllowed ($roles = null, $resource = null, $privilege = null) 
 	{
 		if (!is_array($roles)) {
 			return parent::isAllowed($roles, $resource, $privilege);

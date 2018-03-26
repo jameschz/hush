@@ -81,13 +81,8 @@ class Hush_Cache
 					break;
 				default :
 					if (!is_dir($options['cache_dir'])) {
-                        if (realpath(__DAT_DIR)) {
-                            mkdir(realpath(__DAT_DIR) . '/cache', 0600);
-                            $options['cache_dir'] = realpath(__DAT_DIR . '/cache');
-                        } else {
-                            require_once 'Hush/Cache/Exception.php';
-                            throw new Hush_Cache_Exception('Can not found cache_dir file directory');
-                        }
+					    require_once 'Hush/Cache/Exception.php';
+					    throw new Hush_Cache_Exception('Can not found cache_dir file directory');
 					}
 					$back_opt = array(
 						'cache_dir' => $options['cache_dir']

@@ -18,6 +18,7 @@ if (!class_exists('Mongo')) {
  * @see Hush_Mongo_Exception
  */
 require_once 'Hush/Mongo/Exception.php';
+require_once 'Pdt/Libs.php';
 
 /**
  * @package Hush_Mongo

@@ -400,13 +400,13 @@ NOTICE;
 		}
 		
 		// copy code
-		$codeCtrlPhp = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.ctrl.php';
+		$codeCtrlPhp = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.ctrl.php.t';
 		file_put_contents($ctrlClsFile, str_replace($replaceArr, $changedArr, file_get_contents($codeCtrlPhp)));
 		echo "\nNew Controller Class : $ctrlClsFile\n";
 		
 		// copy tpl
 		if (!is_dir($ctrlTplPath)) mkdir($ctrlTplPath, 0777, true);
-		$codeCtrlTpl = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.ctrl.tpl';
+		$codeCtrlTpl = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.ctrl.tpl.t';
 		file_put_contents($ctrlTplFile, str_replace($replaceArr, $changedArr, file_get_contents($codeCtrlTpl)));
 		echo "\nNew Controller Template : $ctrlTplFile\n";
 	}
@@ -446,7 +446,7 @@ NOTICE;
 		
 		// create db class
 		if (!file_exists($daoDbClsFile)) {
-			$codeDbPhp = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.db.php';
+			$codeDbPhp = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.db.php.t';
 			file_put_contents($daoDbClsFile, str_replace($replaceArr, $changedArr, file_get_contents($codeDbPhp)));
 			echo "\nNew DB Class : $daoDbClsFile\n";
 		} else {
@@ -456,7 +456,7 @@ NOTICE;
 		// create table class
 		if (!is_dir($daoClsPath)) mkdir($daoClsPath, 0777, true);
 		if (!file_exists($daoClsFile)) {
-			$codeTbPhp = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.tb.php';
+			$codeTbPhp = __DOC_DIR . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'code.tb.php.t';
 			file_put_contents($daoClsFile, str_replace($replaceArr, $changedArr, file_get_contents($codeTbPhp)));
 			echo "\nNew Table Class : $daoClsFile\n";
 		} else {

@@ -12,8 +12,8 @@
 error_reporting(E_ALL ^ E_NOTICE);
 
 // Standard inclusions   
-include_once 'Hush/Chart/pChart/pData.class';
-include_once 'Hush/Chart/pChart/pChart.class';
+include_once 'Hush/Chart/pChart/pData.class.php';
+include_once 'Hush/Chart/pChart/pChart.class.php';
 
 define('__FONT_DIR', realpath(dirname(__FILE__).'/Chart/Fonts'));
 define('__FONT_NAME', 'ARIAL.TTF');

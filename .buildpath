@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="hush-lib/Hush"/>
+	<buildpathentry kind="src" path="hush-app/web/backend"/>
+	<buildpathentry external="true" kind="lib" path="D:/workspace/phplibs"/>
+	<buildpathentry external="true" kind="lib" path="D:/workspace/hush/hush-lib"/>
+	<buildpathentry kind="src" path="hush-app/bin"/>
+	<buildpathentry kind="src" path="hush-app/etc"/>
+	<buildpathentry kind="src" path="hush-app/web/frontend"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="hush-app/doc/tpl"/>
+	<buildpathentry kind="src" path="hush-app/lib/Ihush"/>
+</buildpath>
