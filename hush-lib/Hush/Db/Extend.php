@@ -19,7 +19,7 @@ require_once 'Hush/Db/Exception.php';
  */
 class Hush_Db_Extend
 {
-    public static function debugSql ($sql)
+    public static function debugSql ($sql, $bind = array())
     {
         require_once 'Hush/Debug.php';
         $debug = Hush_Debug::getInstance();
@@ -39,7 +39,7 @@ class Hush_Db_Extend
         $debug->debug($sql, '<font style="color:red">' . $label . '</font>');
     }
     
-    public static function replaceSql ($adapter, $table, array $bind)
+    public static function replaceSql ($adapter, $table, $bind = array())
     {
         /**
          * Build "col = ?" pairs for the statement,

@@ -345,6 +345,41 @@ class Hush_Db_Dao
 	}
 	
 	/**
+	 * Load data by where query
+	 *
+	 * @param string $findwhat
+	 * @param string $wheresql
+	 * @return unknown
+	 */
+	public function find ($findwhat = '', $wheresql = '')
+	{
+	    $findwhat = $findwhat ? $findwhat : '*';
+	    $wheresql = $wheresql ? $wheresql : '1=1';
+	    $findsql =  "select {$findwhat} from ".$this->table()." where {$wheresql}";
+	    return $this->dbr()->query($findsql)->fetchAll();
+	}
+	
+	/**
+	 * Forupdate for transaction
+	 *
+	 * @param int $id
+	 * @param array $fields
+	 * @throws Exception
+	 * @return unknown
+	 */
+	public function forupdate ($id, $fields=array('*'))
+	{
+	    if (!$id || !is_numeric($id)) throw new Exception('primkey is not int');
+	    $fields = $fields ? $fields : array("*");
+	    
+	    $sql = $this->dbw()->select()->from($this->table(), $fields);
+	    $sql->where("$this->primkey = ?", $id);
+	    $sql->forUpdate(true);
+	    
+	    return $this->dbw()->fetchRow($sql);
+	}
+	
+	/**
 	 * Update specific data by where expr
 	 * 
 	 * @param array $data Update data

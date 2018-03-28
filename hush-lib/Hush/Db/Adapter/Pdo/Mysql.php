@@ -106,7 +106,7 @@ class Hush_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
             if ($sql instanceof Zend_Db_Select) {
                 $sql = $sql->__toString();
             }
-            Hush_Db_Extend::debugSql($sql);
+            Hush_Db_Extend::debugSql($sql, $bind);
         }
         
         return parent::query($sql, $bind);

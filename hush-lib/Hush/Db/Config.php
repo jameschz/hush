@@ -23,7 +23,7 @@ abstract class Hush_Db_Config
 	 * 默认数据库参数
 	 * @static
 	 */
-	const DEFAULT_TYPE = 'MYSQLI';
+	const DEFAULT_TYPE = 'Pdo_Mysql';
 	const DEFAULT_HOST = '127.0.0.1';
 	const DEFAULT_PORT = '3306';
 	const DEFAULT_USER = 'root';
