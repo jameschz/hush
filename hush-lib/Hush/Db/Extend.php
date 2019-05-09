@@ -19,27 +19,7 @@ require_once 'Hush/Db/Exception.php';
  */
 class Hush_Db_Extend
 {
-    public static function debugSql ($sql, $bind = array())
-    {
-        require_once 'Hush/Debug.php';
-        $debug = Hush_Debug::getInstance();
-        $debug->setWriter(new Hush_Debug_Writer_Html()); // default can be override
-        
-        if (!($debug instanceof Hush_Debug)) {
-            require_once 'Zend/Db/Adapter/Exception.php';
-            throw new Zend_Db_Adapter_Exception("Can not initialize 'Hush_Debug' instance");
-        }
-        
-        if (sizeof($bind) > 0) {
-            $label = 'Prepared Sql >>>';
-        } else {
-            $label = 'Query Sql >>>';
-        }
-        
-        $debug->debug($sql, '<font style="color:red">' . $label . '</font>');
-    }
-    
-    public static function replaceSql ($adapter, $table, $bind = array())
+    public static function replaceSql ($adapter, $table, array $bind)
     {
         /**
          * Build "col = ?" pairs for the statement,

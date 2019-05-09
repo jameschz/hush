@@ -1,0 +1,142 @@
+/* jquery.minitwitter.js - http://minitwitter.webdevdesigner.com/
+ 	Copyright (c) 2012 Olivier Bréchet */
+
+.tweets {
+	border:1px solid #e7e7e7;
+	border-radius:5px;
+	max-width:520px;
+	font:14px/18px "Tahoma",Helvetica,Arial,sans-serif;
+	color:#333;
+	background-color:#fff;
+	margin:auto;
+}
+
+.tweets a {
+	color:#0083b3;
+	text-decoration:none;
+}
+
+.tweets a:hover {
+	color:#0083b3;
+	text-decoration:underline;
+}
+
+.tweet {
+	border-bottom:1px solid #e7e7e7;
+	padding:12px 12px;
+}
+
+.tweets_header {
+	border-bottom:1px solid #e7e7e7;
+	padding:12px 12px;
+	font-weight:bold;
+	font-size:16px;
+}
+
+.tweets_header a {
+	color:#333;
+	text-decoration:none;
+}
+
+.tweets_header a:hover {
+	color:#333;
+	text-decoration:underline;
+}
+
+.tweets_footer {
+	padding:6px 12px;
+}
+
+.tweets_footer span.powered {
+	font-size:9px;
+}
+
+.tweets_footer span.powered p {
+	margin:0;
+	text-align: center;
+	font-size:9px;
+	color:#999;
+}
+
+.tweets_footer span.powered a {
+	font-size:9px;
+	color:#999;
+	text-decoration:none;
+}
+
+.tweets_footer span.powered a:hover {
+	text-decoration:underline;
+}
+
+.tweets_footer #bird, .mt_footer .image_r {
+	display:block;
+	background:url("http://twimg0-a.akamaihd.net/a/1331143368/t1/img/twitter_web_sprite_icons.png") no-repeat;
+}
+
+
+.tweets_footer #bird{
+	margin:10px auto;
+	background-position: 0 0;
+	width: 34px;
+	height: 26px;
+}
+
+.time {
+	float:right;
+	color:#999;
+	font-size:12px;
+}
+
+.avatar {
+	float:left;
+	margin-right:12px;
+	border-radius:5px;
+}
+
+.avatar img {
+	border-radius:5px;
+}
+
+.mt_header {
+	padding-bottom:4px;
+	padding-left:60px;
+}
+
+.mt_screen_name {
+	font-size:12px;
+	color:#999;
+}
+
+.mt_header a {
+	font-weight:bold;
+	color:#333;
+	text-decoration:none;
+}
+
+.mt_header a:hover {
+	font-weight:bold;
+}
+
+.mt_text {
+	padding-left:60px;
+}
+
+.mt_footer {
+	color:#999;
+	font-size:12px;
+	padding-left:60px;
+}
+
+.mt_footer .image_r {
+	display:inline-block;
+	margin-bottom:-2px;
+	margin-right:4px;
+	background-position: -20px -290px;
+	width: 14px;
+	height:13px;
+	background-color:#999;
+}
+
+.mt_footer a{
+	color:#999;
+}

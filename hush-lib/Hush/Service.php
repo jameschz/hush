@@ -79,7 +79,7 @@ class Hush_Service
 	 * @param string $msg Message content
 	 * @param string $label Message label string
 	 * @param int $level Hush_Debug::LEVEL
-	 * @return unknown
+	 * @return void
 	 */
 	protected function debug ($msg, $label = null, $level = Hush_Debug::DEBUG)
 	{
@@ -99,7 +99,7 @@ class Hush_Service
 	 * Do some initialization for page process
 	 * Could be called by some class which need do page process manually
 	 * @see Hush_App_Dispatcher
-	 * @return unknown
+	 * @return void
 	 */
 	public function __init () 
 	{
@@ -121,7 +121,7 @@ class Hush_Service
 	 * Could be called by some class which need do page process manually
 	 * @see Hush_App_Dispatcher
 	 * @param string $tpl_name Passed template name
-	 * @return unknown
+	 * @return void
 	 */
 	public function __done () 
 	{		

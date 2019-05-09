@@ -18,7 +18,7 @@ class Hush_Util
 	 * Md5 encode triple
 	 * @static
 	 * @param mixed $var
-	 * @return unknown
+	 * @return void
 	 */
 	public static function md5 ($str) 
 	{
@@ -29,7 +29,7 @@ class Hush_Util
 	 * Print data structure in better format
 	 * @static
 	 * @param mixed $var
-	 * @return unknown
+	 * @return void
 	 */
 	public static function dump ($var) 
 	{
@@ -60,7 +60,7 @@ class Hush_Util
 	 * Trace exception for more readable
 	 * @static
 	 * @param Exception $e
-	 * @return unknown
+	 * @return void
 	 */
 	public static function trace (Exception $e) 
 	{
@@ -81,7 +81,7 @@ class Hush_Util
 	public static function param ($pname, $value = null) 
 	{
 		// set into $_REQUEST array
-		if ($value) $_REQUEST[$pname] = $value;
+		if ($value !== null) $_REQUEST[$pname] = $value;
 		// get from $_REQUEST array
 		if (array_key_exists($pname, $_REQUEST)) {
 			return is_string($_REQUEST[$pname]) ? self::str_strip($_REQUEST[$pname]) : $_REQUEST[$pname];
@@ -102,7 +102,7 @@ class Hush_Util
 		// set into $_COOKIE array
 		if ($value === '') unset($_COOKIE[$cname]);
 		// set into $_COOKIE array
-		if ($value) $_COOKIE[$cname] = $value;
+		if ($value !== null) $_COOKIE[$cname] = $value;
 		// get from $_COOKIE array
 		if (array_key_exists($cname, $_COOKIE)) {
 			return is_string($_COOKIE[$cname]) ? self::str_strip($_COOKIE[$cname]) : $_COOKIE[$cname];
@@ -125,9 +125,9 @@ class Hush_Util
 		// set into $_SESSION array
 		if ($value === '') unset($_SESSION[$sname]);
 		// set into $_SESSION array
-		if ($value) $_SESSION[$sname] = $value;
+		if ($value !== null) $_SESSION[$sname] = $value;
 		// get from $_SESSION array
-		if (array_key_exists($sname, $_SESSION)) {
+		if ($_SESSION !== null && array_key_exists($sname, $_SESSION)) {
 			return is_string($_SESSION[$sname]) ? trim($_SESSION[$sname]) : $_SESSION[$sname];
 		}
 		return null;
@@ -176,7 +176,7 @@ class Hush_Util
 	 * Redirect page request by javascript
 	 * @static
 	 * @param string $url
-	 * @return unknown
+	 * @return void
 	 */
 	public static function jsRedirect ($url) 
 	{
@@ -190,7 +190,7 @@ class Hush_Util
 	 * @static
 	 * @param string $url
 	 * @param int $sec
-	 * @return unknown
+	 * @return void
 	 */
 	public static function metaRedirect ($url, $sec = 0) 
 	{
@@ -204,7 +204,7 @@ class Hush_Util
 	 * @static
 	 * @param string $url
 	 * @param int $status Http status such as 302, 301, 404, 500 etc.
-	 * @return unknown
+	 * @return void
 	 */
 	public static function headerRedirect ($url, $status = 302) 
 	{
@@ -217,7 +217,7 @@ class Hush_Util
 	 * HTTP Protocol defined status codes
 	 * @static
 	 * @param int $num
-	 * @return unknown
+	 * @return void
 	 */
 	public static function HTTPStatus ($num) 
 	{
@@ -542,7 +542,8 @@ class Hush_Util
 	 * @param string $src
 	 * @param string $dst
 	 * @param array $escape_dir
-	 * @param callback $callback_func
+	 * @param mixed $callback_func
+	 * @return void
 	 */
 	public static function dir_copy ($src, $dst, $escape_dir = array(), $callback_func = null)
 	{
@@ -627,4 +628,15 @@ class Hush_Util
 		$uuid .= substr($chars,20,12);
 		return strtoupper($uuid);
 	}
+
+    /**
+     * get millisecond
+     * @return float
+     */
+    public static function getMillisecond(){
+        list($s,$time) = explode(' ', microtime());
+
+        $ms = (float)sprintf('%.0f', (($time + $s) * 1000));
+        return $ms;
+    }
 }

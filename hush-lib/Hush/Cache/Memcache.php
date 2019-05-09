@@ -10,11 +10,6 @@
  */
  
 /**
- * @see Hush_Exception
- */
-require_once 'Hush/Cache.php';
-
-/**
  * @package Hush_Cache
  */
 class Hush_Cache_Memcache extends Hush_Cache

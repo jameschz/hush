@@ -21,9 +21,9 @@ class Hush_Util_Download
 	/**
 	 * Progress Callback Method
 	 * 
-	 * @return unknown
+	 * @return void
 	 */
-	private function stream_notification_callback ($notification_code, $severity, $message, $message_code, $bytes_transferred, $bytes_max)
+	public function stream_notification_callback ($notification_code, $severity, $message, $message_code, $bytes_transferred, $bytes_max)
 	{
 		static $filesize = null;
 		switch($notification_code) {

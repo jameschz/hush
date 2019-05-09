@@ -1,6 +1,15 @@
+# for dev tools
+.buildpath
 .settings
 .project
-hush-app/dat/cache
-hush-app/dat/dbsql
-hush-app/tpl/*/cache
-hush-app/tpl/*/template_c
+.idea
+
+# for php libraries
+phplibs/
+
+# for run files
+.env.php
+hush-run/sys/
+hush-run/cdn/
+hush-run/dat/
+hush-run/run/

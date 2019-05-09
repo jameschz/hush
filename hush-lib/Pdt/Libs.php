@@ -9,9 +9,6 @@ if (!class_exists('COM')) {
 if (!class_exists('Mongo')) {
     class Mongo {}
 }
-if (!class_exists('Crypt_RC4')) {
-    class Crypt_RC4 {}
-}
 if (!class_exists('TCPDFBarcode')) {
     class TCPDFBarcode {}
 }

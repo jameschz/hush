@@ -35,6 +35,11 @@ class Hush_Db_Dao
 	private $_dbw = null;
 	
 	/**
+	 * @var bool
+	 */
+	private $_debug = false;
+	
+	/**
 	 * @var string
 	 */
 	public $dbName = null;
@@ -70,16 +75,26 @@ class Hush_Db_Dao
 	protected $_config = null;
 	
 	/**
+	 * @var array
+	 */
+	protected $_configs = array();
+	
+	/**
 	 * @var int|string
 	 */
 	protected $_shardId = 0;
+	
+	/**
+	 * @var array
+	 */
+	protected $_trans = array();
 	
 	/**
 	 * Construct
 	 * Init the target db link
 	 * 
 	 * @param $type 'READ' or 'WRITE'
-	 * @return unknown
+	 * @return void
 	 */
 	public function __construct ($configClass = null)
 	{
@@ -124,7 +139,7 @@ class Hush_Db_Dao
 	 */
 	protected function _bindDb ($dbName = '', $charset = '') 
 	{
-		if ($dbName) $this->dbName = $dbName;
+	    if ($dbName) $this->dbName = $dbName;
 		if ($charset) $this->charset = $charset;
 	}
 	
@@ -140,6 +155,37 @@ class Hush_Db_Dao
 	}
 	
 	/**
+	 * Set db configs by hand
+	 * 
+	 * @param array $configs DB configs array
+	 */
+	protected function _setDbConfigs ($configs = array())
+	{
+		if ($configs) {
+			$this->_configs['host'] = isset($configs['host']) ? trim($configs['host']) : '';
+			$this->_configs['port'] = isset($configs['port']) ? trim($configs['port']) : '';
+			$this->_configs['user'] = isset($configs['user']) ? trim($configs['user']) : '';
+			$this->_configs['pass'] = isset($configs['pass']) ? trim($configs['pass']) : '';
+			$this->_configs['name'] = isset($configs['name']) ? trim($configs['name']) : '';
+		}
+	}
+	
+	/**
+	 * Get database link string
+	 * 
+	 * @param string 
+	 */
+	protected function _getDbLink ($dbc = null)
+	{
+	    if ($dbc) {
+	        $configs = $dbc->getConfig();
+	        $keyId = $configs['host'].':'.$configs['port'].'/'.$configs['dbname'];
+	        return $keyId;
+	    }
+	    return '';
+	}
+	
+	/**
 	 * Do sharding database by shardId
 	 * 
 	 * @param int $shardId
@@ -151,7 +197,7 @@ class Hush_Db_Dao
 		}
 		// if using default shardId
 		$shardId = $shardId ? $shardId : $this->_shardId;
-		// running callback function
+		// running callback function, set db name and cluster
 		$this->_config->doShardDb($this->dbName, $this->tableName, $shardId);
 		// set sharded table name for dao
 		$this->shardDbName = $this->_config->getDbName();
@@ -210,6 +256,17 @@ class Hush_Db_Dao
 	}
 	
 	/**
+	 * Set debug mode
+	 *
+	 * @return Hush_Db_Dao
+	 */
+	public function debug ($debug)
+	{
+	    $this->_debug = $debug;
+	    return $this;
+	}
+	
+	/**
 	 * Get read db link
 	 * 
 	 * @param int $cid Cluster index number
@@ -218,24 +275,35 @@ class Hush_Db_Dao
 	 */
 	public function dbr ($cid = 0, $sid = 0)
 	{
-		$dbr = null;
+		$db = null;
+		
 		// try to get specific db
 		$configs = $this->_getSlave($cid, $sid);
-		// try to get sharded db
-		if (!$configs) {
-			// if specific db can not be found, do sharding
+		
+		// try to get sharded db config
+		if (!$configs || $this->_shardId) {
+		    // do sharding & set db cluster
 			$this->_doShardDb();
-			// get specific db server or random slave server
+			// get random slave server from db cluster
 			$configs = $this->_config->getSlaveDb();
 		}
+		
 		// try to init db
 		if ($configs) {
-			$configs['name'] = $this->shardDbName ? $this->shardDbName : $this->dbName;
-			$dbr = Hush_Db::dbPool($configs, $this->charset);
+			// specific db ?
+			if ($this->_configs) {
+				$configs = array_merge($configs, $this->_configs);
+			} else {
+				$configs['name'] = $this->shardDbName ? $this->shardDbName : $this->dbName;
+			}
+			$db = Hush_Db::dbPool($configs, $this->charset);
+			$db->_debug = $this->_debug;
 		}
+		
 		// try to shard table
 		$this->_doShardTable();
-		return $dbr;
+		
+		return $db;
 	}
 	
 	/**
@@ -247,24 +315,35 @@ class Hush_Db_Dao
 	 */
 	public function dbw ($cid = 0, $sid = 0)
 	{
-		$dbw = null;
+		$db = null;
+		
 		// try to get specific db
 		$configs = $this->_getMaster($cid, $sid);
-		// try to get sharded db
-		if (!$configs) {
-			// if specific db can not be found, do sharding
+		
+		// try to get sharded db config
+		if (!$configs || $this->_shardId) {
+			// do sharding & set db cluster
 			$this->_doShardDb();
-			// get specific db server or random master server
+			// get random master server from db cluster
 			$configs = $this->_config->getMasterDb();
 		}
+		
 		// try to init db
 		if ($configs) {
-			$configs['name'] = $this->shardDbName ? $this->shardDbName : $this->dbName;
-			$dbr = Hush_Db::dbPool($configs, $this->charset);
+			// specific db ?
+			if ($this->_configs) {
+				$configs = array_merge($configs, $this->_configs);
+			} else {
+				$configs['name'] = $this->shardDbName ? $this->shardDbName : $this->dbName;
+			}
+			$db = Hush_Db::dbPool($configs, $this->charset);
+			$db->_debug = $this->_debug;
 		}
+		
 		// try to shard table
 		$this->_doShardTable();
-		return $dbr;
+		
+		return $db;
 	}
 	
 	/**
@@ -317,40 +396,80 @@ class Hush_Db_Dao
 	}
 	
 	/**
+	 * batch create
+	 * 
+	 * @param array $cols
+	 * @param array $vals
+	 */
+	public function batchCreate ($cols, $vals)
+	{
+	    return $this->dbw()->insertMulti($this->table(), $cols, $vals);
+	}
+	
+	/**
 	 * Check data exists by primary key id
 	 * 
 	 * @param mixed $id Primary key value
-	 * @param string $pk Primary key name
+	 * @param string $primkey Primary key name
+	 * @param string $wheresql Where sql expr
 	 * @return array
 	 */
-	public function exist ($id, $primkey = '')
+	public function exist ($id, $primkey = '', $wheresql = '')
 	{
 		$primkey = $primkey ? $primkey : $this->primkey;
-		$sql = $this->dbr()->select()->from($this->table(), '(1)')->where("$primkey = ?", $id);
-		return $this->dbr()->fetchOne($sql);
+		if ($wheresql) {
+			$wheresql = $this->dbr()->select()->from($this->table(), '(1)')->where($wheresql);
+		} else {
+			$wheresql = $this->dbr()->select()->from($this->table(), '(1)')->where("$primkey = ?", $id);
+		}
+		return $this->dbr()->fetchOne($wheresql);
+	}
+	
+	/**
+	 * Check data exists by primary key id
+	 *
+	 * @param mixed $id Primary key value
+	 * @param string $primkey Primary key name
+	 * @param string $wheresql Where sql expr
+	 * @return array
+	 */
+	public function count ($id, $primkey = '', $wheresql = '')
+	{
+		$primkey = $primkey ? $primkey : $this->primkey;
+		if ($wheresql) {
+			$wheresql = $this->dbr()->select()->from($this->table(), 'count(*)')->where($wheresql);
+		} else {
+			$wheresql = $this->dbr()->select()->from($this->table(), 'count(*)')->where("$primkey = ?", $id);
+		}
+		return $this->dbr()->fetchOne($wheresql);
 	}
 	
 	/**
 	 * Load data by primary key id
 	 * 
 	 * @param mixed $id Primary key value
-	 * @param string $pk Primary key name
+	 * @param string $primkey Primary key name
+	 * @param string $wheresql Where sql expr
 	 * @return array
 	 */
-	public function read ($id, $primkey = '')
+	public function read ($id, $primkey = '', $wheresql = '')
 	{
 		$primkey = $primkey ? $primkey : $this->primkey;
-		$sql = $this->dbr()->select()->from($this->table())->where("$primkey = ?", $id);
-		return $this->dbr()->fetchRow($sql);
+		if ($wheresql) {
+			$wheresql =  $this->dbr()->select()->from($this->table())->where($wheresql);
+		} else {
+			$wheresql =  $this->dbr()->select()->from($this->table())->where("$primkey = ?", $id);
+		}
+		return $this->dbr()->fetchRow($wheresql);
 	}
 	
-	/**
-	 * Load data by where query
-	 *
-	 * @param string $findwhat
-	 * @param string $wheresql
-	 * @return unknown
-	 */
+    /**
+     * Load data by where query
+     * 
+     * @param string $findwhat
+     * @param string $wheresql
+     * @return array
+     */
 	public function find ($findwhat = '', $wheresql = '')
 	{
 	    $findwhat = $findwhat ? $findwhat : '*';
@@ -361,17 +480,17 @@ class Hush_Db_Dao
 	
 	/**
 	 * Forupdate for transaction
-	 *
+	 * 
 	 * @param int $id
 	 * @param array $fields
 	 * @throws Exception
-	 * @return unknown
+	 * @return void
 	 */
 	public function forupdate ($id, $fields=array('*'))
 	{
 	    if (!$id || !is_numeric($id)) throw new Exception('primkey is not int');
 	    $fields = $fields ? $fields : array("*");
-	    
+	    	    
 	    $sql = $this->dbw()->select()->from($this->table(), $fields);
 	    $sql->where("$this->primkey = ?", $id);
 	    $sql->forUpdate(true);
@@ -383,16 +502,18 @@ class Hush_Db_Dao
 	 * Update specific data by where expr
 	 * 
 	 * @param array $data Update data
-	 * @param string $where Where sql expr
+	 * @param string $primkey Primary key name
+	 * @param string $wheresql Where sql expr
 	 * @return bool
 	 */
-	public function update ($data, $wheresql = '')
+	public function update ($data, $primkey = '', $wheresql = '')
 	{
 		if (!$wheresql) {
-			if (!isset($data[$this->primkey])) {
+			$primkey = $primkey ? $primkey : $this->primkey;
+			if (!isset($data[$primkey])) {
 				throw new Hush_Db_Exception('Can not find primary key in data');
 			}
-			$wheresql = $this->dbw()->quoteInto("{$this->primkey} = ?", $data[$this->primkey]);
+			$wheresql = $this->dbw()->quoteInto("{$primkey} = ?", $data[$primkey]);
 		}
 		return $this->dbw()->update($this->table(), $data, $wheresql);
 	}
@@ -401,13 +522,14 @@ class Hush_Db_Dao
 	 * Delete data by primary key id
 	 * 
 	 * @param mixed $id Primary key value
-	 * @param string $pk Primary key name
+	 * @param string $primkey Primary key name
+	 * @param string $wheresql Where sql expr
 	 * @return bool
 	 */
-	public function delete ($id, $primkey = '')
+	public function delete ($id, $primkey = '', $wheresql = '')
 	{
 		$primkey = $primkey ? $primkey : $this->primkey;
-		$wheresql = $this->dbw()->quoteInto("$primkey = ?", $id);
+		$wheresql = $wheresql ? $wheresql : $this->dbw()->quoteInto("$primkey = ?", $id);
 		return $this->dbw()->delete($this->table(), $wheresql);
 	}
 	
@@ -422,5 +544,69 @@ class Hush_Db_Dao
 	{
 		$affect_rows = $this->dbw()->replace($this->table(), $data);
 		return ($affect_rows !== false) ? true : false;
+	}
+	
+	/**
+	 * Start transaction
+	 * 
+	 * @return bool
+	 */
+	public function beginTransaction ()
+	{
+	    $dbc = $this->dbw();
+	    $link = $this->_getDbLink($dbc);
+	    if (!$link) return false;
+	    // init trans array at the first time
+	    if (!isset($this->_trans[$link])) {
+	        $this->_trans[$link] = 0;
+	        $dbc->beginTransaction();
+	    }
+	    // step into trans call
+	    $this->_trans[$link] += 1;
+	    return true;
+	}
+	
+	/**
+	 * Commit the transaction
+	 *
+	 * @return bool
+	 */
+	public function commit ()
+	{
+	    $dbc = $this->dbw();
+	    $link = $this->_getDbLink($dbc);
+	    if (!$link) return false;
+	    // must call beginTransaction firstly
+	    if (isset($this->_trans[$link])) {
+	        // commit only in the outermost trans
+	        if ($this->_trans[$link] == 1) {
+	            $dbc->commit();
+	        }
+	        // step out trans call
+	        $this->_trans[$link] -= 1;
+	    }
+	    return true;
+	}
+	
+	/**
+	 * Rollback the transaction
+	 *
+	 * @return bool
+	 */
+	public function rollback ()
+	{
+	    $dbc = $this->dbw();
+	    $link = $this->_getDbLink($dbc);
+	    if (!$link) return false;
+	    // must call beginTransaction firstly
+	    if (isset($this->_trans[$link])) {
+	        // rollback only in the outermost trans
+	        if ($this->_trans[$link] == 1) {
+	            $dbc->rollback();
+	        }
+	        // step out trans call
+	        $this->_trans[$link] -= 1;
+	    }
+	    return true;
 	}
 }

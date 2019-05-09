@@ -10,94 +10,114 @@
  */
  
 /**
- * @see Zend_Cache
- */
-require_once 'Zend/Cache.php';
-
-/**
- * Include subclasses
- */
-require_once 'Hush/Cache/Memcache.php';
-
-/**
  * @package Hush_Cache
  */
-class Hush_Cache
-{
-	/**
-	 * Default expire time
-	 * @staticvar int
-	 */
-	public static $life_time = 9999999999; // default never overtime
+abstract class Hush_Cache
+{	
+	protected $tid = '';
+	protected $exp = null;
+	protected $data = array();
+	protected $conn = null;
 	
-	/**
-	 * @staticvar Zend_Cache
-	 */
-	public static $cache_object = null;
-	
-	/**
-	 * Set cache expire time
-	 * @static
-	 * @param int $second
-	 */
-	public static function setLifeTime ($second) 
+	public function __construct ($tag, $exp = '')
 	{
-		self::$life_time = $second;
+	    $this->tid = $tag;
+	    $this->exp = $exp ? intval($exp) : null;
 	}
 	
-	/**
-	 * Singleton method
-	 * @static
-	 * @param string $type
-	 * @return Zend_Cache
-	 */
-	public static function factory ($type = 'File', $options = array()) 
+	abstract public function initConnection ();
+	
+	public function get ($key = '')
 	{
-		if (!self::$cache_object) 
-		{
-			$front_opt = array(
-				'automatic_serialization' => true
-			);
-			
-			if (self::$life_time) {
-				$front_opt['lifeTime'] = self::$life_time;
-			}
-			
-			switch ($type) {
-				case 'Memcached' :
-					$mhost = $options['memcache_host'];
-					$mport = $options['memcache_port'];
-					$memcache = new Memcache;
-					if (!@$memcache->connect($mhost, $mport)) {
-						require_once 'Hush/Cache/Exception.php';
-						throw new Hush_Cache_Exception('Can not connect to memcache server');
-					}
-					$back_opt = array(
-						'servers' => array(
-							'host'	=> $mhost,
-							'port'	=> $mport
-						)
-					);
-					break;
-				default :
-					if (!is_dir($options['cache_dir'])) {
-					    require_once 'Hush/Cache/Exception.php';
-					    throw new Hush_Cache_Exception('Can not found cache_dir file directory');
-					}
-					$back_opt = array(
-						'cache_dir' => $options['cache_dir']
-					);
-					break;
-			}
-			
-			self::$cache_object = Zend_Cache::factory(
-				'Core',		// available frontends : Core, Output, Class, File, Function, Page
-				$type,		// available backends : File, Sqlite, Memcached, Apc, ZendPlatform, Xcache, TwoLevels
-				$front_opt,
-				$back_opt
-			);
-		}
-		
-		return self::$cache_object;
+	    $this->initConnection();
+	    if ($this->tid && $this->conn) {
+	        // get old data
+	        $this->data = (array) json_decode($this->conn->get($this->tid), 1);
+	        if ($key) {
+	            // get key value
+	            $this->data = (array) $this->data;
+	            return $this->data[$key];
+	        } else {
+	            // get all
+	            return $this->data;
+	        }
+	    } else {
+	        return false;
+	    }
 	}
+	
+	public function set ($key, $val = null)
+	{
+	    $this->initConnection();
+	    if ($this->tid && $this->conn) {
+	        // get old data
+	        $this->data = (array) json_decode($this->conn->get($this->tid), 1);
+	        if ($val !== null) {
+	            // set key value
+	            $this->data[$key] = $val;
+	        } else {
+	            // set key as value
+	            if (is_array($key)) {
+	                // merge into data
+	                $this->data = array_merge($this->data, $key);
+	            } else {
+	                // save as string
+	                $this->data = (string) $key;
+	            }
+	        }
+	        // save data
+	        if ($this->exp) {
+	            return $this->conn->set($this->tid, json_encode($this->data), $this->exp);
+	        } else {
+	            return $this->conn->set($this->tid, json_encode($this->data));
+	        }
+	    } else {
+	        return false;
+	    }
+	}
+	
+	public function del ($key = '')
+	{
+	    $this->initConnection();
+	    if ($this->tid && $this->conn) {
+	        if ($key) {
+	            // delete key value
+	            $this->data = json_decode($this->conn->get($this->tid), 1);
+	            unset($this->data[$key]);
+	            return $this->conn->set($this->tid, json_encode($this->data));
+	        } else {
+	            // delete all
+	            $this->data = array();
+	            return $this->conn->del($this->tid);
+	        }
+	    } else {
+	        return false;
+	    }
+	}
+	
+	public function lpush ($data = '')
+	{
+	    $this->initConnection();
+	    if ($this->tid && $this->conn) {
+	        if ($data) {
+	            // push data
+	            return $this->conn->lPush($this->tid, trim($data));
+	        }
+	    } else {
+	        return false;
+	    }
+	}
+
+    public function incr ($key = '')
+    {
+        $this->initConnection();
+        if ($this->tid && $this->conn) {
+            if ($key) {
+                // incr key
+                return $this->conn->incr($this->tid, trim($key));
+            }
+        } else {
+            return false;
+        }
+    }
 }

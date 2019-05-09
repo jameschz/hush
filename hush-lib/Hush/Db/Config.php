@@ -21,6 +21,7 @@ abstract class Hush_Db_Config
 {
 	/**
 	 * 默认数据库参数
+	 * TYPE : Pdo_Mysql / Mysqli
 	 * @static
 	 */
 	const DEFAULT_TYPE = 'Pdo_Mysql';
@@ -72,6 +73,54 @@ abstract class Hush_Db_Config
 	private static $_instance = null;
 	
 	/**
+	 * 获取所有 clusters
+	 * @return array
+	 */
+	public function getAllClusters ()
+	{
+        return $this->_clusters;
+	}
+	
+	/**
+	 * 获取对应数据库的 masters
+	 * 用于操作 Db 的后台脚本
+	 * @return array
+	 */
+	public function getClusterMasters ($dbName = '')
+	{
+	    $masters = array();
+	    // TODO : default get all masters
+	    if (!$dbName) {
+	        throw new Hush_Db_Exception('Please specify db name');
+	    }
+	    // find specific db cluster
+	    if (isset($this->_clusters[$dbName])) {
+	        foreach ((array) $this->_clusters[$dbName] as $db_cluster) {
+	            $masters[$dbName] = $db_cluster['master']; // get all masters
+	        }
+	    }
+	    // search matched db cluster
+	    if (!$masters) {
+	        foreach (array_keys($this->_clusters) as $rule) {
+	            $pattern = preg_quote($rule, '/');
+	            $pattern = str_replace('\*', '(.*?)', $pattern);
+	            if (preg_match('/^' .$pattern . '$/i', $dbName)) {
+	                foreach ((array) $this->_clusters[$rule] as $db_cluster) {
+	                    $masters[$dbName] = $db_cluster['master']; // get all masters
+	                }
+	            }
+	        }
+	    }
+	    // use default db cluster
+	    if (!$masters) {
+	        foreach ((array) $this->_clusters['default'] as $db_cluster) {
+	            $masters[$dbName] = $db_cluster['master']; // get all masters
+	        }
+	    }
+	    return $masters;
+	}
+	
+	/**
 	 * 设置目前 cluster
 	 * @param string $dbName
 	 * @param int|string $clusterId
@@ -85,11 +134,15 @@ abstract class Hush_Db_Config
 			$clusters = (array) $this->_clusters[$dbName];
 		}
 		// search matched db cluster
-		foreach (array_keys($this->_clusters) as $rule) {
-			$rule = str_replace('/', '\/', $rule);
-			if (preg_match("/$rule/i", $dbName)) {
-				$clusters = (array) $this->_clusters[$rule];
-			}
+		if (!$clusters) {
+    		foreach (array_keys($this->_clusters) as $rule) {
+    		    $pattern = preg_quote($rule, '/');
+    		    $pattern = str_replace('\*', '(.*?)', $pattern);
+    		    if (preg_match('/^' .$pattern . '$/i', $dbName)) {
+    				$clusters = (array) $this->_clusters[$rule];
+    				break;
+    			}
+    		}
 		}
 		// use default db cluster
 		if (!$clusters) {
@@ -137,7 +190,7 @@ abstract class Hush_Db_Config
 	 */
 	protected function setDb ($dbName, $clusterId = 0)
 	{
-		$this->_dbName = $dbName;
+	    $this->setDbName($dbName);
 		return $this->setClusterDb($dbName, $clusterId);
 	}
 	
@@ -152,6 +205,20 @@ abstract class Hush_Db_Config
 	public function getDb ($dbName, $clusterId = 0, $dbType, $serverId = 0)
 	{
 		return $this->_clusters[$dbName][$clusterId][$dbType][$serverId];
+	}
+	
+	/**
+	 * 设置 db name
+	 * @return string
+	 */
+	public function setDbName ($dbName)
+	{
+	    $dbSuffix = defined('__HUSH_ENV') 
+	       && strlen(__HUSH_ENV) 
+	       && strcmp(__HUSH_ENV, 'rc') 
+	       && strcmp(__HUSH_ENV, 'local') 
+	       && strcmp(__HUSH_ENV, 'release') ? '_' . __HUSH_ENV : '';
+	    return $this->_dbName = $dbName . $dbSuffix;
 	}
 	
 	/**
@@ -194,7 +261,7 @@ abstract class Hush_Db_Config
 	 */
 	public function doShardDb ($dbName, $tbName, $shardId)
 	{
-		$this->setClusterDb($dbName, 0);
+		return $this->setDb($dbName, 0);
 	}
 	
 	/**
@@ -205,7 +272,7 @@ abstract class Hush_Db_Config
 	 */
 	public function doShardTable ($dbName, $tbName, $shardId)
 	{
-		$this->setTable($tbName);
+		return $this->setTable($tbName);
 	}
 	
 	/**

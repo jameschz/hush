@@ -15,11 +15,6 @@
 require_once 'Hush/Exception.php';
 
 /**
- * @see Hush_Session
- */
-require_once 'Hush/Session.php';
-
-/**
  * @see Hush_Debug
  */
 require_once 'Hush/Debug.php';
@@ -49,6 +44,12 @@ class Hush_Page
 	 * @var string
 	 */
 	protected $tplDir;
+	
+	/**
+	 * @access protected
+	 * @var string
+	 */
+	protected $tplcDir;
 	
 	/**
 	 * @access protected
@@ -103,7 +104,7 @@ class Hush_Page
 	 * Close autoload process
 	 * You should call each page process manually
 	 * @static
-	 * @return unknown
+	 * @return void
 	 */
 	public static function closeAutoLoad () 
 	{
@@ -113,7 +114,7 @@ class Hush_Page
 	/**
 	 * Set page's debug level
 	 * @param int $level
-	 * @return unknown
+	 * @return void
 	 */
 	public function setDebugLevel ($level = Hush_Debug::DEBUG)
 	{
@@ -125,16 +126,22 @@ class Hush_Page
 	/**
 	 * Set template dir
 	 * @param string $dir
+	 * @param string $dir_c
 	 * @throws Hush_Page_Exception
 	 * @return Hush_Page
 	 */
-	public function setTemplateDir ($dir) 
+	public function setTemplateDir ($dir, $dir_c = '') 
 	{
 		if (!is_dir($dir)) {
 			require_once 'Hush/Page/Exception.php';
 			throw new Hush_Page_Exception('Could not find tpl directory \'' . $dir . '\'');
 		}
 		$this->tplDir = $dir; // for tpl base dir
+		if ($dir_c) {
+		    $this->tplcDir = $dir_c; // for tpl compiled dir
+		} else {
+		    $this->tplcDir = $dir; // for tpl compiled dir
+		}
 		return $this;
 	}
 	
@@ -243,7 +250,7 @@ class Hush_Page
 	 * @param string $msg Message content
 	 * @param string $label Message label string
 	 * @param int $level Hush_Debug::LEVEL
-	 * @return unknown
+	 * @return void
 	 */
 	protected function debug ($msg, $label = null, $level = Hush_Debug::DEBUG)
 	{
@@ -261,7 +268,7 @@ class Hush_Page
 	 * Do some initialization for page process
 	 * Could be called by some class which need do page process manually
 	 * @see Hush_App_Dispatcher
-	 * @return unknown
+	 * @return void
 	 */
 	public function __prepare () 
 	{
@@ -277,18 +284,13 @@ class Hush_Page
 		$this->_debug = Hush_Debug::getInstance();
 		$this->_debug->setWriter(new Hush_Debug_Writer_Html());
 		
-		// close debug infos in www
-		if (!strcmp(__ENV, 'www')) {
-			$this->_debug->setDebugLevel(Hush_Debug::INFO);
-		}
-		
 		// set page tpl object
 		$view_engine = defined('__TPL_ENGINE') ? __TPL_ENGINE : 'Smarty';
 		$this->view = Hush_View::getInstance($view_engine, array(
+		    'config_dir'	=> $this->tplDir . DIRECTORY_SEPARATOR . 'config',
 			'template_dir'	=> $this->tplDir . DIRECTORY_SEPARATOR . 'template',
-			'compile_dir'	=> $this->tplDir . DIRECTORY_SEPARATOR . 'template_c',
-			'config_dir'	=> $this->tplDir . DIRECTORY_SEPARATOR . 'config',
-			'cache_dir'		=> $this->tplDir . DIRECTORY_SEPARATOR . 'cache',
+			'compile_dir'	=> $this->tplcDir . DIRECTORY_SEPARATOR . 'template_c',
+			'cache_dir'		=> $this->tplcDir . DIRECTORY_SEPARATOR . 'cache',
 		));
 		
 		// insert callback method
@@ -300,7 +302,7 @@ class Hush_Page
 	 * Could be called by some class which need do page process manually
 	 * @see Hush_App_Dispatcher
 	 * @param string $tpl_name Passed template name
-	 * @return unknown
+	 * @return void
 	 */
 	public function __display ($tpl_name = null) 
 	{
@@ -333,21 +335,21 @@ class Hush_Page
 	/**
 	 * Could be overload by subclasses
 	 * For doing something before page preparation (page's objects initialization)
-	 * @return unknown
+	 * @return void
 	 */
 	protected function __before_prepare () {}
 	
 	/**
 	 * Could be overload by subclasses
 	 * For doing something before page main process
-	 * @return unknown
+	 * @return void
 	 */
 	protected function __before_process () {}
 	
 	/**
 	 * Could be overload by subclasses
 	 * For implement the main process of the subpages
-	 * @return unknown
+	 * @return void
 	 */
 	protected function __process () {}
 }

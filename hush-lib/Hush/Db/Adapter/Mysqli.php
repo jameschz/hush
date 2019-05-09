@@ -33,7 +33,7 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	 * For debug mode
 	 * @var bool
 	 */
-	public $_debug = false; // for trace sql with 'Hush_Debug' lib
+	public $_debug = false; // for trace sql
 	
 	/**
 	 * Replace table rows with specified data based on a WHERE clause.
@@ -96,8 +96,6 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 	
 	/**
 	 * Overload the query method of Zend Db
-	 * So we can debug the sql message
-	 * @see Hush_Debug
 	 * @param string $sql
 	 * @param array $bind
 	 * @return Zend_Db_Statement_Interface
@@ -108,9 +106,17 @@ class Hush_Db_Adapter_Mysqli extends Zend_Db_Adapter_Mysqli
 			if ($sql instanceof Zend_Db_Select) {
 				$sql = $sql->__toString();
 			}
-			Hush_Db_Extend::debugSql($sql);
+			Core_Util::core_log('Query Sql : '.$sql);
+			$t1 = Core_Util::microtime_float();
 		}
 		
-		return parent::query($sql, $bind);
+		$result = parent::query($sql, $bind);
+		
+		if ($this->_debug) {
+		    $t2 = Core_Util::microtime_float();
+		    Core_Util::core_log('Query Time : '.($t2-$t1));
+		}
+		
+		return $result;
 	}
 }

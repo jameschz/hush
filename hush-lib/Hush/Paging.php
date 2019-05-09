@@ -152,6 +152,8 @@ class Hush_Paging
 			$this->frStr = $this->frNum + 1;
 			$this->toNum = ($this->page == $this->totalPage) ? $this->totalNum : $this->each * $this->page;
 			$this->toStr = $this->toNum;
+			$this->limitNum = $this->each; // for db
+			$this->offsetNum = $this->frNum; // for db
 			for ($i = 1; $i <= $this->totalPage; $i++) {
 				if ($this->page == $i) {
 					if (isset($this->pattern['PageTag']) && sizeof($this->pattern['PageTag']) == 2) {

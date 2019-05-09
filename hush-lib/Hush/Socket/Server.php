@@ -189,7 +189,7 @@ class Hush_Socket_Server extends Hush_Socket
 					$params = $pack['params'];
 					
 //					$result = $this->$method($params);
-					$result = call_user_method_array($method, $this, $params);
+					$result = call_user_func_array(array($this, $method), $params);
 					
 					if (self::$debugMode) {
 						echo "result   : ";

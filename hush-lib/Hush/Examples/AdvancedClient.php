@@ -36,7 +36,7 @@ class Examples_AdvancedClient
 	{
 		$key = array_rand($this->ports);
 		$client = new Examples_Client(SERVER_HOST, $this->ports[$key]);
-		return call_user_method_array($method, $client, $params);
+		return call_user_func_array(array($client, $method), $params);
 	}
 }
 

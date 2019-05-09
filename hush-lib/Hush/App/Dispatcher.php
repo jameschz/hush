@@ -116,7 +116,7 @@ class Hush_App_Dispatcher
 	/**
 	 * Set page's debug level
 	 * @param int $level
-	 * @return unknown
+	 * @return void
 	 */
 	public function setDebugLevel ($level = Hush_Debug::DEBUG)
 	{
@@ -272,13 +272,13 @@ class Hush_App_Dispatcher
 	/**
 	 * Format path url
 	 * @access private
-	 * @return unknown
+	 * @return void
 	 */
 	private function _formatPath ()
 	{
 		// get raw url path
 		if (!$this->_path) {
-			$this->_path = $this->_request->getPathInfo();
+		    $this->_path = $this->_request->getPathInfo();
 			$this->_path = preg_replace('/\/+/i', '/', $this->_path);
 		}
 	}
@@ -324,7 +324,7 @@ class Hush_App_Dispatcher
 	 * Main dispatch process
 	 * @param array $app_dir
 	 * @param array $tpl_dir
-	 * @return unknown
+	 * @return void
 	 */
 	public function dispatch ($app_dir, $tpl_dir)
 	{
@@ -428,7 +428,7 @@ class Hush_App_Dispatcher
 		try {
 			
 			// load page class
-			Zend_Loader::loadClass($className, $app_dir); // debug should be closed
+			@Zend_Loader::loadClass($className, $app_dir); // debug should be closed
 			if (!class_exists($className)) {
 				require_once 'Hush/App/Exception.php';
 				throw new Hush_App_Exception('Can not find definition for class \'' . $className . '\'');
@@ -439,10 +439,11 @@ class Hush_App_Dispatcher
 			require_once 'Hush/Util.php';
 			Hush_Util::HTTPStatus(404);
 			if (!$this->_debug) {
+				@error_log($e->getMessage()); // save error log
 				if (file_exists($this->_epage[404])) {
 					include_once $this->_epage[404];
-					exit;
 				}
+				exit;
 			} else {
 				$this->_printDebugInfo(array(
 					'className'		=> $className,
@@ -506,11 +507,11 @@ class Hush_App_Dispatcher
 			require_once 'Hush/Util.php';
 			Hush_Util::HTTPStatus(500);
 			if (!$this->_debug) {
-				
+				@error_log($e->getMessage()); // save error log
 				if (file_exists($this->_epage[500])) {
 					include_once $this->_epage[500];
-					exit;
 				}
+				exit;
 			} else {
 				$this->_printDebugInfo(array(
 					'className'		=> $className,

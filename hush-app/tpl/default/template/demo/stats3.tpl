@@ -1,0 +1,1 @@
+{include file="admin/stat/main.tpl"}

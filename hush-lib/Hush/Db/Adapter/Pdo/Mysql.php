@@ -33,7 +33,7 @@ class Hush_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
      * For debug mode
      * @var bool
      */
-    public $_debug = true; // for trace sql
+    public $_debug = false; // for trace sql
     
     /**
      * Replace table rows with specified data based on a WHERE clause.
@@ -106,9 +106,17 @@ class Hush_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
             if ($sql instanceof Zend_Db_Select) {
                 $sql = $sql->__toString();
             }
-            Hush_Db_Extend::debugSql($sql, $bind);
+            Core_Util::core_log('Query Sql : '.$sql);
+            $t1 = Core_Util::microtime_float();
         }
         
-        return parent::query($sql, $bind);
+        $result = parent::query($sql, $bind);
+        
+        if ($this->_debug) {
+            $t2 = Core_Util::microtime_float();
+            Core_Util::core_log('Query Time : '.($t2-$t1));
+        }
+        
+        return $result;
     }
 }

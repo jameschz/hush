@@ -283,6 +283,9 @@ class Hush_View_Smarty extends Hush_View implements Zend_View_Interface
 	 */
 	public function display($name) 
 	{
+		if (function_exists('smarty_output_filter')) {
+			$this->_smarty->registerFilter('output', 'smarty_output_filter');
+		}
 		return $this->_smarty->display($name);
 	}
 	

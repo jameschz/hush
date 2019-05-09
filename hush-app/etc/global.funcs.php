@@ -1,7 +1,72 @@
 <?php
-/**
- * Global functions
- */
+///////////////////////////////////////////////////////////////////////////////////////////////
+// hush global functions
+
+function err ($k = '')
+{
+    $s = 'err.'.$GLOBALS['core.lang'];
+    $t = isset($GLOBALS[$s][$k]) ? $GLOBALS[$s][$k] : $k;
+    if ($t) {
+        // remove first one params
+        $args = func_get_args();
+        array_shift($args);
+        // should do replace
+        if (sizeof($args) > 0) {
+            $replace_old = array();
+            $replace_new = array();
+            foreach ($args as $id => $arg) {
+                $replace_old[] = '{' . $id . '}';
+                $replace_new[] = $arg;
+            }
+            $t = str_replace($replace_old, $replace_new, $t);
+        }
+    }
+    return $t;
+}
+
+function msg ($k = '')
+{
+    $s = 'msg.'.$GLOBALS['core.lang'];
+    $t = isset($GLOBALS[$s][$k]) ? $GLOBALS[$s][$k] : $k;
+    if ($t) {
+        // remove first one params
+        $args = func_get_args();
+        array_shift($args);
+        // should do replace
+        if (sizeof($args) > 0) {
+            $replace_old = array();
+            $replace_new = array();
+            foreach ($args as $id => $arg) {
+                $replace_old[] = '{' . $id . '}';
+                $replace_new[] = $arg;
+            }
+            $t = str_replace($replace_old, $replace_new, $t);
+        }
+    }
+    return $t;
+}
+
+function cfg ($str, $key = '')
+{
+    global $_APPCFG;
+    if ($key) return isset($_APPCFG[$str][$key]) ? $_APPCFG[$str][$key] : array();
+    else return isset($_APPCFG[$str]) ? $_APPCFG[$str] : array();
+}
+
+function ajax ($err, $msg, $data = '')
+{
+    $result = array(
+        'err'	=> $err,
+        'msg'	=> $msg,
+        'data'	=> $data,
+    );
+    echo json_encode($result);
+    exit;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// hush protected functions
+
 function _hush_realpath ($path)
 {
 	$path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);

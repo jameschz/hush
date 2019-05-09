@@ -1,6 +1,6 @@
 <?php
 /**
- * Ihush Console
+ * App Console
  *
  * @author     James.Huang <shagoo@gmail.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
@@ -8,25 +8,22 @@
  */
 
 define('__HUSH_CLI', 1);
+define('__APP_SITE', '');
 
-require_once '../etc/global.config.php';
+ini_set('default_socket_timeout', -1);
 
-require_once 'Hush/Util.php';
+require_once dirname(__FILE__) . '/../etc/global.config.php';
+require_once dirname(__FILE__) . '/../etc/global.appcfg.php';
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Constants definition
-
-define('__MYSQL_IMPORT_TOOL', 'mysql');
-define('__MYSQL_DUMPER_TOOL', 'mysqldump');
-define('__MYSQL_IMPORT_COMMAND', __MYSQL_IMPORT_TOOL . ' {PARAMS} < {SQLFILE}');
-define('__MYSQL_DUMPER_COMMAND', __MYSQL_DUMPER_TOOL . ' {PARAMS} --add-drop-database > {SQLFILE}');
+require_once 'Core/Util.php';
+require_once 'Core/Service.php';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Main process
 
 try {
-	require_once 'Ihush/Cli.php';
-	$cli = new Ihush_Cli();
+	require_once 'App/Cli.php';
+	$cli = new App_Cli();
 	$cli->run();
 	
 } catch (Exception $e) {

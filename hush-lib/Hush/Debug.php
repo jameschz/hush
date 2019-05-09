@@ -104,7 +104,7 @@ class Hush_Debug
 	 * Set debug level
 	 * Default level is self::FATAL, which means the debug message could be shown if the message level is under self::FATAL
 	 * @param int $level
-	 * @return unknown
+	 * @return void
 	 */
 	public function setDebugLevel ($level = self::FATAL)
 	{
@@ -115,7 +115,7 @@ class Hush_Debug
 	 * Check debug can be showed
 	 * Judge by url parameter named 'debug'
 	 * @param string $level
-	 * @return unknown
+	 * @return void
 	 */
 	public static function showDebug ($str)
 	{
@@ -130,7 +130,7 @@ class Hush_Debug
 	/**
 	 * Set one writer for debug
 	 * @param Hush_Debug_Writer $writer
-	 * @return unknown
+	 * @return void
 	 */
 	public function setWriter($writer = null)
 	{
@@ -147,7 +147,7 @@ class Hush_Debug
 	/**
 	 * Add writer for debug
 	 * @param Hush_Debug_Writer $writer
-	 * @return unknown
+	 * @return void
 	 */
 	public function addWriter($writer = null)
 	{

@@ -206,7 +206,7 @@ class Hush_App
 	 * @see Hush_App_Dispatcher
 	 * @param array $vars Dispatcher vars
 	 * @throws Hush_App_Exception
-	 * @return unknown
+	 * @return void
 	 */
 	public function run ($vars = array())
 	{
