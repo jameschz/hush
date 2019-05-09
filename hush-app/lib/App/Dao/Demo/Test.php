@@ -135,6 +135,7 @@ class Demo_Test extends App_Dao_Demo
 	public function testTrans2 ($id)
 	{
 	    $this->beginTransaction();
+// 	    Core_Service::trans_begin($this);
 	    try {
 	        // 嵌套事务逻辑（也可以是其他库）
 	        App_Dao::load('Demo_Test')->testTrans1($id);
@@ -150,8 +151,10 @@ class Demo_Test extends App_Dao_Demo
 	            throw new Exception("trans update error : update {$id} !!!");
 	        }
 	        $this->commit();
+// 	        Core_Service::trans_begin($this);
 	    } catch (Exception $e) {
 	        $this->rollBack();
+// 	        Core_Service::trans_rollback($this);
 	        throw new Exception($e->getMessage());
 	    }
 	}

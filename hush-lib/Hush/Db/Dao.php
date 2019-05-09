@@ -87,7 +87,7 @@ class Hush_Db_Dao
 	/**
 	 * @var array
 	 */
-	protected $_trans = array();
+	protected static $_trans = array();
 	
 	/**
 	 * Construct
@@ -557,12 +557,12 @@ class Hush_Db_Dao
 	    $link = $this->_getDbLink($dbc);
 	    if (!$link) return false;
 	    // init trans array at the first time
-	    if (!isset($this->_trans[$link])) {
-	        $this->_trans[$link] = 0;
+	    if (!isset(self::$_trans[$link])) {
+	        self::$_trans[$link] = 0;
 	        $dbc->beginTransaction();
 	    }
 	    // step into trans call
-	    $this->_trans[$link] += 1;
+	    self::$_trans[$link] += 1;
 	    return true;
 	}
 	
@@ -577,13 +577,13 @@ class Hush_Db_Dao
 	    $link = $this->_getDbLink($dbc);
 	    if (!$link) return false;
 	    // must call beginTransaction firstly
-	    if (isset($this->_trans[$link])) {
+	    if (isset(self::$_trans[$link])) {
 	        // commit only in the outermost trans
-	        if ($this->_trans[$link] == 1) {
+	        if (self::$_trans[$link] == 1) {
 	            $dbc->commit();
 	        }
 	        // step out trans call
-	        $this->_trans[$link] -= 1;
+	        self::$_trans[$link] -= 1;
 	    }
 	    return true;
 	}
@@ -599,13 +599,13 @@ class Hush_Db_Dao
 	    $link = $this->_getDbLink($dbc);
 	    if (!$link) return false;
 	    // must call beginTransaction firstly
-	    if (isset($this->_trans[$link])) {
+	    if (isset(self::$_trans[$link])) {
 	        // rollback only in the outermost trans
-	        if ($this->_trans[$link] == 1) {
+	        if (self::$_trans[$link] == 1) {
 	            $dbc->rollback();
 	        }
 	        // step out trans call
-	        $this->_trans[$link] -= 1;
+	        self::$_trans[$link] -= 1;
 	    }
 	    return true;
 	}
