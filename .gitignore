@@ -9,6 +9,10 @@ phplibs/
 
 # for run files
 .env.php
+hush-run/sys/
+hush-run/cdn/
+hush-run/dat/
+hush-run/run/
 hush-app/dat/cache
 hush-app/dat/dbsql
 hush-app/tpl/*/cache
