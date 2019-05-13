@@ -1,6 +1,6 @@
 <form method="get" id="search_form">
 {foreach $smarty.get as $k => $v}
-{if $k ne 'p' && !$aps.filter.$k}<input type="hidden" name="{$k}" value="{$v}" />{/if}
+{if $k ne 'p' && !$bps.filter.$k}<input type="hidden" name="{$k}" value="{$v}" />{/if}
 {/foreach}
 <div style="padding:10px;border:1px solid #ccc">
 	<table style="width:100%">
@@ -24,8 +24,8 @@
 		<input type="submit" value="统计{$title}" />
 		</td>
 		<td style="text-align:right">
-		{if $aps.topbtn}
-		{foreach $aps.topbtn as $topbtn}
+		{if $bps.topbtn}
+		{foreach $bps.topbtn as $topbtn}
 			{if $topbtn.path}
 			<input type="button" value="{$topbtn.name}" onclick="javascript:openWindow('{$topbtn.path}','{$title} > {$topbtn.name}');"/>
 			{else}

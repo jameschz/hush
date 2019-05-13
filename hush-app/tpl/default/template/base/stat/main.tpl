@@ -6,9 +6,9 @@
 </div>
 {include file="frame/error.tpl"}
 <div class="mainbox">
-{include file="admin/stat/main_search.tpl"}
-{include file="admin/stat/main_chart.tpl" width="300" height="400"}
-{include file="admin/stat/main_table.tpl"}
+{include file="base/stat/main_search.tpl"}
+{include file="base/stat/main_chart.tpl" width="300" height="400"}
+{include file="base/stat/main_table.tpl"}
 </div>
 
 {include file="frame/datetimepicker.tpl"}

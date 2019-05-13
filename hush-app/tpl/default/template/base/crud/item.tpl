@@ -15,13 +15,13 @@
 	{* main logic *}
 	{if $v.find}
 		<input type="text" class="common {$v.find}" id="ax_{$k}" name="{$k}" value="{$item_val}" readonly=true />
-		{include file="admin/find/{$v.find}.tpl" aw="10" ah="10"}
+		{include file="base/find/{$v.find}.tpl" aw="10" ah="10"}
 	{elseif $v.msel}
-		{include file="admin/crud/item_msel.tpl" from=$from}
+		{include file="base/crud/item_msel.tpl" from=$from}
 	{elseif $v.files}
-		{include file="admin/crud/item_file.tpl" from=$from}
+		{include file="base/crud/item_file.tpl" from=$from}
 	{elseif $v.colors}
-		{include file="admin/crud/item_color.tpl" from=$from}
+		{include file="base/crud/item_color.tpl" from=$from}
 	{elseif $v.model}
 		{if $item._data[$k]}
 			<select name="{$k}" class="common" id="ax_{$k}">

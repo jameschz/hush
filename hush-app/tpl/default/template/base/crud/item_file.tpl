@@ -170,7 +170,7 @@
                 <input type="file" id="uf_{$k}_{$k1}" />
                 <input type="hidden" id="ut_{$k}_{$k1}" name="{$k}[{$k1}]" />
                 {if $item._data.$k.$k1.value}
-                <div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$aps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
+                <div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$bps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
                 <div class="img_box_copy" id="cp_{$k}_{$k1}"><i class="icon icon-copy"></i></div>
                 <div class="img_box_image"><img id="up_{$k}_{$k1}" src="{$item._data.$k.$k1.value}" /></div>
                 {else}
@@ -265,7 +265,7 @@
                 <input type="file" id="uf_{$k}_{$k1}" />
                 <input type="hidden" id="ut_{$k}_{$k1}" name="{$k}[{$k1}]" />
 				{if $item._data.$k.$k1.value}
-				<div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$aps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
+				<div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$bps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
 				<div class="img_box_copy" id="cp_{$k}_{$k1}"><i class="icon icon-copy"></i></div>
 				<div class="img_box_image"><img id="up_{$k}_{$k1}" src="{$item._data.$k.$k1.value}" /></div>
 				{else}
@@ -311,7 +311,7 @@
 			<div class="img_box_in">
 				<input type="file" id="uf_{$k}_{$k1}" name="{$k}[{$k1}]" />
 				{if $item._data.$k.$k1.value}
-				<div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$aps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
+				<div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$bps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
 				<div class="img_box_copy" id="cp_{$k}_{$k1}"><i class="icon icon-copy"></i></div>
 				<div class="img_box_image"><img id="up_{$k}_{$k1}" src="/img/upload_audio.png" data-audio="{$item._data.$k.$k1.value}" /></div>
 				{else}
@@ -362,7 +362,7 @@
 			<div class="img_box_in">
 				<input type="file" id="uf_{$k}_{$k1}" name="{$k}[{$k1}]" />
 				{if $item._data.$k.$k1.value}
-				<div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$aps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
+				<div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$bps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
 				<div class="img_box_copy" id="cp_{$k}_{$k1}"><i class="icon icon-copy"></i></div>
 				<div class="img_box_image"><img id="up_{$k}_{$k1}" src="/img/upload_video.png" data-video="{$item._data.$k.$k1.value}" /></div>
 				{else}
@@ -413,7 +413,7 @@
             <div class="img_box_in">
                 <input type="file" id="uf_{$k}_{$k1}" name="{$k}[{$k1}]" />
                 {if $item._data.$k.$k1.value}
-                <div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$aps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
+                <div class="img_box_close" id="ud_{$k}_{$k1}" _id="{$k1}" _file_id="{$item[$bps.pkey]}" _file_col="{$k}" _file_name="{$k1}"><i class="icon icon-cross"></i></div>
                 <div class="img_box_copy" id="cp_{$k}_{$k1}"><i class="icon icon-copy"></i></div>
                 <div class="img_box_image"><img id="up_{$k}_{$k1}" src="/img/upload_image.png" data-files="{$item._data.$k.$k1.value}" /></div>
                 {else}

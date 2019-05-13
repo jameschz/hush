@@ -3,18 +3,18 @@
  * App Dao
  *
  * @category   App
- * @package    App_Dao_Demo
+ * @package    App_Dao_Base
  * @author     James.Huang <shagoo@gmail.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @version    $Id$
  */
  
-require_once 'App/Dao/Demo.php';
+require_once 'App/Dao/Base.php';
 
 /**
- * @package App_Dao_Demo
+ * @package App_Dao_Base
  */
-class Demo_Test extends App_Dao_Demo
+class Base_Test extends App_Dao_Base
 {
 	/**
 	 * @static
@@ -138,7 +138,7 @@ class Demo_Test extends App_Dao_Demo
 // 	    Core_Service::trans_begin($this);
 	    try {
 	        // 嵌套事务逻辑（也可以是其他库）
-	        App_Dao::load('Demo_Test')->testTrans1($id);
+	        App_Dao::load('Base_Test')->testTrans1($id);
 	        // 当前事务逻辑
 	        $id++;
 	        $res = $this->update(array(

@@ -1,5 +1,5 @@
-{if $aps.topmsg}
-<div class="topmsg">{$aps.topmsg}</div>
+{if $bps.topmsg}
+<div class="topmsg">{$bps.topmsg}</div>
 {/if}
 
 {if $charts}

@@ -11,9 +11,9 @@
 		<td class="field">{$v.name}</td>
 		<td class="value">
 		{if $v.files}
-		{include file="admin/crud/item_file.tpl" from=info}
+		{include file="base/crud/item_file.tpl" from=info}
 		{else}
-		{include file="admin/crud/item.tpl" from=info}
+		{include file="base/crud/item.tpl" from=info}
 		{/if}
 		</td>
 	</tr>

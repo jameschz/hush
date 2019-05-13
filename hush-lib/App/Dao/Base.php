@@ -17,12 +17,12 @@ require_once 'App/Dao.php';
 /**
  * @package App_Dao
  */
-class App_Dao_Demo extends App_Dao
+class App_Dao_Base extends App_Dao
 {
 	/**
 	 * @static
 	 */
-	const DB_NAME = 'hush_demo';
+	const DB_NAME = 'hush_base';
 	
 	/**
 	 * Construct

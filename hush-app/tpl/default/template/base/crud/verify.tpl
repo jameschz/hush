@@ -6,15 +6,15 @@
 
 <div class="mainbox">
 {include file="frame/error.tpl"}
-{include file="admin/crud/verify_msg.tpl"}
+{include file="base/crud/verify_msg.tpl"}
 <form method="post">
-<input type="hidden" name="{$aps.pkey}" value="{$item[$aps.pkey]}" />
+<input type="hidden" name="{$bps.pkey}" value="{$item[$bps.pkey]}" />
 <table class="titem" >
 	<tr>
 		<td class="field">审核结果</td>
 		<td class="value">
 		<select name="status" class="common">
-		{foreach $aps.field.status.data as $k => $v}
+		{foreach $bps.field.status.data as $k => $v}
 			<option value="{$k}" {if $item.status eq $k}selected{/if}>{$v}</option>
 		{/foreach}
 		</select>
@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td class="submit" colspan="2">
-			{include file="admin/form/submit.tpl" _submit_once="1"}
+			{include file="base/form/submit.tpl" _submit_once="1"}
 		</td>
 	</tr>
 </table>

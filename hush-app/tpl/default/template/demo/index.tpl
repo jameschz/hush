@@ -1,1 +1,1 @@
-{include file="admin/crud/list.tpl" blocks="add,edit"}
+{include file="base/crud/list.tpl" blocks="add,edit"}

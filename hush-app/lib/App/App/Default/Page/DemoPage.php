@@ -9,12 +9,12 @@
  * @version    $Id$
  */
  
-require_once 'AdminPage.php';
+require_once 'BasePage.php';
 
 /**
  * @package App_App_Default
  */
-class DemoPage extends AdminPage
+class DemoPage extends BasePage
 {	
 	public function __init ()
 	{
@@ -28,7 +28,7 @@ class DemoPage extends AdminPage
 	protected function _before_add ($data)
 	{
 	    // TODO：添加数据之前的回调处理（比如：字段格式检查）
-	    switch ($this->aps->action) {
+	    switch ($this->bps->action) {
 	        case 'list':
 // 	            sleep(3);
 // 	            $this->addErrorMsg('测试错误');
@@ -93,9 +93,9 @@ class DemoPage extends AdminPage
 	
 	private function _init_test ()
 	{
-	    $this->aps->pkey = 'id';
-	    $this->aps->model = 'Demo_Test';
-	    $this->aps->field = array(
+	    $this->bps->pkey = 'id';
+	    $this->bps->model = 'Base_Test';
+	    $this->bps->field = array(
 	        'id' => array('type' => 'text', 'name' => 'ID', 'add' => false, 'edit' => false, 'list' => true),
 	        'type' => array('type' => 'select', 'name' => '类别', 'add' => true, 'edit' => true, 'list' => true,
                 'data' => array('类型1', '类型2', '类型3'),
@@ -149,41 +149,41 @@ class DemoPage extends AdminPage
 	
 	public function listAction () 
 	{
-	    $this->aps->action = 'list';
-	    $this->aps->title = 'DEMO';
-	    $this->aps->topmsg = '注意事项：在这里添加注意事项！';
+	    $this->bps->action = 'list';
+	    $this->bps->title = 'DEMO';
+	    $this->bps->topmsg = '注意事项：在这里添加注意事项！';
 	    
 	    // 初始化关联模型
 	    $this->_init_test();
 	    
 	    // 添加扩展菜单
-	    $this->aps->extend = array(
+	    $this->bps->extend = array(
 	        array('name' => '预览', 'path' => 'preview'),
 	    );
 	    
 	    // 添加搜索条件
-	    $this->aps->filter = array(
+	    $this->bps->filter = array(
 	        'type' => array('type' => 'select', 'name' => '', 'order' => 0, 'default' => ''),
 	        'title' => array('type' => 'text', 'name' => '标题', 'order' => 1, 'default' => ''),
 	        'ptime' => array('type' => 'date', 'name' => '发布时间', 'order' => 2, 'default' => date('Y-m-d')),
 	    );
 	    
 	    // 添加排序规则
-	    $this->aps->orders = array(
+	    $this->bps->orders = array(
 	        'id' => array('order' => 'desc', 'icon' => true),
 	        'title' => array('order' => 'desc'),
 	    );
 	    
-	    $this->_crud($this->aps);
+	    $this->_crud($this->bps);
 	}
 	
 	public function tabsAction ()
 	{
-	    $this->aps->action = 'tabs';
-	    $this->aps->title = 'DEMO';
+	    $this->bps->action = 'tabs';
+	    $this->bps->title = 'DEMO';
 	    
 	    // 设置Tabs信息
-	    $this->aps->toptabs = array(
+	    $this->bps->toptabs = array(
 	        array('link' => "/demo/tabs?type=0", 'name' => 'TAB1', 'default' => 1),
 	        array('link' => "/demo/tabs?type=1", 'name' => 'TAB2'),
 	        array('link' => "/demo/tabs?type=2", 'name' => 'TAB3'),
@@ -193,46 +193,46 @@ class DemoPage extends AdminPage
 	    $this->_init_test();
 	    
 	    // 添加扩展菜单
-	    $this->aps->extend = array(
+	    $this->bps->extend = array(
 	        array('name' => '预览', 'path' => 'preview'),
 	    );
 	    
 	    // 添加搜索条件
-	    $this->aps->filter = array(
+	    $this->bps->filter = array(
 	        'type' => array('type' => 'select', 'name' => '', 'order' => 0, 'default' => ''),
 	        'title' => array('type' => 'text', 'name' => '标题', 'order' => 1, 'default' => ''),
 	        'ptime' => array('type' => 'date', 'name' => '发布时间', 'order' => 2, 'default' => date('Y-m-d')),
 	    );
 	    
 	    // 添加排序规则
-	    $this->aps->orders = array(
+	    $this->bps->orders = array(
 	        'id' => array('order' => 'desc', 'icon' => true),
 	        'title' => array('order' => 'desc'),
 	    );
 	    
 	    // 无需分页则设置
-	    $this->aps->page_num = 0;
+	    $this->bps->page_num = 0;
 	    
-	    $this->_crud($this->aps);
+	    $this->_crud($this->bps);
 	}
 	
 	public function stats1Action ()
 	{
-	    $this->aps->action = 'stat1';
-	    $this->aps->title = 'DEMO1';
+	    $this->bps->action = 'stat1';
+	    $this->bps->title = 'DEMO1';
 	    
         // 定义搜索条件
-	    $this->aps->filter = array(
+	    $this->bps->filter = array(
 	        'sday' => array('type' => 'date', 'name' => '开始日期', 'order' => 0, 'cond' => 0, 'default' => $this->default_sday),
 	        'eday' => array('type' => 'date', 'name' => '结束日期', 'order' => 1, 'cond' => 0, 'default' => $this->default_eday),
 	        'name' => array('type' => 'text', 'name' => '搜索字段', 'order' => 2, 'cond' => 1, 'default' => ''),
 	    );
 	    
 	    // 获取搜索条件值
-	    $this->aps->topmsg = '注意事项：参数sday值为'.$this->param('sday').'；参数eday值为'.$this->param('eday');
+	    $this->bps->topmsg = '注意事项：参数sday值为'.$this->param('sday').'；参数eday值为'.$this->param('eday');
 	    
 	    // 通过 Dao 的 getChartData 方法设值
-// 	    $this->aps->model = 'Etl_EtlTableName';
+// 	    $this->bps->model = 'Etl_EtlTableName';
 
 	    // 通过直接赋值设值
 	    $datas = array(
@@ -253,7 +253,7 @@ class DemoPage extends AdminPage
 	        ),
 	    );
 	    
-	    $this->aps->chart = array(
+	    $this->bps->chart = array(
 	        'type' => 'area',
 	        'title' => '折线图案例',
 	        'series' => array(
@@ -263,22 +263,22 @@ class DemoPage extends AdminPage
 	        'datas' => $datas,
 	    );
 	    
-	    $this->aps->table = array(
+	    $this->bps->table = array(
 	        'day' => array('name' => '日期'),
 	        'num1' => array('name' => '数据1'),
 	        'num2' => array('name' => '数据2'),
 	    );
 
-	    $this->_stat($this->aps);
+	    $this->_stat($this->bps);
 	}
 	
 	public function stats2Action ()
 	{
-	    $this->aps->action = 'stat2';
-	    $this->aps->title = 'DEMO2';
+	    $this->bps->action = 'stat2';
+	    $this->bps->title = 'DEMO2';
 	    
 	    // 定义搜索条件
-	    $this->aps->filter = array(
+	    $this->bps->filter = array(
 	        'sday' => array('type' => 'date', 'name' => '开始日期', 'order' => 0, 'cond' => 0, 'default' => $this->default_sday),
 	        'eday' => array('type' => 'date', 'name' => '结束日期', 'order' => 1, 'cond' => 0, 'default' => $this->default_eday),
 	        'name' => array('type' => 'text', 'name' => '搜索字段', 'order' => 2, 'cond' => 1, 'default' => ''),
@@ -294,7 +294,7 @@ class DemoPage extends AdminPage
 	        ),
 	    );
 	    
-	    $this->aps->chart = array(
+	    $this->bps->chart = array(
 	        'type' => 'time',
 	        'title' => '时线图案例',
 	        'series' => array(
@@ -303,16 +303,16 @@ class DemoPage extends AdminPage
 	        'datas' => $datas,
 	    );
 
-	    $this->_stat($this->aps);
+	    $this->_stat($this->bps);
 	}
 	
 	public function stats3Action ()
 	{
-	    $this->aps->action = 'stat3';
-	    $this->aps->title = 'DEMO3';
+	    $this->bps->action = 'stat3';
+	    $this->bps->title = 'DEMO3';
 	    
 	    // 定义搜索条件
-	    $this->aps->filter = array(
+	    $this->bps->filter = array(
 	        'sday' => array('type' => 'date', 'name' => '开始日期', 'order' => 0, 'cond' => 0, 'default' => $this->default_sday),
 	        'eday' => array('type' => 'date', 'name' => '结束日期', 'order' => 1, 'cond' => 0, 'default' => $this->default_eday),
 	        'name' => array('type' => 'text', 'name' => '搜索字段', 'order' => 2, 'cond' => 1, 'default' => ''),
@@ -328,7 +328,7 @@ class DemoPage extends AdminPage
 	        ),
 	    );
 	    
-	    $this->aps->chart = array(
+	    $this->bps->chart = array(
 	        'type' => 'bar',
 	        'title' => '柱状图案例',
 	        'series' => array(
@@ -339,16 +339,16 @@ class DemoPage extends AdminPage
 	        'datas' => $datas,
 	    );
 	    
-	    $this->_stat($this->aps);
+	    $this->_stat($this->bps);
 	}
 	
 	public function stats4Action ()
 	{
-	    $this->aps->action = 'stat4';
-	    $this->aps->title = 'DEMO4';
+	    $this->bps->action = 'stat4';
+	    $this->bps->title = 'DEMO4';
 	    
 	    // 定义搜索条件
-	    $this->aps->filter = array(
+	    $this->bps->filter = array(
 	        'sday' => array('type' => 'date', 'name' => '开始日期', 'order' => 0, 'cond' => 0, 'default' => $this->default_sday),
 	        'eday' => array('type' => 'date', 'name' => '结束日期', 'order' => 1, 'cond' => 0, 'default' => $this->default_eday),
 	        'name' => array('type' => 'text', 'name' => '搜索字段', 'order' => 2, 'cond' => 1, 'default' => ''),
@@ -368,7 +368,7 @@ class DemoPage extends AdminPage
 	        ),
 	    );
 	    
-	    $this->aps->chart = array(
+	    $this->bps->chart = array(
 	        'type' => 'pie',
 	        'title' => '饼状图案例',
 	        'series' => array(
@@ -377,7 +377,7 @@ class DemoPage extends AdminPage
 	        'datas' => $datas,
 	    );
 	    
-	    $this->_stat($this->aps);
+	    $this->_stat($this->bps);
 	}
 	
 	public function previewAction ()
@@ -393,7 +393,7 @@ class DemoPage extends AdminPage
 	    $act = $this->param('act');
 	    
 	    // 初始化DAO
-	    $dao = $this->dao->load('Demo_Test');
+	    $dao = $this->dao->load('Base_Test');
 	    
 	    // 是否调试SQL，打开可以在日志里面查看SQL
 	    $dao->debug(true);
@@ -454,7 +454,7 @@ class DemoPage extends AdminPage
 	    }
 	    
 	    // 获取数据
-	    $dao = $this->dao->load('Demo_Test');
+	    $dao = $this->dao->load('Base_Test');
 	    $res = $dao->search(array(), array(), array('dtime desc'), 20);
 	    if ($res) {
 	        $this->view->result = $res;

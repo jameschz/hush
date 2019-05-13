@@ -1,1 +1,1 @@
-{include file="admin/stat/main.tpl"}
+{include file="base/stat/main.tpl"}

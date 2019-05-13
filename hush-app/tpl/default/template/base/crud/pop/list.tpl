@@ -9,7 +9,7 @@
 
 <form method="get" id="search_form">
 {foreach $smarty.get as $k => $v}
-{if !$aps.filter.$k}<input type="hidden" name="{$k}" value="{$v}" />{/if}
+{if !$bps.filter.$k}<input type="hidden" name="{$k}" value="{$v}" />{/if}
 {/foreach}
 <div style="padding:10px;border:1px solid #ccc">
 	<table style="width:100%">
@@ -30,21 +30,21 @@
 		</td>
 		<td style="text-align:right">
 		{if "add"|in_array:$blocks}
-		<input type="button" value="添加{$title}" onclick="javascript:openWindow('{$aps.action}/a/add');" />
+		<input type="button" value="添加{$title}" onclick="javascript:openWindow('{$bps.action}/a/add');" />
 		{/if}
 		</td>
 		</tr>
 	</table>
 </div>
 </form>
-{if $aps.topmsg}
-<div class="topmsg">{$aps.topmsg}</div>
+{if $bps.topmsg}
+<div class="topmsg">{$bps.topmsg}</div>
 {/if}
 <table class="tlist" >
 	<thead>
 		<tr class="title">
 			{foreach $field as $k => $v}
-			{include file="admin/crud/list_th.tpl"}
+			{include file="base/crud/list_th.tpl"}
 			{/foreach}
 			<th align="right"></th>
 		</tr>
@@ -53,19 +53,19 @@
 		{foreach $result as $item}
 		<tr>
 			{foreach $field as $k => $v}
-			{include file="admin/crud/list_td.tpl"}
+			{include file="base/crud/list_td.tpl"}
 			{/foreach}
 			<td align="right">
-				<a href="{$aps.action}/a/info?{$aps.pkey}={$item[$aps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">详情</a>
+				<a href="{$bps.action}/a/info?{$bps.pkey}={$item[$bps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">详情</a>
 				{if "edit"|in_array:$blocks}
-				| <a href="{$aps.action}/a/edit?{$aps.pkey}={$item[$aps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">修改</a> 
+				| <a href="{$bps.action}/a/edit?{$bps.pkey}={$item[$bps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">修改</a> 
 				{/if}
 				{if "verify"|in_array:$blocks}
-				| <a href="{$aps.action}/a/verify?{$aps.pkey}={$item[$aps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">审核</a> 
+				| <a href="{$bps.action}/a/verify?{$bps.pkey}={$item[$bps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">审核</a> 
 				{/if}
-				{if $aps.extend}
-				{foreach $aps.extend as $extend}
-				| <a href="{$extend.path}?{$aps.pkey}={$item[$aps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">{$extend.name}</a>
+				{if $bps.extend}
+				{foreach $bps.extend as $extend}
+				| <a href="{$extend.path}?{$bps.pkey}={$item[$bps.pkey]}&_back={$smarty.server.REQUEST_URI|urlencode}">{$extend.name}</a>
 				{/foreach}
 				{/if}
 			</td>

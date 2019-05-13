@@ -9,12 +9,12 @@
  * @version    $Id$
  */
  
-require_once 'AdminPage.php';
+require_once 'BasePage.php';
 
 /**
  * @package App_App_Default
  */
-class AjaxPage extends AdminPage
+class AjaxPage extends BasePage
 {
 	public function __init ()
 	{

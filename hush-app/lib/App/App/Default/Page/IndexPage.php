@@ -9,12 +9,12 @@
  * @version    $Id$
  */
  
-require_once 'AdminPage.php';
+require_once 'BasePage.php';
 
 /**
  * @package App_App_Default
  */
-class IndexPage extends AdminPage
+class IndexPage extends BasePage
 {	
 	public function __init ()
 	{

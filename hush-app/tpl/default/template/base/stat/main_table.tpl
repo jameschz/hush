@@ -2,7 +2,7 @@
 <table class="tlist">
 	<thead>
 		<tr class="title">
-			{foreach $aps.table as $k => $v}
+			{foreach $bps.table as $k => $v}
 			<th align="left">{$v.name}</th>
 			{/foreach}
 		</tr>
@@ -10,7 +10,7 @@
 	<tbody>
 		{foreach $tables as $table}
 		<tr>
-			{foreach $aps.table as $k => $v}
+			{foreach $bps.table as $k => $v}
 			<td align="left">{$table[$k]}</td>
 			{/foreach}
 		</tr>

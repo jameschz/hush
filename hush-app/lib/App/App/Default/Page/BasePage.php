@@ -11,7 +11,7 @@
 
 require_once 'App/App/Default/Page.php';
 
-class AdminPageSet
+class BasePageSet
 {
     // page setting
     public $page = '';
@@ -27,7 +27,7 @@ class AdminPageSet
     public $search = array();
     public $orders = array();
     public $toptabs = array();
-    public $tpldir = 'admin/crud';
+    public $tpldir = 'base/crud';
     public $verify_type = 0;
     public $page_num = 20;
     
@@ -57,7 +57,7 @@ class AdminPageSet
 /**
  * @package App_App_Default
  */
-class AdminPage extends App_App_Default_Page
+class BasePage extends App_App_Default_Page
 {
     public function __init ()
     {
@@ -67,53 +67,53 @@ class AdminPage extends App_App_Default_Page
         $this->authenticate();
         
         // init variables
-        $this->aps = new AdminPageSet();
-        $this->aps->style = array('td_op' => 'max-width:200px;line-height:20px;word-break:break-all;');
+        $this->bps = new BasePageSet();
+        $this->bps->style = array('td_op' => 'max-width:200px;line-height:20px;word-break:break-all;');
     }
     
     public function __done ()
     {
         // reset view vars
-        $this->view->aps = (array) $this->aps;
-        $this->view->field = (array) $this->aps->field;
+        $this->view->bps = (array) $this->bps;
+        $this->view->field = (array) $this->bps->field;
         
         // reset path
         $class_name = get_class($this);
-        $action_path = '/'.strtolower(str_replace('Page','',$class_name)).'/'.$this->aps->action;
+        $action_path = '/'.strtolower(str_replace('Page','',$class_name)).'/'.$this->bps->action;
         $this->view->action_path = $action_path;
         
         parent::__done();
     }
     
-    private function _fill_data ($aps, &$res)
+    private function _fill_data ($bps, &$res)
     {
-        foreach ($aps->field as $k => $v) {
+        foreach ($bps->field as $k => $v) {
             // 处理文件结构
-            if ($aps->field[$k]['files']) {
+            if ($bps->field[$k]['files']) {
                 $file_data = (array) @json_decode($res[$k], 1);
-                foreach ($aps->field[$k]['files'] as $k1 => $v1) {
+                foreach ($bps->field[$k]['files'] as $k1 => $v1) {
                     $v1['value'] = isset($file_data[$k1]) ? $file_data[$k1] : '';
                     $res['_data'][$k][$k1] = $v1;
                 }
             }
             // 处理颜色结构
-            if ($aps->field[$k]['colors']) {
+            if ($bps->field[$k]['colors']) {
                 $color_data = (array) @json_decode($res[$k], 1);
-                foreach ($aps->field[$k]['colors'] as $k1 => $v1) {
+                foreach ($bps->field[$k]['colors'] as $k1 => $v1) {
                     $v1['value'] = isset($color_data[$k1]) ? $color_data[$k1] : '';
                     $res['_data'][$k][$k1] = $v1;
                 }
             }
             // 处理模型结构（若list_only为真则不处理）
-            if ($aps->field[$k]['model'] && !$aps->field[$k]['model']['list_only']) {
-                $model = $aps->field[$k]['model']['table'];
-                $where = $aps->field[$k]['model']['where'];
-                $id_prim = $aps->field[$k]['model']['id_prim'];
-                $id_list = $aps->field[$k]['model']['id_list'];
+            if ($bps->field[$k]['model'] && !$bps->field[$k]['model']['list_only']) {
+                $model = $bps->field[$k]['model']['table'];
+                $where = $bps->field[$k]['model']['where'];
+                $id_prim = $bps->field[$k]['model']['id_prim'];
+                $id_list = $bps->field[$k]['model']['id_list'];
                 if ($where) {
                     $where = str_replace(
                         array('{pkey}'),
-                        array($res[$aps->pkey]),
+                        array($res[$bps->pkey]),
                         $where
                         );
                     $mdata = $this->dao->load($model)->find('*', $where);
@@ -128,16 +128,16 @@ class AdminPage extends App_App_Default_Page
                 $res['_data'][$k] = $select;
             }
             // 处理选择数据
-            if ($aps->field[$k]['msel']) {
+            if ($bps->field[$k]['msel']) {
                 // 左侧数据
-                $l_model = $aps->field[$k]['msel']['l_table'];
-                $l_where = $aps->field[$k]['msel']['l_where'];
-                $l_key_id = $aps->field[$k]['msel']['l_key_id'];
-                $l_key_name = $aps->field[$k]['msel']['l_key_name'];
+                $l_model = $bps->field[$k]['msel']['l_table'];
+                $l_where = $bps->field[$k]['msel']['l_where'];
+                $l_key_id = $bps->field[$k]['msel']['l_key_id'];
+                $l_key_name = $bps->field[$k]['msel']['l_key_name'];
                 if ($l_where) {
                     $l_where = str_replace(
                         array('{pkey}'),
-                        array($res[$aps->pkey]),
+                        array($res[$bps->pkey]),
                         $l_where
                         );
                     $l_data = $this->dao->load($l_model)->find('*', $l_where);
@@ -152,14 +152,14 @@ class AdminPage extends App_App_Default_Page
                     $res['_data']['_msel_l'][$k] = $select;
                 }
                 // 右侧数据
-                if ($res[$aps->pkey]) {
-                    $r_model = $aps->field[$k]['msel']['r_table'];
-                    $r_where = $aps->field[$k]['msel']['r_where'];
-                    $r_key_id = $aps->field[$k]['msel']['r_key_id'];
+                if ($res[$bps->pkey]) {
+                    $r_model = $bps->field[$k]['msel']['r_table'];
+                    $r_where = $bps->field[$k]['msel']['r_where'];
+                    $r_key_id = $bps->field[$k]['msel']['r_key_id'];
                     if ($r_where) {
                         $r_where = str_replace(
                             array('{pkey}'),
-                            array($res[$aps->pkey]),
+                            array($res[$bps->pkey]),
                             $r_where
                             );
                         $r_data = $this->dao->load($r_model)->find('*', $r_where);
@@ -177,31 +177,31 @@ class AdminPage extends App_App_Default_Page
         }
     }
     
-    private function _list_data ($aps, &$res)
+    private function _list_data ($bps, &$res)
     {
-        foreach ($aps->field as $k => $v) {
+        foreach ($bps->field as $k => $v) {
             // 处理文件结构
-            if ($aps->field[$k]['files']) {
+            if ($bps->field[$k]['files']) {
                 $file_data = (array) json_decode($res[$k], 1);
-                foreach ($aps->field[$k]['files'] as $k1 => $v1) {
+                foreach ($bps->field[$k]['files'] as $k1 => $v1) {
                     $v1['value'] = isset($file_data[$k1]) ? $file_data[$k1] : '';
                     $res['_data'][$k][$k1] = $v1;
                 }
             }
             // 处理颜色结构
-            if ($aps->field[$k]['colors']) {
+            if ($bps->field[$k]['colors']) {
                 $color_data = (array) json_decode($res[$k], 1);
-                foreach ($aps->field[$k]['colors'] as $k1 => $v1) {
+                foreach ($bps->field[$k]['colors'] as $k1 => $v1) {
                     $v1['value'] = isset($color_data[$k1]) ? $color_data[$k1] : '';
                     $res['_data'][$k][$k1] = $v1;
                 }
             }
             // 处理模型结构
-            if ($aps->field[$k]['model']) {
-                $model = $aps->field[$k]['model']['table'];
-                $where = $aps->field[$k]['model']['where'];
-                $id_prim = $aps->field[$k]['model']['id_prim'];
-                $id_list = $aps->field[$k]['model']['id_list'];
+            if ($bps->field[$k]['model']) {
+                $model = $bps->field[$k]['model']['table'];
+                $where = $bps->field[$k]['model']['where'];
+                $id_prim = $bps->field[$k]['model']['id_prim'];
+                $id_list = $bps->field[$k]['model']['id_list'];
                 $dao_m = $this->dao->load($model);
                 if ($dao_m) {
                     $where = $dao_m->dbr()->quoteInto("{$id_prim}=?", $res[$k]);
@@ -227,14 +227,14 @@ class AdminPage extends App_App_Default_Page
         return false;
     }
     
-    protected function _info (AdminPageSet $aps)
+    protected function _info (BasePageSet $bps)
     {
         if (method_exists($this, '_before_info')) {
             $res = call_user_func_array(array($this, '_before_info'), array($res));
         }
-        $dao = $this->dao->load($aps->model);
-        $res = $dao->read($this->param($aps->pkey), $aps->pkey);
-        $this->_list_data($aps, $res);
+        $dao = $this->dao->load($bps->model);
+        $res = $dao->read($this->param($bps->pkey), $bps->pkey);
+        $this->_list_data($bps, $res);
 // 		Hush_Util::dump($res);
         if (method_exists($this, '_after_info')) {
             $res = call_user_func_array(array($this, '_after_info'), array($res));
@@ -242,30 +242,30 @@ class AdminPage extends App_App_Default_Page
         $this->view->item = (array) $res;
     }
     
-    protected function _add (AdminPageSet $aps)
+    protected function _add (BasePageSet $bps)
     {
         // add action
         if ($_POST) {
             // get form
             $form = array();
-            foreach ($aps->field as $k => $v) {
+            foreach ($bps->field as $k => $v) {
                 // 文件参数先去除，后面会在处理文件上传时补充
                 if ($v['type'] == 'file') continue;
                 if ($v['add'] && !in_array($k, $form)) $form[] = $k;
             }
-            $data = $this->getPostData($form, $aps->field);
+            $data = $this->getPostData($form, $bps->field);
             // 按格式处理
             if ($this->noError()) {
                 foreach ($data as $k => $v) {
-                    if ($aps->field[$k]['type'] == 'date' || $aps->field[$k]['type'] == 'time') {
+                    if ($bps->field[$k]['type'] == 'date' || $bps->field[$k]['type'] == 'time') {
                         $data[$k] = strtotime($v);
-                    } elseif ($aps->field[$k]['type'] == 'color') {
+                    } elseif ($bps->field[$k]['type'] == 'color') {
                         $data[$k] = json_encode($v);
-                    } elseif ($aps->field[$k]['type'] == 'pass') {
+                    } elseif ($bps->field[$k]['type'] == 'pass') {
                         $data[$k] = Core_Util::md5($v);
-                    } elseif ($aps->field[$k]['model'] && $v) {
-                        $model = $aps->field[$k]['model']['table'];
-                        $mokey = $aps->field[$k]['model']['id_prim'];
+                    } elseif ($bps->field[$k]['model'] && $v) {
+                        $model = $bps->field[$k]['model']['table'];
+                        $mokey = $bps->field[$k]['model']['id_prim'];
                         $mdata = $this->dao->load($model)->read($v, $mokey);
                         if (!$mdata) {
                             $this->addError('common.err.noexisted', $mokey);
@@ -331,11 +331,11 @@ class AdminPage extends App_App_Default_Page
                     }
                     // 数据创建逻辑
                     $data['dtime'] = time(); // update time
-                    $dao = $this->dao->load($aps->model);
+                    $dao = $this->dao->load($bps->model);
                     $cid = $dao->create($data);
                     // 不是自增主键时可能没有返回值
                     if ($cid) {
-                        $data[$aps->pkey] = $cid;
+                        $data[$bps->pkey] = $cid;
                     }
                     // 后置回调方法
                     if (method_exists($this, '_after_add')) {
@@ -354,37 +354,37 @@ class AdminPage extends App_App_Default_Page
         
         // 获取默认值
         $res = (array) $data;
-        $this->_fill_data($aps, $res);
+        $this->_fill_data($bps, $res);
 // 		Hush_Util::dump($res);
         $this->view->item = (array) $res;
-        $this->view->title = $aps->title;
-        $this->view->field = $aps->field;
+        $this->view->title = $bps->title;
+        $this->view->field = $bps->field;
     }
     
-    protected function _edit (AdminPageSet $aps)
+    protected function _edit (BasePageSet $bps)
     {
         // edit action
         if ($_POST) {
             // get form
-            $form = array($aps->pkey);
-            foreach ($aps->field as $k => $v) {
+            $form = array($bps->pkey);
+            foreach ($bps->field as $k => $v) {
                 // 文件参数先去除，后面会在处理文件上传时补充
                 if ($v['type'] == 'file') continue;
                 if ($v['edit'] && !in_array($k, $form)) $form[] = $k;
             }
-            $data = $this->getPostData($form, $aps->field);
+            $data = $this->getPostData($form, $bps->field);
             // 按格式处理
             if ($this->noError()) {
                 foreach ($data as $k => $v) {
-                    if ($aps->field[$k]['type'] == 'date' || $aps->field[$k]['type'] == 'time') {
+                    if ($bps->field[$k]['type'] == 'date' || $bps->field[$k]['type'] == 'time') {
                         $data[$k] = strtotime($v);
-                    } elseif ($aps->field[$k]['type'] == 'color') {
+                    } elseif ($bps->field[$k]['type'] == 'color') {
                         $data[$k] = json_encode($v);
-                    } elseif ($aps->field[$k]['type'] == 'pass') {
+                    } elseif ($bps->field[$k]['type'] == 'pass') {
                         $data[$k] = Core_Util::md5($v);
-                    } elseif ($aps->field[$k]['model'] && $v) {
-                        $model = $aps->field[$k]['model']['table'];
-                        $mokey = $aps->field[$k]['model']['id_prim'];
+                    } elseif ($bps->field[$k]['model'] && $v) {
+                        $model = $bps->field[$k]['model']['table'];
+                        $mokey = $bps->field[$k]['model']['id_prim'];
                         $mdata = $this->dao->load($model)->read($v, $mokey);
                         if (!$mdata) {
                             $this->addError('common.err.noexisted', $mokey);
@@ -395,8 +395,8 @@ class AdminPage extends App_App_Default_Page
             // 处理文件上传
             if ($this->noError()) {
                 // 获取原始数据
-                $dao = $this->dao->load($aps->model);
-                $res = (array) $dao->read($this->param($aps->pkey), $aps->pkey);
+                $dao = $this->dao->load($bps->model);
+                $res = (array) $dao->read($this->param($bps->pkey), $bps->pkey);
                 $cdn_dir = cfg('app.upload.pics.dir');
                 $cdn_url = cfg('app.upload.pics.url');
                 if (!is_dir($cdn_dir)) mkdir($cdn_dir, 0777, true);
@@ -462,10 +462,10 @@ class AdminPage extends App_App_Default_Page
                         }
                     }
                     // 数据更新逻辑
-                    $data[$aps->pkey] = $this->param($aps->pkey);
+                    $data[$bps->pkey] = $this->param($bps->pkey);
                     $data['dtime'] = time(); // update time
-                    $dao = $this->dao->load($aps->model);
-                    $dao->update($data, $aps->pkey);
+                    $dao = $this->dao->load($bps->model);
+                    $dao->update($data, $bps->pkey);
                     // 后置回调方法
                     if (method_exists($this, '_after_edit')) {
                         $data = call_user_func_array(array($this, '_after_edit'), array($data));
@@ -482,24 +482,24 @@ class AdminPage extends App_App_Default_Page
         }
         
         // 获取数据库值
-        $dao = $this->dao->load($aps->model);
-        $res = (array) $dao->read($this->param($aps->pkey), $aps->pkey);
-        $this->_fill_data($aps, $res);
+        $dao = $this->dao->load($bps->model);
+        $res = (array) $dao->read($this->param($bps->pkey), $bps->pkey);
+        $this->_fill_data($bps, $res);
         // 		Hush_Util::dump($res);
         $this->view->item = (array) $res;
-        $this->view->title = $aps->title;
-        $this->view->field = $aps->field;
+        $this->view->title = $bps->title;
+        $this->view->field = $bps->field;
     }
     
-    protected function _verify (AdminPageSet $aps)
+    protected function _verify (BasePageSet $bps)
     {
         // verify action
         if ($_POST) {
             // add aps field
-            $aps->field['result'] = array('type' => 'text', 'name' => '审核原因');
+            $bps->field['result'] = array('type' => 'text', 'name' => '审核原因');
             // get form
-            $form = array($aps->pkey, 'status', 'result');
-            $data = $this->getPostData($form, $aps->field);
+            $form = array($bps->pkey, 'status', 'result');
+            $data = $this->getPostData($form, $bps->field);
             if ($this->noError()) {
                 try {
                     Core_Service::trans_begin();
@@ -515,8 +515,8 @@ class AdminPage extends App_App_Default_Page
                     $result = $data['result'];
                     unset($data['result']);
                     $data['dtime'] = $time;
-                    $dao = $this->dao->load($aps->model);
-                    $dao->update($data, $aps->pkey);
+                    $dao = $this->dao->load($bps->model);
+                    $dao->update($data, $bps->pkey);
                     // 后置回调方法
                     if (method_exists($this, '_after_verify')) {
                         $data = call_user_func_array(array($this, '_after_verify'), array($data));
@@ -531,14 +531,14 @@ class AdminPage extends App_App_Default_Page
             }
         }
         
-        $dao = $this->dao->load($aps->model);
-        $res = (array) $dao->read($this->param($aps->pkey), $aps->pkey);
+        $dao = $this->dao->load($bps->model);
+        $res = (array) $dao->read($this->param($bps->pkey), $bps->pkey);
         $this->view->item = (array) $res;
-        $this->view->title = $aps->title;
-        $this->view->field = $aps->field;
+        $this->view->title = $bps->title;
+        $this->view->field = $bps->field;
     }
     
-    protected function _delete (AdminPageSet $aps)
+    protected function _delete (BasePageSet $bps)
     {
         // delete ajax logic
         if ($_POST) {
@@ -548,8 +548,8 @@ class AdminPage extends App_App_Default_Page
             $file_name = $this->param('_file_name');
             if ($file_id && $file_col && $file_name) {
                 // 处理文件删除
-                $dao = $this->dao->load($aps->model);
-                $res = (array) $dao->read($file_id, $aps->pkey);
+                $dao = $this->dao->load($bps->model);
+                $res = (array) $dao->read($file_id, $bps->pkey);
                 $file_data = (array) json_decode($res[$file_col],1);
                 if (!$res || !$file_data) {
                     Core_Util::app_ajax_result(ERR_SYS, '数据不存在');
@@ -576,12 +576,12 @@ class AdminPage extends App_App_Default_Page
         }
         // delete main logic
         else {
-            $del_id = $this->param($aps->pkey);
+            $del_id = $this->param($bps->pkey);
             if ($del_id) {
                 try {
                     Core_Service::trans_begin();
-                    $dao = $this->dao->load($aps->model);
-                    $data = $dao->read($del_id, $aps->pkey);
+                    $dao = $this->dao->load($bps->model);
+                    $data = $dao->read($del_id, $bps->pkey);
                     // 前置回调方法
                     if (method_exists($this, '_before_delete')) {
                         $data = call_user_func_array(array($this, '_before_delete'), array($data));
@@ -591,8 +591,8 @@ class AdminPage extends App_App_Default_Page
                     }
                     // 判断是否删除
                     if ($data) {
-                        $dao = $this->dao->load($aps->model);
-                        $dao->delete($del_id, $aps->pkey);
+                        $dao = $this->dao->load($bps->model);
+                        $dao->delete($del_id, $bps->pkey);
                     }
                     // 后置回调方法
                     if (method_exists($this, '_after_delete')) {
@@ -612,62 +612,62 @@ class AdminPage extends App_App_Default_Page
         }
     }
     
-    public function _export (AdminPageSet $aps)
+    public function _export (BasePageSet $bps)
     {
         
     }
     
-    public function _crud (AdminPageSet $aps, $need_list = true)
+    public function _crud (BasePageSet $bps, $need_list = true)
     {
         // view vars
-        $this->view->title = $aps->title;
-        $this->view->field = $aps->field;
-        $this->view->filter = $aps->filter;
+        $this->view->title = $bps->title;
+        $this->view->field = $bps->field;
+        $this->view->filter = $bps->filter;
         
         // info action
         if ($this->param('a') == 'info') {
-            $this->_info($aps);
-            return $this->render($aps->tpldir.'/info.tpl');
+            $this->_info($bps);
+            return $this->render($bps->tpldir.'/info.tpl');
         }
         
         // add action
         if ($this->param('a') == 'add') {
-            $this->_add($aps);
-            return $this->render($aps->tpldir.'/add.tpl');
+            $this->_add($bps);
+            return $this->render($bps->tpldir.'/add.tpl');
         }
         
         // edit action
         if ($this->param('a') == 'edit') {
-            $this->_edit($aps);
-            return $this->render($aps->tpldir.'/edit.tpl');
+            $this->_edit($bps);
+            return $this->render($bps->tpldir.'/edit.tpl');
         }
         
         // verify action
         if ($this->param('a') == 'verify') {
-            $this->_verify($aps);
-            return $this->render($aps->tpldir.'/verify.tpl');
+            $this->_verify($bps);
+            return $this->render($bps->tpldir.'/verify.tpl');
         }
         
         // delete action
         if ($this->param('a') == 'delete') {
-            $this->_delete($aps);
-            return $this->render($aps->tpldir.'/delete.tpl');
+            $this->_delete($bps);
+            return $this->render($bps->tpldir.'/delete.tpl');
         }
         
         // export action
         if ($this->param('a') == 'export') {
-            return $this->_export($aps);
+            return $this->_export($bps);
         }
         
         // list action
         if ($need_list) {
             
             // get search array
-            $search = (array) $aps->search;
-            foreach ($aps->filter as $k => $v) {
+            $search = (array) $bps->search;
+            foreach ($bps->filter as $k => $v) {
                 // add filter into search
                 if (!isset($search[$k])) {
-                    $fv = $aps->getFilterVal($k);
+                    $fv = $bps->getFilterVal($k);
                     $search[$k] = $fv;
                 }
             }
@@ -690,7 +690,7 @@ class AdminPage extends App_App_Default_Page
                     }
                 }
             } else {
-                foreach ((array) $aps->orders as $k => $v) {
+                foreach ((array) $bps->orders as $k => $v) {
                     $order_by = isset($v['order']) ? $v['order'] : false;
                     if ($order_by) {
                         $page_orders[] = $k . ' ' . $v['order'];
@@ -707,7 +707,7 @@ class AdminPage extends App_App_Default_Page
             if (isset($this->path['query'])) {
                 parse_str($this->path['query'], $path_pars);
             }
-            foreach ((array) $aps->orders as $k => $v) {
+            foreach ((array) $bps->orders as $k => $v) {
                 $order_by = isset($v['order']) ? $v['order'] : 'desc';
                 $order_arr = array();
                 $order_arr[$k] = $order_by;
@@ -727,14 +727,14 @@ class AdminPage extends App_App_Default_Page
             }
             
             // search by default
-            $dao = $this->dao->load($aps->model);
-            if ($aps->page_num) {
-                $res = $dao->page($search, null, $aps->page_num, $page_orders);
+            $dao = $this->dao->load($bps->model);
+            if ($bps->page_num) {
+                $res = $dao->page($search, null, $bps->page_num, $page_orders);
                 if ($res) {
                     $list = (array) $res['list'];
                     $page = (array) $res['page'];
                     foreach ($list as &$data) {
-                        $this->_list_data($aps, $data);
+                        $this->_list_data($bps, $data);
                     }
                     if (method_exists($this, '_after_list')) {
                         $list = call_user_func_array(array($this, '_after_list'), array($list));
@@ -747,7 +747,7 @@ class AdminPage extends App_App_Default_Page
                 if ($res) {
                     $list = (array) $res;
                     foreach ($list as &$data) {
-                        $this->_list_data($aps, $data);
+                        $this->_list_data($bps, $data);
                     }
                     if (method_exists($this, '_after_list')) {
                         $list = call_user_func_array(array($this, '_after_list'), array($list));
@@ -758,19 +758,19 @@ class AdminPage extends App_App_Default_Page
         }
     }
     
-    public function _stat (AdminPageSet $aps)
+    public function _stat (BasePageSet $bps)
     {
         // view vars
-        $this->view->title = $aps->title;
-        $this->view->field = $aps->field;
-        $this->view->filter = $aps->filter;
+        $this->view->title = $bps->title;
+        $this->view->field = $bps->field;
+        $this->view->filter = $bps->filter;
         
         // get search array
-        $cond = $search = (array) $aps->search;
-        foreach ($aps->filter as $k => $v) {
+        $cond = $search = (array) $bps->search;
+        foreach ($bps->filter as $k => $v) {
             // add filter into search
             if (!isset($search[$k])) {
-                $fv = $aps->getFilterVal($k);
+                $fv = $bps->getFilterVal($k);
                 $search[$k] = $fv;
             }
             // add stat condition
@@ -781,18 +781,18 @@ class AdminPage extends App_App_Default_Page
         $this->view->search = $search;
         
         // get chart data
-        if ($this->aps->chart) {
+        if ($this->bps->chart) {
             // get time data
             $sday = min($search['sday'], $search['eday']);
             $eday = max($search['sday'], $search['eday']);
             $days = Core_Util::app_day_range($sday, $eday);
-            if ($this->aps->model) {
+            if ($this->bps->model) {
                 // get data from dao
-                $dao_etl = $this->dao->load($this->aps->model);
+                $dao_etl = $this->dao->load($this->bps->model);
                 $chart_data = (array) $dao_etl->getChartData($days, $cond);
             } else {
                 // get data from code
-                $chart_data = (array) $this->aps->chart['datas'];
+                $chart_data = (array) $this->bps->chart['datas'];
             }
             $ticks = isset($chart_data['ticks']) ? $chart_data['ticks'] : array();
             $datas = isset($chart_data['datas']) ? $chart_data['datas'] : array();
@@ -809,7 +809,7 @@ class AdminPage extends App_App_Default_Page
                 }
                 // fill series
                 $series = array();
-                foreach ((array) $this->aps->chart['series'] as $k => $v) {
+                foreach ((array) $this->bps->chart['series'] as $k => $v) {
                     $sdata = $v['data']; // 字段标识
                     $sname = $v['name']; // 字段名称
                     $serie = array(
@@ -825,7 +825,7 @@ class AdminPage extends App_App_Default_Page
                 }
                 // show charts
                 $charts = null;
-                switch ($this->aps->chart['type']) {
+                switch ($this->bps->chart['type']) {
                     case 'area':
                         require_once 'Core/Charts.php';
                         $charts = new Core_Charts('areaspline');
@@ -847,8 +847,8 @@ class AdminPage extends App_App_Default_Page
                         break;
                 }
                 if ($charts) {
-                    $charts->setTitle($this->aps->chart['title']);
-                    $charts->setSubTitle($this->aps->chart['subtitle']);
+                    $charts->setTitle($this->bps->chart['title']);
+                    $charts->setSubTitle($this->bps->chart['subtitle']);
                     $charts->setCategories($categories);
                     $charts->setSeries($series);
                     $this->view->charts = $charts->toJson();

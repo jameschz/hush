@@ -1,11 +1,11 @@
-{if $aps.topmsg}
-<div class="topmsg">{$aps.topmsg}</div>
+{if $bps.topmsg}
+<div class="topmsg">{$bps.topmsg}</div>
 {/if}
 <table class="tlist" >
 	<thead>
 		<tr class="title">
 			{foreach $field as $k => $v}
-			{include file="admin/crud/list_th.tpl"}
+			{include file="base/crud/list_th.tpl"}
 			{/foreach}
 			<th align="right"></th>
 		</tr>
@@ -14,42 +14,42 @@
 		{foreach $result as $item}
 		<tr>
 			{foreach $field as $k => $v}
-			{include file="admin/crud/list_td.tpl"}
+			{include file="base/crud/list_td.tpl"}
 			{/foreach}
-			<td align="right" {if $aps.style.td_op}style="{$aps.style.td_op}"{/if}>
-				<a href="javascript:openWindow('{$aps.action}{$aps.options.link_info}{if $aps.options.link_info|strpos:'?'}&{else}?{/if}{$aps.pkey}={$item[$aps.pkey]}','{$title}{$aps.options.name_info}');">{$aps.options.name_info}</a>
+			<td align="right" {if $bps.style.td_op}style="{$bps.style.td_op}"{/if}>
+				<a href="javascript:openWindow('{$bps.action}{$bps.options.link_info}{if $bps.options.link_info|strpos:'?'}&{else}?{/if}{$bps.pkey}={$item[$bps.pkey]}','{$title}{$bps.options.name_info}');">{$bps.options.name_info}</a>
 				{if $blocks && "edit"|in_array:$blocks}
                     {if $item._unclick && "edit"|in_array:$item._unclick}
-                    | {$aps.options.name_edit}
+                    | {$bps.options.name_edit}
                     {else}
-				    | <a href="javascript:openWindow('{$aps.action}{$aps.options.link_edit}{if $aps.options.link_edit|strpos:'?'}&{else}?{/if}{$aps.pkey}={$item[$aps.pkey]}','{$title}{$aps.options.name_edit}');">{$aps.options.name_edit}</a>
+				    | <a href="javascript:openWindow('{$bps.action}{$bps.options.link_edit}{if $bps.options.link_edit|strpos:'?'}&{else}?{/if}{$bps.pkey}={$item[$bps.pkey]}','{$title}{$bps.options.name_edit}');">{$bps.options.name_edit}</a>
                     {/if}
 				{/if}
 				{if $blocks && "verify"|in_array:$blocks}
                     {if $item._unclick && "verify"|in_array:$item._unclick}
-                    | {$aps.options.name_verify}
+                    | {$bps.options.name_verify}
                     {else}
-				    | <a href="javascript:openWindow('{$aps.action}{$aps.options.link_verify}{if $aps.options.link_verify|strpos:'?'}&{else}?{/if}{$aps.pkey}={$item[$aps.pkey]}','{$title}{$aps.options.name_verify}');">{$aps.options.name_verify}</a> 
+				    | <a href="javascript:openWindow('{$bps.action}{$bps.options.link_verify}{if $bps.options.link_verify|strpos:'?'}&{else}?{/if}{$bps.pkey}={$item[$bps.pkey]}','{$title}{$bps.options.name_verify}');">{$bps.options.name_verify}</a> 
 				    {/if}
                 {/if}
 				{if $blocks && "delete"|in_array:$blocks}
                     {if $item._unclick && "delete"|in_array:$item._unclick}
-                    | {$aps.options.name_delete}
+                    | {$bps.options.name_delete}
                     {else}
-				    | <a href="javascript:if(confirm('确认{$aps.options.name_delete}{$title}？'))location.href='{$aps.action}{$aps.options.link_delete}?{$aps.pkey}={$item[$aps.pkey]}';">{$aps.options.name_delete}</a> 
+				    | <a href="javascript:if(confirm('确认{$bps.options.name_delete}{$title}？'))location.href='{$bps.action}{$bps.options.link_delete}?{$bps.pkey}={$item[$bps.pkey]}';">{$bps.options.name_delete}</a> 
 				    {/if}
                 {/if}
-				{if $aps.extend}
-				{foreach $aps.extend as $extend}
+				{if $bps.extend}
+				{foreach $bps.extend as $extend}
                     {if $item._unclick && $extend.name|in_array:$item._unclick}
                         | {$extend.name}
                     {else}
     					{if $extend.path}
-    					| <a href="javascript:openWindow('{$extend.path}{if $extend.path|strpos:'?'}&{else}?{/if}{foreach $extend.params as $pk => $pv}{$pk}={$item[$pv]}&{/foreach}{$aps.pkey}={$item[$aps.pkey]}','{$title} > {$extend.name}');">{$extend.name}</a>
+    					| <a href="javascript:openWindow('{$extend.path}{if $extend.path|strpos:'?'}&{else}?{/if}{foreach $extend.params as $pk => $pv}{$pk}={$item[$pv]}&{/foreach}{$bps.pkey}={$item[$bps.pkey]}','{$title} > {$extend.name}');">{$extend.name}</a>
     					{elseif $extend.href}
-    					| <a href="{$extend.href}{if $extend.href|strpos:'?'}&{else}?{/if}{foreach $extend.params as $pk => $pv}{$pk}={$item[$pv]}&{/foreach}{$aps.pkey}={$item[$aps.pkey]}">{$extend.name}</a>
+    					| <a href="{$extend.href}{if $extend.href|strpos:'?'}&{else}?{/if}{foreach $extend.params as $pk => $pv}{$pk}={$item[$pv]}&{/foreach}{$bps.pkey}={$item[$bps.pkey]}">{$extend.name}</a>
     					{else}
-                        | <a href="{$extend.link|replace:'{pval}':$item[$aps.pkey]}">{$extend.name}</a>
+                        | <a href="{$extend.link|replace:'{pval}':$item[$bps.pkey]}">{$extend.name}</a>
                         {/if}
                     {/if}
 				{/foreach}

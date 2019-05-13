@@ -1,8 +1,8 @@
-{if $aps.toptabs}
+{if $bps.toptabs}
 <div id="tab_nav">
-{foreach $aps.toptabs as $toptab}{if $_page eq $toptab.link}{assign var="is_tab" value="1"}{/if}{/foreach}
+{foreach $bps.toptabs as $toptab}{if $_page eq $toptab.link}{assign var="is_tab" value="1"}{/if}{/foreach}
     <ul>
-    {foreach $aps.toptabs as $toptab}
+    {foreach $bps.toptabs as $toptab}
         <li{if $_page eq $toptab.link || (!$is_tab && $toptab.default)} class="cur"{/if}><a href="{$toptab.link}">{$toptab.name}</a></li>
     {/foreach}
     </ul>
