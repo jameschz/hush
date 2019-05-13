@@ -18,18 +18,13 @@ require_once 'App/Acl/Default.php';
 class App_App_Default_Page extends App_App_Default
 {
     /**
-     * Dao object
-     */
-    protected $dao;
-    
-    /**
      * Do something before dispatch
      * @see Hush_App_Dispatcher
      */
     public function __init ()
     {
         // Auto load dao
-        $this->dao = new App_Dao();
+        $this->__init_dao();
         
         // Super admin
         $this->view->_sa = $this->sa = defined('__ACL_SA') ? __ACL_SA : 'sa';

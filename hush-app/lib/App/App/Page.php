@@ -24,6 +24,22 @@ class App_App_Page extends Hush_Page
 	protected $errors = array();
 	
 	/**
+	 * Dao object
+	 */
+	protected $dao = null;
+	
+	/**
+	 * Get dao instance
+	 */
+	public function __init_dao() {
+	    if (!$this->dao) {
+	        require_once 'App/Dao.php';
+	        $this->dao = new App_Dao();
+	    }
+	    return $this->dao;
+	}
+	
+	/**
 	 * Do something before __prepare() method
 	 * @see Hush_Page
 	 */

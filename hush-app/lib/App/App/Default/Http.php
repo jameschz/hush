@@ -23,7 +23,7 @@ class App_App_Default_Http extends App_App_Default
 // 		parent::__init();
 		
 		// init dao
-		$this->dao = new App_Dao();
+	    $this->__init_dao();
 		
 		// init context
 		$this->ctx = new Core_App_Context($this);

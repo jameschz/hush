@@ -16,5 +16,5 @@ require_once 'App/App/Page.php';
  */
 class App_App_Default extends App_App_Page
 {
-	
+    
 }
