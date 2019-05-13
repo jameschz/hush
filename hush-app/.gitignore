@@ -1,0 +1,11 @@
+# Ignore for dev tool
+.settings/
+.project/
+.idea/
+*.iml
+*.class
+*.project
+*.buildpath
+
+# Ignore for code
+.env.php

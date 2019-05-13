@@ -1,0 +1,14 @@
+# Ignore for dev tool
+.settings/
+.project/
+.idea/
+*.iml
+*.class
+*.project
+*.buildpath
+
+# Ignore for file
+sys/
+cdn/
+dat/
+run/
