@@ -11,7 +11,6 @@
  
 require_once 'Hush/Page.php';
 require_once 'Core/Util.php';
-require_once 'Core/Service.php';
 
 /**
  * @package App_App
@@ -29,6 +28,11 @@ class App_App_Page extends Hush_Page
 	protected $dao = null;
 	
 	/**
+	 * Service object
+	 */
+	protected $service = null;
+	
+	/**
 	 * Get dao instance
 	 */
 	public function __init_dao() {
@@ -37,6 +41,17 @@ class App_App_Page extends Hush_Page
 	        $this->dao = new App_Dao();
 	    }
 	    return $this->dao;
+	}
+	
+	/**
+	 * Get dao instance
+	 */
+	public function __init_service() {
+	    if (!$this->service) {
+	        require_once 'App/Service.php';
+	        $this->service = new App_Service();
+	    }
+	    return $this->service;
 	}
 	
 	/**

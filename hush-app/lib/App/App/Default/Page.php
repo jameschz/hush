@@ -26,6 +26,9 @@ class App_App_Default_Page extends App_App_Default
         // Auto load dao
         $this->__init_dao();
         
+        // Auto load service
+        $this->__init_service();
+        
         // Super admin
         $this->view->_sa = $this->sa = defined('__ACL_SA') ? __ACL_SA : 'sa';
         

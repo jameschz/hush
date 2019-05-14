@@ -4,7 +4,6 @@ set SysPath=%~pd0\..\sys
 set CdnPath=%~pd0\..\cdn
 set DatPath=%~pd0\..\dat
 set RunPath=%~pd0\..\run
-set AppPath=%~pd0\..\run\hush-app
 
 echo building sys path...
 md %SysPath%
@@ -18,9 +17,8 @@ md %DatPath%\hush-app
 
 echo building run path...
 md %RunPath%
-md %AppPath%
-md %AppPath%\tpl\default
-md %AppPath%\log\default
-md %AppPath%\cache\default
+md %RunPath%\hush-app\tpl\default
+md %RunPath%\hush-app\log\default
+md %RunPath%\hush-app\cache\default
 
 pause
