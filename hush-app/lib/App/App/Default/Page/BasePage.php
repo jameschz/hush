@@ -16,7 +16,7 @@ class BasePageSet
     // page setting
     public $page = '';
     public $action = '';
-    public $title = 'null';
+    public $title = 'NULL';
     
     // model setting
     public $pkey = 'id';
@@ -321,7 +321,9 @@ class BasePage extends App_App_Default_Page
             // 处理数据记录
             if ($this->noError()) {
                 try {
-                    Core_Service::trans_begin();
+                    // 数据事务开始
+                    $dao = $this->dao->load($bps->model);
+                    Core_Service::trans_begin($dao);
                     // 前置回调方法
                     if (method_exists($this, '_before_add')) {
                         $data = call_user_func_array(array($this, '_before_add'), array($data));
@@ -331,7 +333,6 @@ class BasePage extends App_App_Default_Page
                     }
                     // 数据创建逻辑
                     $data['dtime'] = time(); // update time
-                    $dao = $this->dao->load($bps->model);
                     $cid = $dao->create($data);
                     // 不是自增主键时可能没有返回值
                     if ($cid) {
@@ -342,12 +343,12 @@ class BasePage extends App_App_Default_Page
                         $data = call_user_func_array(array($this, '_after_add'), array($data));
                     }
                     $this->addOk('common.msg.success');
-                    Core_Service::trans_commit();
+                    Core_Service::trans_commit($dao);
                     $this->add_ok = true;
                 } catch (Exception $e) {
 // 					echo '[ADD] : '.$e->getMessage();
 // 					$this->addError('common.msg.failed');
-                    Core_Service::trans_rollback();
+                    Core_Service::trans_rollback($dao);
                 }
             }
         }
@@ -453,7 +454,9 @@ class BasePage extends App_App_Default_Page
             // 处理数据记录
             if ($this->noError()) {
                 try {
-                    Core_Service::trans_begin();
+                    // 数据事务开始
+                    $dao = $this->dao->load($bps->model);
+                    Core_Service::trans_begin($dao);
                     // 前置回调方法
                     if (method_exists($this, '_before_edit')) {
                         $data = call_user_func_array(array($this, '_before_edit'), array($data));
@@ -464,19 +467,18 @@ class BasePage extends App_App_Default_Page
                     // 数据更新逻辑
                     $data[$bps->pkey] = $this->param($bps->pkey);
                     $data['dtime'] = time(); // update time
-                    $dao = $this->dao->load($bps->model);
                     $dao->update($data, $bps->pkey);
                     // 后置回调方法
                     if (method_exists($this, '_after_edit')) {
                         $data = call_user_func_array(array($this, '_after_edit'), array($data));
                     }
                     $this->addOk('common.msg.success');
-                    Core_Service::trans_commit();
+                    Core_Service::trans_commit($dao);
                     $this->edit_ok = true;
                 } catch (Exception $e) {
 //                     echo '[EDIT] : '.$e->getMessage();
 //                     $this->addError('common.msg.failed');
-                    Core_Service::trans_rollback();
+                    Core_Service::trans_rollback($dao);
                 }
             }
         }
@@ -502,7 +504,9 @@ class BasePage extends App_App_Default_Page
             $data = $this->getPostData($form, $bps->field);
             if ($this->noError()) {
                 try {
-                    Core_Service::trans_begin();
+                    // 数据事务开始
+                    $dao = $this->dao->load($bps->model);
+                    Core_Service::trans_begin($dao);
                     // 前置回调方法
                     if (method_exists($this, '_before_verify')) {
                         $data = call_user_func_array(array($this, '_before_verify'), array($data));
@@ -515,18 +519,17 @@ class BasePage extends App_App_Default_Page
                     $result = $data['result'];
                     unset($data['result']);
                     $data['dtime'] = $time;
-                    $dao = $this->dao->load($bps->model);
                     $dao->update($data, $bps->pkey);
                     // 后置回调方法
                     if (method_exists($this, '_after_verify')) {
                         $data = call_user_func_array(array($this, '_after_verify'), array($data));
                     }
                     $this->addOk('common.msg.success');
-                    Core_Service::trans_commit();
+                    Core_Service::trans_commit($dao);
                 } catch (Exception $e) {
 //                     echo '[VERIFY] : '.$e->getMessage();
 //                     $this->addError('common.msg.failed');
-                    Core_Service::trans_rollback();
+                    Core_Service::trans_rollback($dao);
                 }
             }
         }
@@ -579,10 +582,11 @@ class BasePage extends App_App_Default_Page
             $del_id = $this->param($bps->pkey);
             if ($del_id) {
                 try {
-                    Core_Service::trans_begin();
+                    // 数据事务开始
                     $dao = $this->dao->load($bps->model);
-                    $data = $dao->read($del_id, $bps->pkey);
+                    Core_Service::trans_begin($dao);
                     // 前置回调方法
+                    $data = $dao->read($del_id, $bps->pkey);
                     if (method_exists($this, '_before_delete')) {
                         $data = call_user_func_array(array($this, '_before_delete'), array($data));
                         if (!$this->noError()) {
@@ -591,14 +595,13 @@ class BasePage extends App_App_Default_Page
                     }
                     // 判断是否删除
                     if ($data) {
-                        $dao = $this->dao->load($bps->model);
                         $dao->delete($del_id, $bps->pkey);
                     }
                     // 后置回调方法
                     if (method_exists($this, '_after_delete')) {
                         $data = call_user_func_array(array($this, '_after_delete'), array($data));
                     }
-                    Core_Service::trans_commit();
+                    Core_Service::trans_commit($dao);
                     // 返回来源页
                     if ($data) {
                         $this->forward($_SERVER['HTTP_REFERER']);
@@ -606,7 +609,7 @@ class BasePage extends App_App_Default_Page
                 } catch (Exception $e) {
 //                     echo '[DELETE] : '.$e->getMessage();
 //                     $this->addError('common.msg.failed');
-                    Core_Service::trans_rollback();
+                    Core_Service::trans_rollback($dao);
                 }
             }
         }
