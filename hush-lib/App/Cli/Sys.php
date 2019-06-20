@@ -294,11 +294,11 @@ NOTICE;
 		// check user input
 		$localpath = trim(fgets(fopen("php://stdin", "r")));
 		if (!is_dir($localpath)) {
-			mkdir($localpath, 0777, true);
-		}
-		$localpath = realpath($localpath);
-		if ($localpath) {
-			echo "\nLOCALPATH : $localpath\n\n";
+		    echo "\nLOCALPATH must be a existed dir.\n";
+		    exit;
+		} else {
+		    $localpath = realpath($localpath);
+		    echo "\nNEW APP CODE DIR : $localpath\n\n";
 		}
 		
 		echo 
@@ -312,50 +312,30 @@ NOTICE;
 			exit;
 		}
 		
-		// copy main code
-		Hush_Util::dir_copy(__ROOT, $localpath, array('.svn'), array($this, 'copy_all_wrapper'));
+		// check code dirs
+		$this->ns_old = __APP_NS;
+		$this->ns_new = $namespace;
+		$root_dir = realpath(__ROOT . '/../');
+		if (!$root_dir || !$localpath) {
+		    echo "\nSOURCE or TARGET dirs error.\n";
+		    exit;
+		} else {
+		    mkdir($localpath . '/' . $this->ns_new . '-app', 0777, true);
+		    mkdir($localpath . '/' . $this->ns_new . '-lib', 0777, true);
+		    mkdir($localpath . '/' . $this->ns_new . '-run/bin', 0777, true);
+		}
 		
-		// used by copy_lib_wrapper callback
-		$this->namespace = $namespace;
-		
-		// copy lib code
-		$baseLibDir = realpath($localpath . '/lib/');
-		$oldLibDir = $baseLibDir . DIRECTORY_SEPARATOR . 'App';
-		$newLibDir = $baseLibDir . DIRECTORY_SEPARATOR . $namespace;
-		Hush_Util::dir_copy($oldLibDir, $newLibDir, null, array($this, 'copy_lib_wrapper'));
-		
-		// copy etc code
-		$baseEtcDir = realpath($localpath . '/etc/');
-		$tmpEtcDir = $localpath . DIRECTORY_SEPARATOR . 'etc_tmp';
-		Hush_Util::dir_copy($baseEtcDir, $tmpEtcDir, null, array($this, 'copy_lib_wrapper'));
-		Hush_Util::dir_copy($tmpEtcDir, $baseEtcDir, null, null);
-		
-		// copy bin code
-		$baseBinDir = realpath($localpath . '/bin/');
-		$tmpBinDir = $localpath . DIRECTORY_SEPARATOR . 'bin_tmp';
-		Hush_Util::dir_copy($baseBinDir, $tmpBinDir, null, array($this, 'copy_lib_wrapper'));
-		Hush_Util::dir_copy($tmpBinDir, $baseBinDir, null, null);
-		
-		// remove useless dir
-		echo "Remove useless dirs ...\n";
-		Hush_Util::dir_remove($oldLibDir);
-		Hush_Util::dir_remove($tmpEtcDir);
-		Hush_Util::dir_remove($tmpBinDir);
-		
-		// change init configs
-		echo "Change init configs ...\n";
-		$configFilePath = $baseEtcDir . DIRECTORY_SEPARATOR . 'global.config.php';
-		$configFileCode = file_get_contents($configFilePath);
-		$pregArr = array(
-			'/__COMM_LIB_DIR\',.*?\)/',
-			'/__HUSH_LIB_DIR\',.*?\)/',
+		// copy source code
+		$code_cp_dirs = array(
+		    $root_dir . '/' . $this->ns_old . '-app' => $localpath . '/' . $this->ns_new . '-app',
+		    $root_dir . '/' . $this->ns_old . '-lib' => $localpath . '/' . $this->ns_new . '-lib',
+		    $root_dir . '/' . $this->ns_old . '-run/bin' => $localpath . '/' . $this->ns_new . '-run/bin',
+		    $root_dir . '/.settings' => $localpath . '/.settings',
 		);
-		$replaceArr = array(
-			'__COMM_LIB_DIR\', _hush_realpath(__ROOT . \'/../phplibs\')',
-			'__HUSH_LIB_DIR\', _hush_realpath(__ROOT . \'/../phplibs\')',
-		);
-		$configFileCode = preg_replace($pregArr, $replaceArr, $configFileCode);
-		file_put_contents($configFilePath, $configFileCode);
+		foreach ($code_cp_dirs as $src_dir => $dst_dir) {
+		    Hush_Util::dir_copy($src_dir, $dst_dir, array('.svn','.git'), array($this, 'copy_wrapper'));
+		}
+		copy($root_dir . '/.gitignore', $localpath . '/.gitignore');
 		
 		// all completed
 		echo 
@@ -371,18 +351,49 @@ NOTICE;
 	}
 	
 	// used by newappAction
-	public function copy_all_wrapper ($src, $dst)
+	public function copy_wrapper ($src, $dst)
 	{
-		echo "Copy $src => $dst\n";
-	}
-	
-	// used by newappAction
-	public function copy_lib_wrapper ($src, $dst)
-	{
-		$srcCode = file_get_contents($src);
-		$srcCode = str_replace('App', $this->namespace, $srcCode);
-		file_put_contents($dst, $srcCode);
-		echo "Overwrite $dst ...\n";
+	    // 忽略的目录
+	    $escape_dirs = array(
+	        $this->ns_old. '-run/cdn',
+	        $this->ns_old. '-run/dat',
+	        $this->ns_old. '-run/run',
+	        $this->ns_old. '-run/sys',
+	    );
+	    foreach ($escape_dirs as $escape_dir) {
+	        if (preg_match('/'.preg_quote($escape_dir,'/').'/', $src)) {
+	            return false;
+	        }
+	    }
+	    
+		echo "Copy $src\nSave $dst\n";
+		
+		// 替换的目录
+		$replace_dirs = array(
+		    'doc/sql/',
+		    'App/Dao/',
+		    'App/Cache/',
+		    'Core/Session.php',
+		    'global.appcfg.php',
+		    'global.config.php',
+		    'build.bat',
+		    'build.sh',
+		);
+		foreach ($replace_dirs as $replace_dir) {
+		    if (preg_match('/'.preg_quote($replace_dir,'/').'/', $src)) {
+		        $src_code = file_get_contents($src);
+		        $dst_code = str_replace($this->ns_old, $this->ns_new, $src_code);
+		        if ($src_code != $dst_code) {
+		            $dst_dir_name = dirname($dst);
+		            $dst_file_name = basename($dst);
+		            $dst_file_name = str_replace($this->ns_old, $this->ns_new, $dst_file_name);
+		            $dst_file_path = $dst_dir_name . '/' . $dst_file_name;
+		            unlink($dst); // 删除老的文件，创建新的文件
+		            file_put_contents($dst_file_path, $dst_code);
+		            echo "Replace $dst_file_path ...\n";
+		        }
+		    }
+		}
 	}
 	
 	public function newctrlAction ()
@@ -410,10 +421,10 @@ NOTICE;
 		$typeName = ucfirst($ctrlNSArr[1]);
 		$ctrlName = ucfirst($ctrlNSArr[2]);
 		$replaceArr = array('APPNAME', 'CTRLNAME');
-		$changedArr = array(__APP_NS, $ctrlName);
+		$changedArr = array('App', $ctrlName);
 		
 		// check controller path
-		$ctrlClsBase = realpath(__LIB_DIR . '/' . __APP_NS . '/App/');
+		$ctrlClsBase = realpath(__LIB_DIR . '/App/App/');
 		$ctrlNS = str_replace('\\', DIRECTORY_SEPARATOR, $ctrlNS); // fix bug on linux
 		$ctrlClsPath = realpath($ctrlClsBase . '/' . dirname($ctrlNS)); // just for check
 		$ctrlClsFile = $ctrlClsPath . DIRECTORY_SEPARATOR . $ctrlName . 'Page.php';
@@ -466,10 +477,9 @@ NOTICE;
 		$dbName = ucfirst($daoNSArr[0]);
 		$tableName = ucfirst($daoNSArr[1]);
 		$replaceArr = array('APPNAME', 'DBNAME', 'TABLENAME');
-		$changedArr = array(__APP_NS, $dbName, $tableName);
+		$changedArr = array('App', $dbName, $tableName);
 		
 		// check dao path
-// 		$daoClsBase = realpath(__LIB_DIR . '/' . __APP_NS . '/Dao/');
 		$daoClsBase = realpath(__ROOT . '/../lib/App/Dao/'); // move to lib dir
 		$daoClsPath = $daoClsBase . DIRECTORY_SEPARATOR . $dbName; // should be created
 		$daoClsFile = $daoClsPath . DIRECTORY_SEPARATOR . $tableName . '.php';

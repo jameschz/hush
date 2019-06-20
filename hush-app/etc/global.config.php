@@ -13,8 +13,8 @@ date_default_timezone_set('PRC');
  * App Name
  */
 define('__APP', 'hush-app');
-define('__APP_NS', 'App');
-define('__APP_NAME', 'App Template');
+define('__APP_NS', 'hush');
+define('__APP_NAME', 'hush-app');
 
 /**
  * Windows OS
@@ -43,10 +43,10 @@ define('__SQL_DIR', realpath(__DOC_DIR . '/sql'));
 /**
  * Core data paths
  */
-define('__SYS_DIR', realpath(__ROOT . '/../hush-run/sys'));
-define('__CDN_DIR', realpath(__ROOT . '/../hush-run/cdn/' . __APP));
-define('__DAT_DIR', realpath(__ROOT . '/../hush-run/dat/' . __APP));
-define('__RUN_DIR', realpath(__ROOT . '/../hush-run/run/' . __APP));
+define('__SYS_DIR', realpath(__ROOT . '/../' . __APP_NS . '-run/sys'));
+define('__CDN_DIR', realpath(__ROOT . '/../' . __APP_NS . '-run/cdn/' . __APP));
+define('__DAT_DIR', realpath(__ROOT . '/../' . __APP_NS . '-run/dat/' . __APP));
+define('__RUN_DIR', realpath(__ROOT . '/../' . __APP_NS . '-run/run/' . __APP));
 define('__CACHE_DIR', realpath(__RUN_DIR . '/cache'));
 define('__TPL_C_DIR', realpath(__RUN_DIR . '/tpl'));
 define('__LOG_DIR', realpath(__RUN_DIR . '/log'));
