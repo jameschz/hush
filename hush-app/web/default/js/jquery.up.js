@@ -30,11 +30,16 @@ jQuery.fn.extend({
         };
         _this.change(function () {
             if (this.value) {
-                if (!RegExp("\.(" + opts.types.join("|") + ")$", "i").test(this.value.toLowerCase())) {
+            	// 检查图片类型
+            	var file_path = this.value.toLowerCase();
+            	var file_type = file_path.substring(file_path.lastIndexOf('.') + 1);
+            	var file_meta = file_type == "png" ? "image/png" :"image/jpeg";
+                if (!RegExp("\.(" + opts.types.join("|") + ")$", "i").test(file_path)) {
                     alert("图片类型只能是" + opts.types.join("，") + "！");
                     this.value = "";
                     return false;
                 }
+                // 检查图片大小
                 var file_data = this.files[0];
                 var file_size = file_data.size;
                 if (file_size > opts.maxsize) {
@@ -42,7 +47,7 @@ jQuery.fn.extend({
                     this.value = "";
                     return false;
                 }
-                // 使用FileReader
+                // 使用FileReader读取图片
                 var reader = new FileReader();
                 reader.readAsDataURL(file_data);
             	reader.onload = function(e){
@@ -60,12 +65,12 @@ jQuery.fn.extend({
                         drawer = canvas.getContext("2d");
                         drawer.drawImage(image,0,0,new_w,new_h);
                         // 回调FileReader方法
-                        var imageCompress = canvas.toDataURL("image/jpeg", 0.8); // 80%
+                        var imageCompress = canvas.toDataURL(file_meta, 0.8); // jpeg compress 80%
                         opts.readfile(this, imageCompress);
             		}
             		image.src = this.result;
             	}
-                // 使用createObjectURL
+                // 使用createObjectURL创建图片
                 var old_img_src = $("#" + opts.img).attr('src');
                 if (/msie/.test(navigator.userAgent.toLowerCase())) {
                     try {
@@ -93,9 +98,9 @@ jQuery.fn.extend({
                 } else {
                     $("#" + opts.img).attr('src', _self.getObjectURL(file_data))
                 }
-                // 回调createObjectURL方法
+                // 往回调函数传回图片信息
                 var img_src = $("#" + opts.img).attr('src');
-                opts.callback(this, img_src, old_img_src);
+                opts.callback(this, img_src, old_img_src, file_meta);
             }
         })
     }

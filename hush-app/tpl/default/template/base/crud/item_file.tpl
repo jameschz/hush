@@ -36,7 +36,7 @@
             }
             $("#uf_{$k}_{$k1}").uploadPreview({
                 img : "up_{$k}_{$k1}",
-                callback : function(file_obj, img_src, old_img_src){
+                callback : function(file_obj, img_src, old_img_src, img_meta){
                     var crop_box = $('#crop_box_{$k}_{$k1}');
                     var crop_img = $('#crop_img_{$k}_{$k1}');
                     var crop_btn_back = $('#crop_btn_back_{$k}_{$k1}');
@@ -68,7 +68,7 @@
                     });
                     crop_btn_save.click(function(){
                         var canvas = crop_img.cropper("getCroppedCanvas");
-                        var result = canvas.toDataURL("image/jpeg", 0.8);
+                        var result = canvas.toDataURL(img_meta, 0.8);
                         $('#up_{$k}_{$k1}').attr('src', result);
                         $('#ut_{$k}_{$k1}').val(result);
                         crop_box.hide();
@@ -200,7 +200,7 @@
         	}
         	$("#uf_{$k}_{$k1}").uploadPreview({
         	    img : "up_{$k}_{$k1}",
-        	    callback : function(file_obj, img_src, old_img_src){
+        	    callback : function(file_obj, img_src, old_img_src, img_meta){
         	    	var crop_box = $('#crop_box_{$k}_{$k1}');
         	    	var crop_img = $('#crop_img_{$k}_{$k1}');
         	    	var crop_btn_back = $('#crop_btn_back_{$k}_{$k1}');
@@ -232,7 +232,7 @@
         	    	});
         	    	crop_btn_save.click(function(){
         	        	var canvas = crop_img.cropper("getCroppedCanvas");
-        	        	var result = canvas.toDataURL("image/jpeg", 0.8);
+        	        	var result = canvas.toDataURL(img_meta, 0.8);
         	        	$('#up_{$k}_{$k1}').attr('src', result);
         	        	$('#ut_{$k}_{$k1}').val(result);
         	        	crop_box.hide();
