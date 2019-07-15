@@ -40,8 +40,6 @@ $_APPCFG['core.cache.redis'] = array(
 
 // app host
 $_APPCFG['app.host'] = 'http://hush-app';
-$_APPCFG['app.host.sdk'] = 'http://hush-app-sdk';
-$_APPCFG['app.host.admin'] = 'http://hush-app-admin';
 
 // static host
 $_APPCFG['app.host.s'] = 'http://hush-app';

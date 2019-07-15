@@ -28,19 +28,17 @@ $_APPCFG['core.cache.redis'] = array(
 // hosts config
 
 // app host
-$_APPCFG['app.host'] = 'http://hush-app.beta.focusgames.cn';
-$_APPCFG['app.host.sdk'] = 'http://hush-app-sdk.beta.focusgames.cn';
-$_APPCFG['app.host.admin'] = 'http://hush-app-admin.beta.focusgames.cn';
+$_APPCFG['app.host'] = 'http://hush-app.beta.hostname.com';
 
 // static host
-$_APPCFG['app.host.s'] = 'http://hush-app.beta.focusgames.cn';
+$_APPCFG['app.host.s'] = 'http://hush-app.beta.hostname.com';
 
 // cdn host
-$_APPCFG['app.cdn.url'] = 'http://hush-cdn.beta.focusgames.cn/hush-app/'.__APP_SITE;
+$_APPCFG['app.cdn.url'] = 'http://hush-cdn.beta.hostname.com/hush-app/'.__APP_SITE;
 $_APPCFG['app.cdn.dir'] = __CDN_DIR.'/'.__APP_SITE;
 
 // upload host
-$_APPCFG['app.upload.host'] = $_APPCFG['app.host.admin'];
+$_APPCFG['app.upload.host'] = $_APPCFG['app.host'];
 $_APPCFG['app.upload.pics.dir'] = $_APPCFG['app.cdn.dir'] . '/upload/';
 $_APPCFG['app.upload.pics.url'] = $_APPCFG['app.cdn.url'] . '/upload/';
 $_APPCFG['app.upload.pack.dir'] = $_APPCFG['app.cdn.dir'] . '/pack/';
