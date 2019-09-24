@@ -57,7 +57,7 @@ See more INFO about the old version of Hush Framework in **Branch v1.1.1**
     * 进入应用框架 hush-app/bin 目录
     * 运行 hush sys uplib 安装基础类库，系统会自动安装
     * 类库一般会被安装到 hush/phplibs 目录下，此目录请在 gitignore 中排除
-* 第二步：安装数据库
+* 第二步：初始化数据库
     * 在开发机上准备好 MYSQL 数据库，并把 root 密码设置为 passwd（框架默认）
     * 执行 hush db init create 安装数据库
     * 执行 hush db table create 安装数据表
@@ -67,7 +67,9 @@ See more INFO about the old version of Hush Framework in **Branch v1.1.1**
     * __HUSH_DB_PORT：数据库端口地址（默认 3306）
     * __HUSH_DB_USER：数据库用户名（默认 root）
     * __HUSH_DB_PASS：数据库密码（默认 passwd）
-* 给运行时目录赋权限，进入 hush-run/bin 目录（Linux 下需执行 chmod +x hush）
+* 第三步：初始化运行环境
+    * 进入 hush-run/bin 目录，执行 build 命令，并给 run 目录赋权限（Linux 下需执行 chmod +x hush-run/run）
+    * 进入 etc/ 目录，保存 env.php.sample 为 .env.php，里面配置的是当前环境的特殊变量（此文件一般给运维使用）
 
 #### 3> 配置服务器（Apache / Nginx）
 

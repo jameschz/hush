@@ -101,8 +101,9 @@ else {
 	$zendDir = __COMM_LIB_DIR . DIRECTORY_SEPARATOR . 'Zend';
 	if (!is_dir($hushDir) || !is_dir($zendDir)) {
 		echo "Core libraries can not be found .. <br/>\n";
-		echo "1. If database EXISTED, Please enter 'hush_app/bin' and execute 'hush sys uplib' command.<br/>\n";
-		echo "2. If database NO-EXISTED, Please enter 'hush_app/bin' and execute 'hush sys init' command.<br/>\n";
+		echo "If it is the first installation, Please do the following :";
+		echo "1. Please enter 'hush-app/bin' and execute 'hush sys uplib' command.<br/>\n";
+		echo "2. If database NO-EXISTED, Please execute 'hush db init create' and 'hush db table create' command.<br/>\n";
 		exit(1);
 	}
 }
