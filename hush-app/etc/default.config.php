@@ -59,6 +59,3 @@ define('__ACL_SA', 'sa');
  * Load app configs
  */
 require_once 'global.appcfg.php';
-if (__HUSH_ENV != 'local') {
-    require_once __ETC . '/' . __HUSH_ENV . '/global.appcfg.php';
-}

@@ -57,5 +57,13 @@ $_APPCFG['app.upload.pack.dir'] = $_APPCFG['app.cdn.dir'] . '/pack/';
 $_APPCFG['app.upload.pack.url'] = $_APPCFG['app.cdn.url'] . '/pack/';
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// app config
+// app config : defines global configs here
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// includes configs for env
+
+if (__HUSH_ENV != 'local') {
+    require_once __ETC . '/' . __HUSH_ENV . '/global.appcfg.php';
+}
