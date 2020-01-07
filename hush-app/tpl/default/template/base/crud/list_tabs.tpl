@@ -1,5 +1,5 @@
 {if $bps.toptabs}
-<div id="tab_nav">
+<div class="tab_nav">
 {foreach $bps.toptabs as $toptab}{if $_page eq $toptab.link}{assign var="is_tab" value="1"}{/if}{/foreach}
     <ul>
     {foreach $bps.toptabs as $toptab}

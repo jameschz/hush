@@ -153,6 +153,9 @@ class DemoPage extends BasePage
 	    $this->bps->title = 'DEMO';
 	    $this->bps->topmsg = '注意事项：在这里添加注意事项！';
 	    
+	    // 设置顶部导航
+	    $this->bps->navimsg = '<font>余额：1000.00</font><button>提现</button>';
+	    
 	    // 初始化关联模型
 	    $this->_init_test();
 	    
@@ -188,6 +191,9 @@ class DemoPage extends BasePage
 	        array('link' => "/demo/tabs?type=1", 'name' => 'TAB2'),
 	        array('link' => "/demo/tabs?type=2", 'name' => 'TAB3'),
 	    );
+	    
+	    // 设置顶部导航
+	    $this->bps->navimsg = '<font>余额：1000.00</font><button>提现</button>';
 	    
 	    // 初始化关联模型
 	    $this->_init_test();

@@ -28,6 +28,7 @@ class BasePageSet
     public $orders = array();
     public $toptabs = array();
     public $tpldir = 'base/crud';
+    public $navimsg = '';
     public $verify_type = 0;
     public $page_num = 20;
     

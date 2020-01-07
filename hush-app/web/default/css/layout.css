@@ -54,3 +54,16 @@ ul,li{list-style-type:none;padding:0px;}
 .fz-nav{content:'';clear:both;}
 .fz-nav li{float:left;padding:0px 15px;color:#B3B7BB;cursor:pointer;}
 .fz-nav .check{border-bottom:2px solid #EE7600;color:#000;}
+.fz-input{outline-style:none;border:1px solid #ccc;border-radius:3px;padding:6px;width:auto;font-size:12px;vertical-align:middle;}
+.fz-block{padding:0px 15px;width:auto;display:inline-block;vertical-align:middle;}
+.fz-block font{text-align:center;vertical-align:middle;display:block;margin-bottom:5px;}
+.fz-block button{background:#1E90FF;width:100px;height:30px;margin:0px 0px 0px 20px;line-height:24px;font-size:12px;border-width:0px;border-radius:3px;cursor:pointer;outline:none;color:white;}
+.fz-block button:hover{background:#5599FF;}
+.fz-block button.for-small{width:60px;height:20px;line-height:22px;font-size:10px;}
+.fz-block img.icon{width:100px;height:100px;}
+.fz-block i.icon{font-size:50px;width:50px;height:50px;text-align:center;display:block;margin:25px;color:#FF9933}
+.fz-stock{width:200px;margin:0px 0px 5px 15px;display:inline-block;padding:0px;}
+.fz-stock table{width:100%;background-color: #eee;border-collapse: collapse;border-spacing: 0;margin:auto;}
+.fz-stock table td{border:1px solid #c4c4c4;height:40px;line-height:40px;padding-left:15px;}
+.fz-stock table td.for-sale{background:#FF9933}
+.fz-stock font{width:100%;text-align:center;vertical-align:middle;display:block;margin-bottom:5px;line-height:30px;}

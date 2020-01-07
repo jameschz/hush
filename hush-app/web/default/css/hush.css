@@ -16,7 +16,7 @@ input, textarea { color: #59626d; }
 a{ text-decoration:none; color: inherit}
 body{ overflow-x: hidden;font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB",STHeiti,"Microsoft YaHei"; background: #eaedf1; min-width: 1024px; color: #59626d;}
 .ax_loding{ width: 100%; background: url(../img/bj.jpg) no-repeat top center; background-size: 100%; position: fixed;}
-.ax_loding_nr{ width: 250px;margin: auto;position:absolute; left: 50%; margin-left: -125.5px; top: 0;}
+.ax_loding_nr{ width: 250px;margin: auto;position:absolute; left: 50%; margin-left: -125.5px; top: 10%;}
 .ax_loding_logo{ width: 250px; text-align: center; margin-top: 30%; position: absolute; vertical-align: middle;}
 .ax_loding_logo img{ width:0px;opacity: 0;}
 .ax_error_box { width: 250px; font-size:12px; color:#fff; text-align: center; margin-top: 82%; position: absolute; vertical-align: middle;}
@@ -26,8 +26,8 @@ body{ overflow-x: hidden;font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans"
 .ax_srnr_mr input{ width: 210px; height: 50px; line-height: 50px;  font-size: 14px; background: none; border: 0;}
 .ax_srnr_mr i{ width: 40px; text-align: center;  display: inline-block; color: #59626d}
 .ax_srnr_mr img{ height: 20px; position: absolute; top: 0; right: 0; margin-top: 15px; margin-right: 10px;}
-.ax_srnr_botton{ margin-top: 162%; position: absolute; width: 100%; background:#ff6b7b; color: #fff; border: 1px solid #ff6b7b; line-height: 50px; text-align: center; line-height: 40px;border-radius: 6px;}
-.ax_srnr_botton:hover{ background: #fc7e8c; color: #fff; cursor: pointer; border: 1px solid #fc7e8c;}
+.ax_srnr_botton{ margin-top: 162%; position: absolute; width: 100%; background:#ff9933; color: #fff; border: 1px solid #ff9933; line-height: 50px; text-align: center; line-height: 40px;border-radius: 6px;}
+.ax_srnr_botton:hover{ background: #ff9933; color: #fff; cursor: pointer; border: 1px solid #ff9933;}
 .ax_bottom{ width: 100%; text-align: center; font-size: 11px; color: #fff; position: absolute; bottom: 20px;}
 .ax_top{ width: 100%; position: fixed; height: 50px;  z-index: 302; font-size: 14px; color: #59626d; background:#e0e1e6;background: -webkit-linear-gradient(rgba(237,238,242,1),rgba(217,218,223,1)); /* Safari 5.1 - 6.0 */
   background: -o-linear-gradient(rgba(237,238,242,1),rgba(217,218,223,1)); /* Opera 11.1 - 12.0 */
@@ -39,7 +39,7 @@ body{ overflow-x: hidden;font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans"
 .ax_top_left_sy{ float: left; height: 50px; padding: 0 29px; border-right: 1px solid #d4d7da;}
 .ax_top_left_hz{float: left; height: 50px; padding: 0 20px; }
 .ax_top_left_dj font{ margin-left: 2px; font-size: 8px; line-height: 12px;}
-.ax_top_left_dj span{  background: #ff697c;  margin-left: 5px; padding:0 5px; color: #fff; border-radius: 2px; font-size: 11px; display: inline-block; height: 16px; line-height: 16px;}
+.ax_top_left_dj span{  background: #ff9933;  margin-left: 5px; padding:0 5px; color: #fff; border-radius: 2px; font-size: 11px; display: inline-block; height: 16px; line-height: 16px;}
 .ax_top_left_dj i{ font-size: 18px; vertical-align: middle; }
 .ax_top_left_dj:hover{ background:#fff;  cursor: pointer;}
 .ax_top_left_dj_h{ background: #fff; color: #399BFC; cursor: pointer;}
@@ -57,11 +57,11 @@ body{ overflow-x: hidden;font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans"
 .ax_nr_left_nav_bt i{ width: 50px; height: 40px; line-height: 40px; text-align: center; color: #faeef7; display: inline-block; font-size: 16px; vertical-align: middle;}
 .ax_nr_left_nav_nr p{ height: 40px; }
 .ax_nr_left_nav_nr p i{ width: 50px; height: 40px; line-height: 40px; text-align: center; color: #faeef7; display: inline-block; font-size: 16px; vertical-align: middle;}
-.ax_nr_left_nav_nr_h{ background: #ff697c;}
+.ax_nr_left_nav_nr_h{ background: #ff9933;}
 .ax_nr_left_nav_nr p.ax_nr_left_nav_nr_h i{ color: #fff;}
 .ax_nr_left_nav_bt:hover{ background: #141921; cursor: pointer;}
 .ax_nr_left_nav_nr p:hover{background: #212832;cursor: pointer;}
-.ax_nr_left_nav_nr p.ax_nr_left_nav_nr_h:hover{ background: #ff6b7b;}
+.ax_nr_left_nav_nr p.ax_nr_left_nav_nr_h:hover{ background: #ff9933;}
 .ax_h_50{ height: 50px;}
 .ax_nr_left.wi{ width: 50px;}
 .ax_nr_left_bt.wi{ width: 50px;}

@@ -17,12 +17,12 @@ a{color:#004b8d; text-decoration:none}
 a:hover{color:#4192d9; text-decoration:none}
 hr.common{margin-top:10px;margin-bottom:10px;}
 
-input{padding:3px;background:#ffffee;border:1px solid #eee;}
-select{padding:3px;background:#ffffee;border:1px solid #eee;}
-textarea{padding:3px;background:#ffffee;border:1px solid #eee;}
-input[type="text"]{padding:5px;}
-input[type="button"]{padding:3px;background:#eee;border:1px solid #888;}
-input[type="submit"]{padding:3px;background:#eee;border:1px solid #888;}
+input{padding:3px;background:#ffffee;border:1px solid #eee;box-sizing: border-box;height:30px;}
+select{padding:3px;background:#ffffee;border:1px solid #eee;box-sizing: border-box;height:30px;}
+textarea{padding:3px;background:#ffffee;border:1px solid #eee;box-sizing: border-box;height:30px;}
+input[type="text"]{padding:5px;font-size:13px;}
+input[type="button"]{padding:3px 10px 3px 10px;background:#1E90FF;color:#fff;font-size:13px;border-radius:5px;cursor:pointer;}
+input[type="submit"]{padding:3px 10px 3px 10px;background:#1E90FF;color:#fff;font-size:13px;border-radius:5px;cursor:pointer;}
 
 .fc_red{color:#f26101}
 .fc_blue{color:#004b8d}
@@ -40,26 +40,26 @@ input[type="submit"]{padding:3px;background:#eee;border:1px solid #888;}
 .mtitle h1{width:48%; height:29px; float:left; line-height:27px; font-size:12pt; font-weight:bold; text-indent:14px; letter-spacing:2px; color:#333;}
 .mtitle span{float:right;}
 
+.topmsg{background:#ffffee; margin:10px auto 0px; padding:5px;border:1px dotted #ccc}
 .tform{width:100%; margin:0 auto; border-bottom:1px solid #d9e8f5; height:26px;line-height:26px;text-align:right;}
 
 table .title{color:#333;font-weight:bold;background:#f1f1f2;}
 table .total{color:#333;font-weight:bold;background:#f1f1f2;}
 table thead tr{height:24px;line-height:24px;}
-table thead th{padding:3px;color:#333;}
+table thead th{padding:5px;color:#333;}
 
-.topmsg{background:#ffffee; margin:10px auto 0px; padding:5px;border:1px dotted #ccc}
-
-.tlist{width:100%; margin:10px auto 0px; border-collapse:collapse}
+.tlist{width:100%; margin:10px auto 0px; font-size:13px;border-collapse:collapse}
+.tlist td.op_box{width:200px; text-align:right; font-size:13px;}
+.tlist td.op_box a{color:#1E90FF; margin:3px; display:inline-block;}
+.tlist td.op_box b{font-weight:normal; margin:3px; display:inline-block;}
 .tlist tbody tr{height:20px;line-height:20px;background:#fff;font-weight:normal;color:#333;border-bottom:1px dotted #d9e8f5}
-.tlist tr td{line-height:15px;padding:5px;color:#333;}
-.tlist tbody td{border-bottom:1px dotted #d9e8f5}
+.tlist tbody td{padding:5px;border-bottom:1px dotted #d9e8f5}
 .tlist tfoot tr{text-align:left;}
 .tlist tfoot td{padding:5px;}
 
 .tlist2{width:100%; margin:auto 0px; border-collapse:collapse}
 .tlist2 tbody tr{height:20px;line-height:20px;background:#fff;font-weight:normal;color:#333;border-bottom:1px dotted #d9e8f5}
-.tlist2 tr td{line-height:15px;padding:5px;color:#333;}
-.tlist2 tbody td{border-bottom:1px dotted #d9e8f5}
+.tlist2 tbody td{padding:5px;color:#333;border-bottom:1px dotted #d9e8f5}
 .tlist2 tfoot tr{text-align:left;}
 .tlist2 tfoot td{padding-left:0px;}
 
@@ -82,7 +82,7 @@ table thead th{padding:3px;color:#333;}
 .titem select optgroup option {padding-left:23px}
 .titem td.submit {padding-top:10px;}
 .titem .item_desc {padding-top:3px;color:red}
-.titem .item_tips {height:18px;background:#ff697c;margin-bottom:10px;padding:5px 10px;border-radius:3px;}
+.titem .item_tips {height:18px;background:#ff9933;margin-bottom:10px;padding:5px 10px;border-radius:3px;}
 .titem .item_tips b { float:left;color:#ffffff;font-weight:normal; }
 .titem .item_tips a { float:right;color:#ffffff; }
 
@@ -98,7 +98,7 @@ img.chart_pie{width:500px;height:300px}
 
 input.filter_input{width:50px}
 
-div.errorbox{width:100%;background:#ff697c;margin-top:10px;border-radius:3px;color:#fff;}
+div.errorbox{width:100%;background:#ff9933;margin-top:10px;border-radius:3px;color:#fff;}
 div.errorbox span{padding:5px;display:block;}
 
 div.main{height:100%;margin:0px;padding:10px;}
@@ -114,13 +114,17 @@ div.windownav .close{float:right;width:18px;cursor:pointer}
 .mainblock_box { padding:10px; background:#fff; border-radius:10px;}
 .mainblock_box .btn_1 { cursor:pointer; padding:8px; background:#66cc66; border-radius:5px; color:#fff}
 
-#tab_nav{margin:0; padding:0; height:30px; line-height:29px; border-bottom:1px solid #ccc; margin:5px 0px;}
-#tab_nav li{float:left; border-radius:8px 8px 0 0; margin:0 3px; list-style:none; border:1px solid #ccc; border-bottom:none; height:29px; width:100px; text-align:center; background:#fff;}
-#tab_nav li a{font:bold 13px "微软雅黑", Verdana, Arial, Helvetica, sans-serif; color:#bbb; text-decoration:none;}
-#tab_nav li a:hover{color:#888;}
-#tab_nav li.cur{background:#ff697c;border:1px solid #ff697c;}
-#tab_nav li.cur a{color:#fff}
-#tab_nav li.cur a:hover{color:#fff;}
+.tab_nav{margin:0; padding:0; height:30px; line-height:29px; border-bottom:1px solid #ccc; margin:5px 0px;}
+.tab_nav li{float:left; border-radius:8px 8px 0 0; margin:0 3px; list-style:none; border:1px solid #ccc; border-bottom:none; height:29px; width:100px; text-align:center; background:#fff;}
+.tab_nav li a{font:bold 13px "微软雅黑", Verdana, Arial, Helvetica, sans-serif; color:#bbb; text-decoration:none;}
+.tab_nav li a:hover{color:#888;}
+.tab_nav li.cur{background:#ff9933;border:1px solid #ff9933;}
+.tab_nav li.cur a{color:#fff}
+.tab_nav li.cur a:hover{color:#fff;}
+
+.navi_msg{margin:0; padding:0; height:30px; line-height:30px; padding-top:5px;}
+.navi_msg font{line-height:30px;font-size:16px;display:inline-block;vertical-align:middle;}
+.navi_msg button{background:#1E90FF;width:60px;height:20px;line-height:22px;font-size:10px;vertical-align:middle;margin:0px 0px 0px 20px;border-width:0px;border-radius:3px;cursor:pointer;outline:none;color:white;}
 
 .finder_box {background:#fff;height:150px;position:absolute;border:1px solid #ddd;z-index:99999;}
 .finder_box_search {background:#eee;height:28px;}
@@ -136,7 +140,7 @@ div.windownav .close{float:right;width:18px;cursor:pointer}
 .sq_box_add {padding:5px;padding-top:75px;font-size:60px;text-align:center;color:#eee}
 .sq_box_close {position:absolute;right:0px;top:0px;color:#fff;background:#bbb;padding:5px;cursor:pointer;}
 
-.img_box {width:110px;height:110px;margin-right:8px;padding:5px;float:left;background:#eee;position:relative;}
+.img_box {width:120px;height:120px;margin-right:8px;padding:5px;float:left;background:#eee;position:relative;}
 .img_box input {cursor:pointer;position:absolute;width:100%;height:100%;top:0px;left:0px;filter:alpha(opacity=0);opacity:0;z-index:2000;}
 .img_box b {color:#399bfc;font-weight:normal;}
 .img_box_in {background:#ffffee;width:100%;height:100%;position:relative;}
@@ -153,6 +157,16 @@ div.windownav .close{float:right;width:18px;cursor:pointer}
 .list_col_box_body {padding-top:5px;}
 
 .crop_box_div {position:fixed;top:0px;left:0px;z-index:99999;display:none;}
-.crop_box_btn_l {position:absolute;top:0px;left:0px;width:120px;height:40px;font-size:16px;font-weight:bold;line-height:40px;text-align:center;background:#ff697c;color:#fff;cursor:pointer;z-index:99999;}
-.crop_box_btn_r {position:absolute;top:0px;right:0px;width:120px;height:40px;font-size:16px;font-weight:bold;line-height:40px;text-align:center;background:#ff697c;color:#fff;cursor:pointer;z-index:99999;}
+.crop_box_btn_l {position:absolute;top:0px;left:0px;width:120px;height:40px;font-size:16px;font-weight:bold;line-height:40px;text-align:center;background:#ff9933;color:#fff;cursor:pointer;z-index:99999;}
+.crop_box_btn_r {position:absolute;top:0px;right:0px;width:120px;height:40px;font-size:16px;font-weight:bold;line-height:40px;text-align:center;background:#ff9933;color:#fff;cursor:pointer;z-index:99999;}
 .crop_box_txt_b {position:absolute;background:#333;z-index:99999;left:50%;bottom:20px;width:300px;height:50px;line-height:50px;border-radius:15px;opacity:0.9;margin-left:-150px;text-align:center;font-size:16px;color:#fff;}
+
+/* ht-app */
+.express-table{ width:100%; margin:10px auto 0px; border-collapse:collapse; font-size:13px;}
+.express-table table{ width:100%; border-collapse:collapse;margin:0;padding:0;}
+.express-table table td{ padding:5px;margin:0;vertical-align:middle;}
+.express-prodbox{ width:200px;height:80px;background:#fff;display:inline-block;}
+.express-prodbox img{ width:70px;height:70px;float:left;margin:5px;}
+.express-prodbox p{ width:120px;height:80px;float:left;padding-top:20px; font-size:12px;}
+.express-prodbox p span{ width:120px;height:20px;display:block;line-height:20px;overflow:hidden;}
+.express-inputbox{ float:right;vertical-align:middle;}

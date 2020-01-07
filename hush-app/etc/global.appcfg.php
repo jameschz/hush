@@ -1,7 +1,7 @@
 <?php
 require_once 'App/Etc/Config.php';
 
-$_APPCFG['version'] = 'v1.0.0';
+$_APPCFG['version'] = 'v1.1.0';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // session config

@@ -38,8 +38,8 @@ body.hidemenu .left{display:none}
 .menu dl dd{clear:both; padding-top:5px}
 .menu dl dd ul li{float:right; width:178px; text-indent:10px; height:26px; line-height:26px; *margin-right:-4px; overflow:hidden; display:block; font-size:12px}
 .menu dl dd ul li a{overflow:hidden; display:block; color:#fff; text-decoration:none}
-.menu dl dd ul li a:hover{color:#fdd31c}
-.menu dl dd ul li a.thisclass, .menu dl dd ul li a.thisclass:hover{color:#fdd31c; font-weight:bold; background:url(../img/leftmenu_li_s.gif) left top no-repeat}
+.menu dl dd ul li a:hover{color:#ff9933}
+.menu dl dd ul li a.thisclass, .menu dl dd ul li a.thisclass:hover{color:#ff9933; font-weight:bold; background:url(../img/leftmenu_li_s.gif) left top no-repeat}
 body.showmenu .right{left:188px}
 body.hidemenu .right{left:0px}
 .right{height:100%;position:absolute;right:0;top:50px;bottom:0; z-index:7}

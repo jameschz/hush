@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title></title>
-<link rel="stylesheet" href="{$_host_s}/css/layout.css">
+<link rel="stylesheet" href="{$_host_s}/css/font.css" />
+<link rel="stylesheet" href="{$_host_s}/css/layout.css" />
 <script src="{$_host_s}/js/json.js" type="text/javascript"></script>
 <script src="{$_host_s}/js/string.js" type="text/javascript"></script>
 <script src="{$_host_s}/js/jquery.js" type="text/javascript"></script>

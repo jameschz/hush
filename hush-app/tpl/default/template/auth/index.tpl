@@ -27,10 +27,12 @@ $(document).keypress(function(event){
 </script>
 </head>
 <body>
-	<div class="ax_loding" style="background:url(/img/bg-1.jpg) no-repeat scroll center top / 100% auto"></div>
+    <!-- set login page background here -->
+	<div class="ax_loding" style="background:#fff"></div>
 	<form action="{$_root}auth/login" method="post" id="login_form">
 	<div class="ax_loding_nr">
-		<div class="ax_loding_logo"><img src="{$_root}img/logo_1.png"></div>
+        <!-- set login page logo icon here -->
+		<div class="ax_loding_logo"><img src="{$_root}img/logo.png"></div>
 		{if $errors}
 			<div class="ax_error_box">
 			{foreach $errors as $error}

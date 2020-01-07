@@ -12,16 +12,14 @@
 <meta name="copyright" content="" />
 <title>{$_app}</title>
 <link rel="canonical" href=""/>
-<link href="{$_host_s}/css/hush.css" rel="stylesheet" type="text/css" />
 <link href="{$_host_s}/css/font.css" rel="stylesheet" type="text/css" />
+<link href="{$_host_s}/css/hush.css?v={$_ver}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{$_host_s}/js/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="{$_host_s}/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="{$_host_s}/js/hush.js"></script>
 <script type="text/javascript">
 function go_home () {
-    selMenuLv1('menu_lv1_1','down');
-    selMenuLv2('menu_lv2_2');
-    selMenuLv3('menu_lv3_3');
+	goMenu('/acl/welcome');
 }
 function go_message () {
     
@@ -59,37 +57,17 @@ $(function(){
 			</div>
 		</div>
 		<div class="ax_top_right">
-            {if $_shops}{*商户后台*}
-            <div class="ax_top_right_01 ax_top_left_dj" id="ax_top_grzx">
-                <b id="ax_cur_shop_box" data-id="{$_shop.id}">{$_shop.sname_s}</b><font>▼</font>
-                <div class="ax_tc_cpfw" style="display:none;">
-                    <div class="ax_tc_cpfw_01">
-                        {foreach $_shops as $k => $v}
-                        <p class="ax_tc_cpfw_nr ax_all_shop_list" data-id="{$v.id}" onclick="javascript:select_shop({$v.id});"><i class="icon icon-play3"></i>{$v.sname_s}</p>
-                        {/foreach}
-                        <p class="ax_tc_cpfw_nr" onclick="javascript:location.href='/auth/logout';"><i class="icon icon-switch"></i>注销登录帐号</p>
-                    </div>
-                </div>
-            </div>
-            {else}{*超级后台*}
 			<div class="ax_top_right_01 ax_top_left_dj" id="ax_top_grzx">
 				<b>{if $_admin.sa}超级管理员{else}{$_admin.name}{/if}</b><font>▼</font>
 				<div class="ax_tc_cpfw" style="display:none;">
 					<div class="ax_tc_cpfw_01">
-						<p class="ax_tc_cpfw_nr" onclick="javascript:location.href='/auth/logout';"><i class="icon icon-switch"></i>注销登录帐号</p>
+						<p class="ax_tc_cpfw_nr" onclick="javascript:location.href='/auth/logout';"><i class="icon icon-switch"></i>退出登录</p>
 					</div>
 				</div>
 			</div>
-            {/if}
-			<div class="ax_top_right_01 ax_top_left_dj" onclick="javascript:go_helpcenter();">帮助中心</div>
-			{if $_shops}{*商户后台*}
-            <div class="ax_top_right_01 ax_top_left_dj" onclick="javascript:go_home();">
-                <i class="icon icon-mail2"></i><span id="msg_num_box" style="display:none;"></span>
-            </div>
-            {else}{*超级后台*}
+			{*<div class="ax_top_right_01 ax_top_left_dj" onclick="javascript:go_helpcenter();">帮助中心</div>*}
             <div class="ax_top_right_01 ax_top_left_dj" onclick="javascript:go_message();">
                 <i class="icon icon-mail2"></i><span id="msg_num_box" style="display:none;"></span>
             </div>
-            {/if}
 		</div>
 	</div>

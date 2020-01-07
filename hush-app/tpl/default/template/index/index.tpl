@@ -41,7 +41,7 @@
 		</div>
 	</div>
 </div>
-    
+{*
 <div id="fresh_btn" class="icon icon-loop2 ax_fresh_btn"></div>
 <script type="text/javascript">
 $(function(){
@@ -51,5 +51,5 @@ $(function(){
 	});
 });
 </script>
-
+*}
 {include file="index/frame/foot.tpl"}
