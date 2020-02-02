@@ -110,8 +110,15 @@ class DemoPage extends BasePage
 	                'id_list' => 'name'
 	            ),
 	        ),
+	        'tags' => array('type' => 'chosen', 'name' => '标签', 'add' => true, 'edit' => true, 'list' => true,
+	            'data' => array('标签1', '标签2', '标签3'),
+	            'chosen' => array(
+	                'max_num' => 2, // 最大可选标签个数
+	                'placeholder' => '请选择标签', // 默认提示语
+	            ),
+	        ),
+	        'content' => array('type' => 'richtext', 'name' => '内容', 'add' => true, 'edit' => true, 'list' => false),
 	        'ptime' => array('type' => 'date', 'name' => '发布日期', 'add' => true, 'edit' => true, 'list' => true),
-	        'content' => array('type' => 'richtext', 'name' => '内容', 'add' => true, 'edit' => true, 'list' => true),
 	        'images' => array('type' => 'file', 'name' => '图片', 'add' => true, 'edit' => true, 'list' => true,
 	            'files' => array(
 	                'pic1' => array('type' => 'imagecrop', 'name' => '宽截图1', 'size' => '400x300', 'value' => '', 'list' => true),
@@ -211,6 +218,8 @@ class DemoPage extends BasePage
 	        'type' => array('type' => 'select', 'name' => '', 'order' => 0, 'default' => ''),
 	        'title' => array('type' => 'text', 'name' => '标题', 'order' => 1, 'default' => ''),
 	        'ptime' => array('type' => 'date', 'name' => '发布时间', 'order' => 2, 'default' => date('Y-m-d')),
+	        '_space_1' => array('type' => 'space', 'style' => 'display:block;height:5px;'),
+	        'id' => array('type' => 'text', 'name' => 'ID', 'order' => 3, 'default' => ''),
 	    );
 	    
 	    // 添加排序规则

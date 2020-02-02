@@ -65,12 +65,8 @@
 			<option value="{$k1}" {if $item_val eq $k1}selected{/if}>{$v1}</option>
 		{/foreach}
 		</select>
-        {elseif $v.type eq 'select-m'}
-        <select class="common chosen-select" id="ax_{$k}" name="{$k}[]" multiple>
-        {foreach $v.data as $k1 => $v1}
-            <option value="{$k1}" {if is_array($item[$k]) && $k1|in_array:$item[$k]}selected{/if}>{$v1}</option>
-        {/foreach}
-        </select>
+        {elseif $v.type eq 'chosen'}
+        {include file="base/crud/item_chosen.tpl" from=$from}
 		{else}{* include types : html *}
 		<input type="text" class="common" id="ax_{$k}" name="{$k}" value="{$item_val}" />
 		{/if}

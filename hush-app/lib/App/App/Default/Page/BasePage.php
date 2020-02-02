@@ -89,6 +89,10 @@ class BasePage extends App_App_Default_Page
     private function _fill_data ($bps, &$res)
     {
         foreach ($bps->field as $k => $v) {
+            // 处理标签结构
+            if ($bps->field[$k]['chosen']) {
+                $res[$k] = (array) @json_decode($res[$k], 1);
+            }
             // 处理文件结构
             if ($bps->field[$k]['files']) {
                 $file_data = (array) @json_decode($res[$k], 1);
@@ -260,6 +264,8 @@ class BasePage extends App_App_Default_Page
                 foreach ($data as $k => $v) {
                     if ($bps->field[$k]['type'] == 'date' || $bps->field[$k]['type'] == 'time') {
                         $data[$k] = strtotime($v);
+                    } elseif ($bps->field[$k]['type'] == 'chosen') {
+                        $data[$k] = json_encode($v);
                     } elseif ($bps->field[$k]['type'] == 'color') {
                         $data[$k] = json_encode($v);
                     } elseif ($bps->field[$k]['type'] == 'pass') {
@@ -380,6 +386,8 @@ class BasePage extends App_App_Default_Page
                 foreach ($data as $k => $v) {
                     if ($bps->field[$k]['type'] == 'date' || $bps->field[$k]['type'] == 'time') {
                         $data[$k] = strtotime($v);
+                    } elseif ($bps->field[$k]['type'] == 'chosen') {
+                        $data[$k] = json_encode($v);
                     } elseif ($bps->field[$k]['type'] == 'color') {
                         $data[$k] = json_encode($v);
                     } elseif ($bps->field[$k]['type'] == 'pass') {
@@ -488,7 +496,7 @@ class BasePage extends App_App_Default_Page
         $dao = $this->dao->load($bps->model);
         $res = (array) $dao->read($this->param($bps->pkey), $bps->pkey);
         $this->_fill_data($bps, $res);
-        // 		Hush_Util::dump($res);
+// 		Hush_Util::dump($res);
         $this->view->item = (array) $res;
         $this->view->title = $bps->title;
         $this->view->field = $bps->field;

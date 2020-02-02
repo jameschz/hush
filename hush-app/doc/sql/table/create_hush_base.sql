@@ -50,3 +50,8 @@ INSERT INTO `test` (`id`, `user_id`, `type`, `title`, `content`) VALUES
 (2, 1, 1, 'title 2', 'content 2'),
 (3, 1, 2, 'title 3', 'content 3');
 
+--
+-- 新版本增加标签字段
+--
+
+ALTER TABLE `test` ADD `tags` varchar(255) NOT NULL DEFAULT '' AFTER `type`;
