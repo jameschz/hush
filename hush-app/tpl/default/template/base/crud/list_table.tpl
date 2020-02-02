@@ -7,7 +7,9 @@
 			{foreach $field as $k => $v}
 			{include file="base/crud/list_th.tpl"}
 			{/foreach}
+            {if !$no_op}
 			<th align="right"></th>
+            {/if}
 		</tr>
 	</thead>
 	<tbody>
@@ -16,9 +18,12 @@
 			{foreach $field as $k => $v}
 			{include file="base/crud/list_td.tpl"}
 			{/foreach}
+            {if !$no_op}
 			<td class="op_box" align="right" {if $bps.style.td_op}style="{$bps.style.td_op}"{/if}>
+                {if !$no_info}
 				<a href="javascript:openWindow('{$bps.action}{$bps.options.link_info}{if $bps.options.link_info|strpos:'?'}&{else}?{/if}{$bps.pkey}={$item[$bps.pkey]}','{$title}{$bps.options.name_info}');">{$bps.options.name_info}</a>
-				{if $blocks && "edit"|in_array:$blocks}
+				{/if}
+                {if $blocks && "edit"|in_array:$blocks}
                     {if $item._unclick && "edit"|in_array:$item._unclick}
                     <b>{$bps.options.name_edit}</b>
                     {else}
@@ -55,6 +60,7 @@
 				{/foreach}
 				{/if}
 			</td>
+            {/if}
 		</tr>
 		{/foreach}
 	</tbody>

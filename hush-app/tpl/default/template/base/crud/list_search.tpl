@@ -8,32 +8,33 @@
 		<tr><td>
 		{foreach $filter as $k => $v}
 			{if $v.type eq 'text' || $v.type eq 'int'}
-			<input type="text" name="{$k}" value="{if $search.$k}{$search.$k}{/if}" placeholder="请输入{$v.name}" style="{if $v.style}{$v.style};{else}width:auto;{/if}" />
+			<input type="text" name="{$k}" value="{if $search.$k}{$search.$k}{/if}" placeholder="请输入{$v.name}" style="{if $v.style}{$v.style}{else}width:auto;{/if}" />
 			{elseif $v.type eq 'date'}
-			<input type="text" class="datepicker" name="{$k}" value="{if $search.$k}{$search.$k}{/if}" style="{if $v.style}{$v.style};{else}width:auto;{/if}" autocomplete="off" />
+			<input type="text" class="datepicker" name="{$k}" value="{if $search.$k}{$search.$k}{/if}" style="{if $v.style}{$v.style}{else}width:auto;{/if}" autocomplete="off" />
 			{elseif $v.type eq 'time'}
-			<input type="text" class="datetimepicker" name="{$k}" value="{if $search.$k}{$search.$k}{/if}" style="{if $v.style}{$v.style};{else}width:auto;{/if}" autocomplete="off" />
+			<input type="text" class="datetimepicker" name="{$k}" value="{if $search.$k}{$search.$k}{/if}" style="{if $v.style}{$v.style}{else}width:auto;{/if}" autocomplete="off" />
 			{elseif $v.type eq 'select'}
-			<select class="search_selector" name="{$k}" style="{if $v.style}{$v.style};{else}width:auto;{/if}">
+			<select class="search_selector" name="{$k}" style="{if $v.style}{$v.style}{else}width:auto;{/if}">
 				{foreach $field.$k.data as $k1 => $v1}
 				<option value="{$k1}" {if $search.$k eq $k1}selected{/if}>{$v1}</option>
 				{/foreach}
 			</select>
+            {elseif $v.type eq 'space'}
+            <div style="{if $v.style}{$v.style}{else}display:block;{/if}"></div>
 			{/if}
-			&nbsp;
 		{/foreach}
 		<input type="submit" value="查找{$title}" />
 		</td>
-		<td style="text-align:right">
+		<td style="text-align:right;vertical-align:top;">
 		{if $blocks && "add"|in_array:$blocks}
 		<input type="button" value="添加{$title}" onclick="javascript:openWindow('{$bps.action}{$bps.options.link_add}','添加{$title}');" />
 		{/if}
 		{if $bps.topbtn}
 		{foreach $bps.topbtn as $topbtn}
 			{if $topbtn.path}
-			<input type="button" value="{$topbtn.name}" onclick="javascript:openWindow('{$topbtn.path}','{$title} > {$topbtn.name}');"/>
+			<input type="button" value="{$topbtn.name}" onclick="javascript:openWindow('{$topbtn.path}','{$title} > {$topbtn.name}');" {if $topbtn.style}style="{$topbtn.style}"{/if}/>
 			{else}
-			<input type="button" value="{$topbtn.name}" onclick="javascript:location.href='{$topbtn.href}';" />
+			<input type="button" value="{$topbtn.name}" onclick="javascript:location.href='{$topbtn.href}';" {if $topbtn.style}style="{$topbtn.style}"{/if}/>
 			{/if}
 		{/foreach}
 		{/if}

@@ -169,6 +169,9 @@ class DemoPage extends BasePage
 	        'type' => array('type' => 'select', 'name' => '', 'order' => 0, 'default' => ''),
 	        'title' => array('type' => 'text', 'name' => '标题', 'order' => 1, 'default' => ''),
 	        'ptime' => array('type' => 'date', 'name' => '发布时间', 'order' => 2, 'default' => date('Y-m-d')),
+	        '_space_1' => array('type' => 'space', 'style' => 'display:block;height:5px;'),
+	        'id' => array('type' => 'text', 'name' => 'ID', 'order' => 3, 'default' => ''),
+	        
 	    );
 	    
 	    // 添加排序规则
