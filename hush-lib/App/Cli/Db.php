@@ -172,7 +172,7 @@ class App_Cli_Db extends App_Cli
     	            $s .= preg_replace('/#(.*)$/', '', $s_1);
     	        }
     	        // get db name
-    	        $r = preg_split('/use/i', $s);
+    	        $r = preg_split('/use /i', $s);
     	        if (isset($r[1]) && !empty($r[1])) {
     	            $db_name_str = trim(str_replace('`', '', $r[1]));
     	            $db_name_str = $db_name_str . $this->_db_suffix;
