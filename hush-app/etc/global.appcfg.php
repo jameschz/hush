@@ -9,18 +9,20 @@ $_APPCFG['version'] = 'v1.1.0';
 if (__HUSH_ENV == 'local') {
     // TODO : add session handler here
     require_once 'Core/Session.php';
-//     $sessionPath = __SYS_DIR . '/php/session';
-//     Core_Session::init(array(
-//         'type' => 'files',
-//         'name' => 'hush_sid',
-//         'path' => $sessionPath,
-//         'life' => 24 * 3600,
-//     ));
+    // 默认使用本地SESSION
+    $sessionPath = __SYS_DIR . '/php/session';
     Core_Session::init(array(
-        'type' => 'redis',
+        'type' => 'files',
         'name' => 'hush_sid',
+        'path' => $sessionPath,
         'life' => 24 * 3600,
     ));
+    // 有条件可以使用REDIS做SESSION
+//     Core_Session::init(array(
+//         'type' => 'redis',
+//         'name' => 'hush_sid',
+//         'life' => 24 * 3600,
+//     ));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
