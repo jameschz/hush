@@ -36,6 +36,17 @@ class Hush_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
     public $_debug = false; // for trace sql
     
     /**
+     * Set debug flag
+     * 
+     * @param bool $debug
+     * @return void
+     */
+    public function setDebug($debug)
+    {
+        $this->_debug = $debug;
+    }
+    
+    /**
      * Replace table rows with specified data based on a WHERE clause.
      *
      * @param  mixed $table The table to update.
@@ -98,7 +109,7 @@ class Hush_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
      * Overload the query method of Zend Db
      * @param string $sql
      * @param array $bind
-     * @return Zend_Db_Statement_Interface
+     * @return Zend_Db_Statement_Pdo
      */
     public function query($sql, $bind = array())
     {
@@ -110,11 +121,52 @@ class Hush_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
             $t1 = Core_Util::microtime_float();
         }
         
-        $result = parent::query($sql, $bind);
+        try {
+            $result = parent::query($sql, $bind);
+        } catch (Exception $e) {
+            // close connection if server has gone away
+            if (stripos($e->getMessage(), 'mysql server has gone away') !== false) {
+                parent::closeConnection();
+            }
+            throw $e;
+        }
         
         if ($this->_debug) {
             $t2 = Core_Util::microtime_float();
             Core_Util::core_log('Query Time : '.($t2-$t1));
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Overload the exec method of Zend Db
+     * @param string $sql
+     * @return integer Number of rows affected
+     */
+    public function exec($sql)
+    {
+        if ($this->_debug) {
+            if ($sql instanceof Zend_Db_Select) {
+                $sql = $sql->__toString();
+            }
+            Core_Util::core_log('Exec Sql : '.$sql);
+            $t1 = Core_Util::microtime_float();
+        }
+        
+        try {
+            $result = parent::exec($sql);
+        } catch (Exception $e) {
+            // close connection if server has gone away
+            if (stripos($e->getMessage(), 'mysql server has gone away') !== false) {
+                parent::closeConnection();
+            }
+            throw $e;
+        }
+        
+        if ($this->_debug) {
+            $t2 = Core_Util::microtime_float();
+            Core_Util::core_log('Exec Time : '.($t2-$t1));
         }
         
         return $result;

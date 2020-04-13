@@ -38,7 +38,7 @@ class Hush_Db extends Zend_Db
 	/**
 	 * Db adaptor factory
 	 * @static
-	 * @param mixed $adapter Can be 'MYSQLI', 'ORACLE'...
+	 * @param mixed $adapter Can be 'Pdo_Mysql', 'MYSQLI', 'ORACLE'...
 	 * @param array $config
 	 * @return Zend_Db_Adaptor
 	 */
@@ -71,7 +71,11 @@ class Hush_Db extends Zend_Db
 	}
 	
 	/**
-	 * 
+	 * Db connection pool
+	 * @static
+	 * @param array $options
+	 * @param string $charset
+	 * @return Zend_Db_Adaptor
 	 */
 	public static function dbPool ($options = array(), $charset = null)
 	{
@@ -107,5 +111,38 @@ class Hush_Db extends Zend_Db
 		}
 		
 		return self::$db_pool[$dbPoolKey];
+	}
+	
+	/**
+	 * Db connection ping
+	 * @static
+	 * @param Zend_Db_Adaptor $dbConn
+	 * @return bool
+	 */
+	public static function dbPing ($dbConn = null)
+	{
+	    // no connection
+	    if (!$dbConn) {
+	       return false;
+	    }
+	    
+	    // disconnected
+	    if (!$dbConn->isConnected()) {
+	        return false;
+	    }
+	    
+	    // try connecting
+    	try {
+     	    $dbConn->getConnection()->getAttribute(PDO::ATTR_SERVER_VERSION);
+//    	    $dbConn->getConnection()->query('select version();');
+    	} catch (PDOException $e) {
+    	    // mysql server has gone away
+    	    if (stripos($e->getMessage(), 'mysql server has gone away') !== false) {
+    	        return false;
+    	    }
+    	}
+    	
+    	// connection ok
+    	return true;
 	}
 }
