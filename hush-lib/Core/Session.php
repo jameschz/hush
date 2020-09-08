@@ -36,7 +36,7 @@ class Core_Session
             case 'files':
                 if ($sessionPath) {
                     if (!is_dir($sessionPath)) {
-                        mkdir($sessionPath, 0777);
+                        mkdir($sessionPath, 0777, true);
                     }
                     ini_set("session.save_path", $sessionPath);
                 }
