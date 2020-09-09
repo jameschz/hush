@@ -33,7 +33,7 @@ define('__HUSH_ENVID', $_HUSH['ENVID']);
  * Global include path
  */
 define('__HUSH_LIB_DIR', _hush_realpath(__ROOT . '/../' . __APP_NS . '-lib'));
-define('__COMM_LIB_DIR', !empty($_HUSH['PHPLIBS']) ? $_HUSH['PHPLIBS'] : _hush_realpath(__ROOT . '/../phplibs'));
+define('__COMM_LIB_DIR', !empty($_HUSH['PHPLIBS']) ? $_HUSH['PHPLIBS'] : _hush_realpath(__ROOT . '/../../phplibs'));
 set_include_path('.' . PATH_SEPARATOR . __LIB_DIR . PATH_SEPARATOR . __HUSH_LIB_DIR . PATH_SEPARATOR . __COMM_LIB_DIR . PATH_SEPARATOR . get_include_path());
 
 /**

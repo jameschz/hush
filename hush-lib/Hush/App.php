@@ -255,7 +255,6 @@ class Hush_App
 	public static function setPageView ($pageViewClass = true)
 	{
 		Hush_App_Dispatcher::$pageViewClass = $pageViewClass;
-		return $this;
 	}
 	
 	/**
@@ -270,7 +269,5 @@ class Hush_App
 			session_start();
 			$started = true;
 		}
-		
-		return $this;
 	}
 }
