@@ -1,0 +1,7 @@
+{
+    "name": "jameschz/hush",
+    "description": "Hush Framework 2.x",
+    "require": {
+        "php": ">=7.2",
+    }
+}
